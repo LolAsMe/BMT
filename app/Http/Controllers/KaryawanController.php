@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use App\Http\Requests\StoreKaryawanRequest;
 use App\Http\Requests\UpdateKaryawanRequest;
+use Inertia\Inertia;
 
 class KaryawanController extends Controller
 {
@@ -16,6 +17,7 @@ class KaryawanController extends Controller
     public function index()
     {
         //
+        return Inertia::render('BMT/Karyawan');
     }
 
     /**
