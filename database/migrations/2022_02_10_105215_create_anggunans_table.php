@@ -13,8 +13,20 @@ class CreateAnggunansTable extends Migration
      */
     public function up()
     {
-        Schema::create('anggunans', function (Blueprint $table) {
+        Schema::create('anggunan', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pembiayaan_id');
+            $table->string('kode')->nullable();
+            $table->string('jenis_objek');
+            $table->string('nomer_polisi')->nullable();
+            $table->dateTime('tanggal_masuk')->useCurrent();
+            $table->dateTime('tanggal_ambil')->nullable();
+            $table->string('tahun_pembuatan')->nullable();
+            $table->string('luas_objek')->nullable();
+            $table->string('letak_objek')->nullable();
+            $table->string('nama_pemilik');
+            $table->string('alamat_pemilik');
+            $table->foreignId('karyawan_id')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +38,6 @@ class CreateAnggunansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anggunans');
+        Schema::dropIfExists('anggunan');
     }
 }

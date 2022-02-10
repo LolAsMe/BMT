@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetailAngsuransTable extends Migration
+class CreateDetailTransaksisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDetailAngsuransTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_angsurans', function (Blueprint $table) {
+        Schema::create('detail_transaksis', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateDetailAngsuransTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_angsurans');
+        Schema::dropIfExists('detail_transaksis');
     }
 }

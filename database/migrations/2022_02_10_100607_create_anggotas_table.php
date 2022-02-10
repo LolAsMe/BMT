@@ -13,8 +13,20 @@ class CreateAnggotasTable extends Migration
      */
     public function up()
     {
-        Schema::create('anggotas', function (Blueprint $table) {
+        Schema::create('anggota', function (Blueprint $table) {
             $table->id();
+            $table->string('kode')->nullable();
+            $table->string('nama');
+            $table->string('no_ktp')->nullable();
+            $table->string('alamat');
+            $table->string('telepon');
+            $table->string('pekerjaan')->nullable();
+            $table->dateTime('tanggal_lahir')->useCurrent();
+            $table->dateTime('tanggal_masuk');
+            $table->string('nama_ibu_kandung')->nullable();
+            $table->enum('jenis_kelamin',['pria','wanita']);
+            $table->foreignId('karyawan_id');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +38,6 @@ class CreateAnggotasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anggotas');
+        Schema::dropIfExists('anggota');
     }
 }

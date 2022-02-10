@@ -13,8 +13,17 @@ class CreateCetaksTable extends Migration
      */
     public function up()
     {
-        Schema::create('cetaks', function (Blueprint $table) {
+        Schema::create('cetak', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
+            $table->dateTime('tanggal')->useCurrent();
+            $table->string('sandi');
+            $table->unsignedDecimal('debit');
+            $table->unsignedDecimal('kredit');
+            $table->unsignedDecimal('saldo');
+            $table->foreignId('karyawan_id');
+            $table->foreignId('simpanan_id');
+            $table->unsignedInteger('no_urut');
             $table->timestamps();
         });
     }
@@ -26,6 +35,6 @@ class CreateCetaksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cetaks');
+        Schema::dropIfExists('cetak');
     }
 }

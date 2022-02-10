@@ -13,8 +13,12 @@ class CreateDetailNisbahsTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_nisbahs', function (Blueprint $table) {
+        Schema::create('detail_nisbah', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pengendapan_id');
+            $table->foreignId('detail_simpanan_id');
+            $table->integer('pengendapan');
+            $table->unsignedDecimal('hasil');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateDetailNisbahsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_nisbahs');
+        Schema::dropIfExists('detail_nisbah');
     }
 }

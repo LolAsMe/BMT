@@ -13,8 +13,15 @@ class CreateDetailPembiayaansTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_pembiayaans', function (Blueprint $table) {
+        Schema::create('detail_pembiayaan', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pembiayaan_id');
+            $table->foreignId('karyawan_id');
+            $table->unsignedInteger('angsuran_ke');
+            $table->decimal('jumlah');
+            $table->unsignedDecimal('akumulasi_angsuran');
+            $table->unsignedDecimal('total_tanggungan');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +33,6 @@ class CreateDetailPembiayaansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_pembiayaans');
+        Schema::dropIfExists('detail_pembiayaan');
     }
 }

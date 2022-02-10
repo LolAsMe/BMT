@@ -13,8 +13,14 @@ class CreateNisbahsTable extends Migration
      */
     public function up()
     {
-        Schema::create('nisbahs', function (Blueprint $table) {
+        Schema::create('nisbah', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
+            $table->string('bulan');
+            $table->foreignId('simpanan_id');
+            $table->decimal('pengendapan');
+            $table->decimal('tabungan');
+            $table->decimal('nisbah');
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreateNisbahsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nisbahs');
+        Schema::dropIfExists('nisbah');
     }
 }

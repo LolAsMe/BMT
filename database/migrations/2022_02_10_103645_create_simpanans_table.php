@@ -13,8 +13,14 @@ class CreateSimpanansTable extends Migration
      */
     public function up()
     {
-        Schema::create('simpanans', function (Blueprint $table) {
+        Schema::create('simpanan', function (Blueprint $table) {
             $table->id();
+            $table->string('kode')->nullable();
+            $table->foreignId('anggota_id');
+            $table->foreignId('jenis_simpanan_id');
+            $table->decimal('jumlah', 10, 2, true)->default(0);;
+            $table->dateTime('tanggal_pembuatan')->useCurrent();
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreateSimpanansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('simpanans');
+        Schema::dropIfExists('simpanan');
     }
 }

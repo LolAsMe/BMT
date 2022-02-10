@@ -13,8 +13,13 @@ class CreateKaryawansTable extends Migration
      */
     public function up()
     {
-        Schema::create('karyawans', function (Blueprint $table) {
+        Schema::create('karyawan', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('no_telepon');
+            $table->foreignId('jabatan_id');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateKaryawansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('karyawans');
+        Schema::dropIfExists('karyawan');
     }
 }
