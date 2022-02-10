@@ -42,22 +42,24 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resources([
-        'anggotas' => AnggotaController::class,
-        'jenis-anggotas' => JenisAnggotaController::class,
-        'simpanans' => SimpananController::class,
-        'anggunans' => AnggunanController::class,
-        'cetaks' => CetakController::class,
-        'pembiayaans' => PembiayaanController::class,
-        'pembiayaans.details' => DetailAngsuranController::class,
-        'simpanans.details' => DetailSimpananController::class,
-        'karyawans' => KaryawanController::class,
-        'jabatans' => JabatanController::class,
-        'jenis-simpanans' => JenisSimpananController::class,
-        'jenis-pembiayaans' => JenisPembiayaanController::class,
-        'nisbahs' => NisbahController::class,
-        'nisbahs.details' => DetailNisbahController::class,
-    ]);
+        'anggota' => AnggotaController::class,
+        'jenis-anggota' => JenisAnggotaController::class,
+        'simpanan' => SimpananController::class,
+        'anggunan' => AnggunanController::class,
+        'cetak' => CetakController::class,
+        'pembiayaan' => PembiayaanController::class,
+        'pembiayaan.detail' => DetailAngsuranController::class,
+        'simpanan.detail' => DetailSimpananController::class,
+        'karyawan' => KaryawanController::class,
+        'jabatan' => JabatanController::class,
+        'jenis-simpanan' => JenisSimpananController::class,
+        'jenis-pembiayaan' => JenisPembiayaanController::class,
+        'nisbah' => NisbahController::class,
+        'nisbah.detail' => DetailNisbahController::class,
+    ], ['parameters' => [
+        'anggota' => 'anggota'
+    ]]);
 });
