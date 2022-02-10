@@ -19,6 +19,7 @@ class CreateDetailNisbahsTable extends Migration
             $table->foreignId('detail_simpanan_id');
             $table->integer('pengendapan');
             $table->unsignedDecimal('hasil');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

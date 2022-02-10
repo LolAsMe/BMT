@@ -21,6 +21,7 @@ class CreateSimpanansTable extends Migration
             $table->decimal('jumlah', 10, 2, true)->default(0);;
             $table->dateTime('tanggal_pembuatan')->useCurrent();
             $table->string('keterangan');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

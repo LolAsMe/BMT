@@ -21,6 +21,7 @@ class CreateNisbahsTable extends Migration
             $table->decimal('pengendapan');
             $table->decimal('tabungan');
             $table->decimal('nisbah');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

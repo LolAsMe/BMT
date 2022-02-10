@@ -1,5 +1,19 @@
 <?php
 
+use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\AnggunanController;
+use App\Http\Controllers\CetakController;
+use App\Http\Controllers\DetailAngsuranController;
+use App\Http\Controllers\DetailNisbahController;
+use App\Http\Controllers\DetailSimpananController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\JenisAnggotaController;
+use App\Http\Controllers\JenisPembiayaanController;
+use App\Http\Controllers\JenisSimpananController;
+use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\NisbahController;
+use App\Http\Controllers\PembiayaanController;
+use App\Http\Controllers\SimpananController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,5 +43,21 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
+    // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
+    Route::resources([
+        'anggotas' => AnggotaController::class,
+        'jenis-anggotas' => JenisAnggotaController::class,
+        'simpanans' => SimpananController::class,
+        'anggunans' => AnggunanController::class,
+        'cetaks' => CetakController::class,
+        'pembiayaans' => PembiayaanController::class,
+        'pembiayaans.details' => DetailAngsuranController::class,
+        'simpanans.details' => DetailSimpananController::class,
+        'karyawans' => KaryawanController::class,
+        'jabatans' => JabatanController::class,
+        'jenis-simpanans' => JenisSimpananController::class,
+        'jenis-pembiayaans' => JenisPembiayaanController::class,
+        'nisbahs' => NisbahController::class,
+        'nisbahs.details' => DetailNisbahController::class,
+    ]);
 });

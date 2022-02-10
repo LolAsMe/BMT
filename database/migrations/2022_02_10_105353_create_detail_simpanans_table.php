@@ -26,6 +26,7 @@ class CreateDetailSimpanansTable extends Migration
             $table->decimal('saldo_akhir',10,2,true);
             $table->string('keterangan')->nullable();
             $table->foreignId('karyawan_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -27,6 +27,7 @@ class CreateAnggunansTable extends Migration
             $table->string('nama_pemilik');
             $table->string('alamat_pemilik');
             $table->foreignId('karyawan_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

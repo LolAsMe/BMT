@@ -20,6 +20,7 @@ class CreateKaryawansTable extends Migration
             $table->string('alamat');
             $table->string('no_telepon');
             $table->foreignId('jabatan_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

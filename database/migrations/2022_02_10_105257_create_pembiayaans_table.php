@@ -33,6 +33,7 @@ class CreatePembiayaansTable extends Migration
             $table->decimal('angsuran_diterima',10,2,true);
             $table->string('keterangan')->nullable();
             $table->enum('status',['pending','ongoing','ongoing-telat','selesai']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

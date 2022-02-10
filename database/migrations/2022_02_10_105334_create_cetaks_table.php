@@ -24,6 +24,7 @@ class CreateCetaksTable extends Migration
             $table->foreignId('karyawan_id');
             $table->foreignId('simpanan_id');
             $table->unsignedInteger('no_urut');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

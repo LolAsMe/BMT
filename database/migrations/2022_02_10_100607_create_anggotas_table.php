@@ -28,6 +28,7 @@ class CreateAnggotasTable extends Migration
             $table->foreignId('karyawan_id');
             $table->string('keterangan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

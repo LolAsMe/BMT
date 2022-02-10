@@ -22,6 +22,7 @@ class CreateDetailPembiayaansTable extends Migration
             $table->unsignedDecimal('akumulasi_angsuran');
             $table->unsignedDecimal('total_tanggungan');
             $table->string('keterangan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
