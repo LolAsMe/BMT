@@ -6,7 +6,6 @@
       </h2>
     </template>
     <add-modal></add-modal>
-    {{karyawans}}
 
     <div class="py-2">
       <v-card>
@@ -25,7 +24,7 @@
                   tracking-wider
                 "
               >
-                Name
+                Nama
               </th>
               <th
                 scope="col"
@@ -39,7 +38,7 @@
                   tracking-wider
                 "
               >
-                Title
+                Alamat
               </th>
               <th
                 scope="col"
@@ -68,7 +67,7 @@
                   tracking-wider
                 "
               >
-                Role
+                Jabatan
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span class="px-6
@@ -92,24 +91,24 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr>
+            <tr v-for="(karyawan) in karyawans" :key="karyawan.id">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      Jane Cooper
+                      {{karyawan.nama}}
                     </div>
                     <div class="text-sm text-black">
-                      jane.cooper@example.com
+                      {{karyawan.kode}}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
-                  Regional Paradigm Technician
+                      {{karyawan.alamat}}
                 </div>
-                <div class="text-sm text-black">Optimization</div>
+                <div class="text-sm text-black">{{karyawan.no_telepon}}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
@@ -128,7 +127,7 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                Admin
+                      {{karyawan.jabatan_id}}
               </td>
               <td
                 class="
