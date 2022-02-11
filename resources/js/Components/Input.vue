@@ -25,7 +25,7 @@
       class="
         absolute
         text-sm text-black
-        dark:text-gray-400
+        dark:text-black
         duration-300
         transform
         -translate-y-6
