@@ -6,6 +6,7 @@
       </h2>
     </template>
     <add-modal></add-modal>
+    {{karyawans}}
 
     <div class="py-2">
       <v-card>
@@ -62,6 +63,7 @@
                   text-left text-xs
                   font-medium
                   text-gray-500
+                  text-center
                   uppercase
                   tracking-wider
                 "
@@ -69,7 +71,23 @@
                 Role
               </th>
               <th scope="col" class="relative px-6 py-3">
-                <span class="sr-only">Edit</span>
+                <span class="px-6
+                  py-3
+                  text-left text-xs
+                  text-center
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider">Edit</span>
+              </th>
+              <th scope="col" class="relative px-6 py-3">
+                <span class="px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  uppercase
+                  tracking-wider">Delete</span>
               </th>
             </tr>
           </thead>
@@ -77,14 +95,7 @@
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                  <div class="flex-shrink-0 h-10 w-10">
-                    <img
-                      class="h-10 w-10 rounded-full"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-                      alt=""
-                    />
-                  </div>
-                  <div class="ml-4">
+                  <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
                       Jane Cooper
                     </div>
@@ -124,7 +135,7 @@
                   px-6
                   py-4
                   whitespace-nowrap
-                  text-right text-sm
+                  text-center text-sm
                   font-medium
                 "
               >
@@ -137,7 +148,7 @@
                   px-6
                   py-4
                   whitespace-nowrap
-                  text-right text-sm
+                  text-center text-sm
                   font-medium
                 "
               >
@@ -172,6 +183,9 @@ export default defineComponent({
     VInput,
     VCard,
     VButton,
-  }
+  },
+    props: {
+      karyawans: Object,
+    },
 });
 </script>
