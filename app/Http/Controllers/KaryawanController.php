@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use App\Http\Requests\StoreKaryawanRequest;
 use App\Http\Requests\UpdateKaryawanRequest;
-use App\Models\Anggota;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class KaryawanController extends Controller
@@ -95,5 +95,8 @@ class KaryawanController extends Controller
     public function destroy(Karyawan $karyawan)
     {
         //
+        $karyawan->delete();
+        return redirect(route('karyawan.index'));
+
     }
 }

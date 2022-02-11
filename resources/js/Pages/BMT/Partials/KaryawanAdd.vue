@@ -62,8 +62,8 @@ export default defineComponent({
     };
   },
   methods: {
-    createKaryawan() {
-      this.form.post(route("karyawan.store"), {
+    async createKaryawan() {
+      await this.form.post(route("karyawan.store"), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();
