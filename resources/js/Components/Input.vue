@@ -5,6 +5,8 @@
       :type="type"
       :name="name"
       :id="name"
+      :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
       class="
         block
         py-2.5
@@ -55,7 +57,11 @@ export default defineComponent({
       type: String,
       default: "text",
     },
+    modelValue: {
+      type: String,
+    },
   },
+  emits: ['update:modelValue'],
   computed: {
     // a computed getter
     Name() {
