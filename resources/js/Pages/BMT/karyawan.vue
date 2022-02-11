@@ -5,8 +5,7 @@
         Karyawan
       </h2>
     </template>
-    <add-modal></add-modal>
-
+    <add></add>
     <div class="py-2">
       <v-card>
         <table class="min-w-full divide-y divide-gray-200">
@@ -61,8 +60,7 @@
                   py-3
                   text-left text-xs
                   font-medium
-                  text-gray-500
-                  text-center
+                  text-gray-500 text-center
                   uppercase
                   tracking-wider
                 "
@@ -70,45 +68,54 @@
                 Jabatan
               </th>
               <th scope="col" class="relative px-6 py-3">
-                <span class="px-6
-                  py-3
-                  text-left text-xs
-                  text-center
-                  font-medium
-                  text-gray-500
-                  uppercase
-                  tracking-wider">Edit</span>
+                <span
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs text-center
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                  >Edit</span
+                >
               </th>
               <th scope="col" class="relative px-6 py-3">
-                <span class="px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  uppercase
-                  tracking-wider">Delete</span>
+                <span
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                  >Delete</span
+                >
               </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(karyawan) in karyawans" :key="karyawan.id">
+            <tr v-for="karyawan in karyawans" :key="karyawan.id">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      {{karyawan.nama}}
+                      {{ karyawan.nama }}
                     </div>
                     <div class="text-sm text-black">
-                      {{karyawan.kode}}
+                      {{ karyawan.kode }}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
-                      {{karyawan.alamat}}
+                  {{ karyawan.alamat }}
                 </div>
-                <div class="text-sm text-black">{{karyawan.no_telepon}}</div>
+                <div class="text-sm text-black">{{ karyawan.no_telepon }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
@@ -127,7 +134,7 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                      {{karyawan.jabatan_id}}
+                {{ karyawan.jabatan_id }}
               </td>
               <td
                 class="
@@ -138,7 +145,10 @@
                   font-medium
                 "
               >
-                <a href="#" class="text-indigo-600 hover:text-indigo-900"
+                <a
+                  v-on:click="$refs.editModal.show(karyawan)"
+                  href="#"
+                  class="text-indigo-600 hover:text-indigo-900"
                   >Edit</a
                 >
               </td>
@@ -158,6 +168,7 @@
             </tr>
           </tbody>
         </table>
+        <edit-modal ref="editModal"></edit-modal>
       </v-card>
     </div>
   </app-layout>
@@ -171,20 +182,22 @@ import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-import AddModal from "@/Pages/BMT/Partials/KaryawanAddModal.vue";
+import Add from "@/Pages/BMT/Partials/KaryawanAdd.vue";
+import EditModal from "@/Pages/BMT/Partials/KaryawanEditModal.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     Welcome,
     VModal,
-    AddModal,
+    Add,
+    EditModal,
     VInput,
     VCard,
     VButton,
   },
-    props: {
-      karyawans: Object,
-    },
+  props: {
+    karyawans: Object,
+  }
 });
 </script>

@@ -13,7 +13,7 @@ class UpdateKaryawanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdateKaryawanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+
+            'kode'=>'',
+            'nama'=>'required',
+            'alamat'=>'required',
+            'no_telepon'=>'required',
+            'jabatan_id'=>'required',
         ];
     }
 }

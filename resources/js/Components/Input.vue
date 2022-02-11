@@ -58,7 +58,7 @@ export default defineComponent({
       default: "text",
     },
     modelValue: {
-      type: String,
+      type: undefined,
     },
   },
   emits: ['update:modelValue'],

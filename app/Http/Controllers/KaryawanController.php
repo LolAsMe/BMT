@@ -19,7 +19,7 @@ class KaryawanController extends Controller
     {
         //
         $karyawans = Karyawan::all();
-        return Inertia::render('BMT/Karyawan',compact('karyawans'));
+        return Inertia::render('BMT/Karyawan', compact('karyawans'));
     }
 
     /**
@@ -79,6 +79,11 @@ class KaryawanController extends Controller
     public function update(UpdateKaryawanRequest $request, Karyawan $karyawan)
     {
         //
+        $karyawan->update($request->validated());
+        $karyawan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
