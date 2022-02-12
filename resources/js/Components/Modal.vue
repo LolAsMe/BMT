@@ -52,7 +52,6 @@
                 bg-transparent
                 border-0
                 text-black
-                opacity-5
                 float-right
                 text-xl
                 leading-none
@@ -66,7 +65,6 @@
                 class="
                   bg-transparent
                   text-black
-                  opacity-5
                   h-6
                   w-6
                   text-2xl
@@ -75,7 +73,7 @@
                   focus:outline-none
                 "
               >
-                ×
+                X
               </span>
             </button>
           </div>

@@ -41,7 +41,9 @@ class KaryawanController extends Controller
     public function store(StoreKaryawanRequest $request)
     {
         //
+        // dd($request->validated());
         Karyawan::create($request->validated());
+
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);

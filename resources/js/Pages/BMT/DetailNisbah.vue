@@ -83,6 +83,7 @@
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
+
                   class="
                     px-6
                     py-3
@@ -161,10 +162,7 @@
                   font-medium
                 "
               >
-                <a
-                  @click="deleteKaryawan(karyawan)"
-                  href="#"
-                  class="text-indigo-600 hover:text-indigo-900"
+                <a  @click="deleteKaryawan(karyawan)" href="#" class="text-indigo-600 hover:text-indigo-900"
                   >Delete</a
                 >
               </td>
@@ -199,7 +197,9 @@ export default defineComponent({
   },
   methods: {
     deleteKaryawan(karyawan) {
-      this.$inertia.delete(route("karyawan.destroy", karyawan.id));
+      this.$inertia.delete(
+        route("karyawan.destroy", karyawan.id)
+      );
     },
   },
   props: {
