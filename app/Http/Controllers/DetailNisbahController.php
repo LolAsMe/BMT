@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DetailNisbah;
 use App\Http\Requests\StoreDetailNisbahRequest;
 use App\Http\Requests\UpdateDetailNisbahRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class DetailNisbahController extends Controller
 {
@@ -16,6 +18,8 @@ class DetailNisbahController extends Controller
     public function index()
     {
         //
+        $detailNisbahs = DetailNisbah::all();
+        return Inertia::render('BMT/DetailNisbah', compact('detailNisbahs'));
     }
 
     /**
@@ -37,6 +41,12 @@ class DetailNisbahController extends Controller
     public function store(StoreDetailNisbahRequest $request)
     {
         //
+        // dd($request->validated());
+        DetailNisbah::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class DetailNisbahController extends Controller
     public function update(UpdateDetailNisbahRequest $request, DetailNisbah $detailNisbah)
     {
         //
+        $detailNisbah->update($request->validated());
+        $detailNisbah->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class DetailNisbahController extends Controller
     public function destroy(DetailNisbah $detailNisbah)
     {
         //
+        $detailNisbah->delete();
+        return redirect(route('detailNisbah.index'));
+
     }
 }

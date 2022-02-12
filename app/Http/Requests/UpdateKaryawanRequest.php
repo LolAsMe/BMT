@@ -26,10 +26,10 @@ class UpdateKaryawanRequest extends FormRequest
         return [
 
             'kode'=>'',
-            'nama'=>'required',
-            'alamat'=>'required',
-            'no_telepon'=>'required',
-            'jabatan_id'=>'required',
+            'nama'=>'',
+            'alamat'=>'',
+            'no_telepon'=>'',
+            'jabatan_id'=>'',
         ];
     }
 }

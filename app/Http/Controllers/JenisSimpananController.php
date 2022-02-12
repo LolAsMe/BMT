@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\JenisSimpanan;
 use App\Http\Requests\StoreJenisSimpananRequest;
 use App\Http\Requests\UpdateJenisSimpananRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class JenisSimpananController extends Controller
 {
@@ -16,6 +18,8 @@ class JenisSimpananController extends Controller
     public function index()
     {
         //
+        $jenisSimpanans = JenisSimpanan::all();
+        return Inertia::render('BMT/JenisSimpanan', compact('jenisSimpanans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class JenisSimpananController extends Controller
     public function store(StoreJenisSimpananRequest $request)
     {
         //
+        // dd($request->validated());
+        JenisSimpanan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class JenisSimpananController extends Controller
     public function update(UpdateJenisSimpananRequest $request, JenisSimpanan $jenisSimpanan)
     {
         //
+        $jenisSimpanan->update($request->validated());
+        $jenisSimpanan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class JenisSimpananController extends Controller
     public function destroy(JenisSimpanan $jenisSimpanan)
     {
         //
+        $jenisSimpanan->delete();
+        return redirect(route('jenisSimpanan.index'));
+
     }
 }

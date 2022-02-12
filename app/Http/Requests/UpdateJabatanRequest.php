@@ -13,7 +13,7 @@ class UpdateJabatanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,8 @@ class UpdateJabatanRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'nama'=>'required'
         ];
     }
 }

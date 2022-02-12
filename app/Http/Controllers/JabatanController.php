@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Jabatan;
 use App\Http\Requests\StoreJabatanRequest;
 use App\Http\Requests\UpdateJabatanRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class JabatanController extends Controller
 {
@@ -16,6 +18,8 @@ class JabatanController extends Controller
     public function index()
     {
         //
+        $jabatans = Jabatan::all();
+        return Inertia::render('BMT/Jabatan', compact('jabatans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class JabatanController extends Controller
     public function store(StoreJabatanRequest $request)
     {
         //
+        // dd($request->validated());
+        Jabatan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class JabatanController extends Controller
     public function update(UpdateJabatanRequest $request, Jabatan $jabatan)
     {
         //
+        $jabatan->update($request->validated());
+        $jabatan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class JabatanController extends Controller
     public function destroy(Jabatan $jabatan)
     {
         //
+        $jabatan->delete();
+        return redirect(route('jabatan.index'));
+
     }
 }

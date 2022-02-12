@@ -13,7 +13,7 @@ class StoreDetailNisbahRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,10 @@ class StoreDetailNisbahRequest extends FormRequest
     {
         return [
             //
+            'pengendapan_id'=>'',
+            'detail_simpanan_id'=>'',
+            'pengendapan'=>'',
+            'hasil'=>'',
         ];
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DetailTransaksi;
 use App\Http\Requests\StoreDetailTransaksiRequest;
 use App\Http\Requests\UpdateDetailTransaksiRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class DetailTransaksiController extends Controller
 {
@@ -16,6 +18,8 @@ class DetailTransaksiController extends Controller
     public function index()
     {
         //
+        $detailTransaksis = DetailTransaksi::all();
+        return Inertia::render('BMT/DetailTransaksi', compact('detailTransaksis'));
     }
 
     /**
@@ -37,6 +41,12 @@ class DetailTransaksiController extends Controller
     public function store(StoreDetailTransaksiRequest $request)
     {
         //
+        // dd($request->validated());
+        DetailTransaksi::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class DetailTransaksiController extends Controller
     public function update(UpdateDetailTransaksiRequest $request, DetailTransaksi $detailTransaksi)
     {
         //
+        $detailTransaksi->update($request->validated());
+        $detailTransaksi->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class DetailTransaksiController extends Controller
     public function destroy(DetailTransaksi $detailTransaksi)
     {
         //
+        $detailTransaksi->delete();
+        return redirect(route('detailTransaksi.index'));
+
     }
 }

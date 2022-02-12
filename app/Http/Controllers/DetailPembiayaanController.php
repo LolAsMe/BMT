@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DetailPembiayaan;
 use App\Http\Requests\StoreDetailPembiayaanRequest;
 use App\Http\Requests\UpdateDetailPembiayaanRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class DetailPembiayaanController extends Controller
 {
@@ -16,6 +18,8 @@ class DetailPembiayaanController extends Controller
     public function index()
     {
         //
+        $detailPembiayaans = DetailPembiayaan::all();
+        return Inertia::render('BMT/DetailPembiayaan', compact('detailPembiayaans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class DetailPembiayaanController extends Controller
     public function store(StoreDetailPembiayaanRequest $request)
     {
         //
+        // dd($request->validated());
+        DetailPembiayaan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class DetailPembiayaanController extends Controller
     public function update(UpdateDetailPembiayaanRequest $request, DetailPembiayaan $detailPembiayaan)
     {
         //
+        $detailPembiayaan->update($request->validated());
+        $detailPembiayaan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class DetailPembiayaanController extends Controller
     public function destroy(DetailPembiayaan $detailPembiayaan)
     {
         //
+        $detailPembiayaan->delete();
+        return redirect(route('detailPembiayaan.index'));
+
     }
 }

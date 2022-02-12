@@ -3,11 +3,9 @@
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AnggunanController;
 use App\Http\Controllers\CetakController;
-use App\Http\Controllers\DetailAngsuranController;
 use App\Http\Controllers\DetailNisbahController;
 use App\Http\Controllers\DetailSimpananController;
 use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\JenisAnggotaController;
 use App\Http\Controllers\JenisPembiayaanController;
 use App\Http\Controllers\JenisSimpananController;
 use App\Http\Controllers\KaryawanController;
@@ -46,7 +44,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resources([
         'anggota' => AnggotaController::class,
-        'jenis-anggota' => JenisAnggotaController::class,
         'simpanan' => SimpananController::class,
         'anggunan' => AnggunanController::class,
         'cetak' => CetakController::class,

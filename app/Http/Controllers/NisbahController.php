@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Nisbah;
 use App\Http\Requests\StoreNisbahRequest;
 use App\Http\Requests\UpdateNisbahRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class NisbahController extends Controller
 {
@@ -16,6 +18,8 @@ class NisbahController extends Controller
     public function index()
     {
         //
+        $nisbahs = Nisbah::all();
+        return Inertia::render('BMT/Nisbah', compact('nisbahs'));
     }
 
     /**
@@ -37,6 +41,12 @@ class NisbahController extends Controller
     public function store(StoreNisbahRequest $request)
     {
         //
+        // dd($request->validated());
+        Nisbah::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class NisbahController extends Controller
     public function update(UpdateNisbahRequest $request, Nisbah $nisbah)
     {
         //
+        $nisbah->update($request->validated());
+        $nisbah->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class NisbahController extends Controller
     public function destroy(Nisbah $nisbah)
     {
         //
+        $nisbah->delete();
+        return redirect(route('nisbah.index'));
+
     }
 }

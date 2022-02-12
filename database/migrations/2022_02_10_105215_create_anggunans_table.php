@@ -18,7 +18,7 @@ class CreateAnggunansTable extends Migration
             $table->foreignId('pembiayaan_id');
             $table->string('kode')->nullable();
             $table->string('jenis_objek');
-            $table->string('nomer_polisi')->nullable();
+            $table->string('nomor_polisi')->nullable();
             $table->dateTime('tanggal_masuk')->useCurrent();
             $table->dateTime('tanggal_ambil')->nullable();
             $table->string('tahun_pembuatan')->nullable();

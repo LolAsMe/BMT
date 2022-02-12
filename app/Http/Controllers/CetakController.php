@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cetak;
 use App\Http\Requests\StoreCetakRequest;
 use App\Http\Requests\UpdateCetakRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class CetakController extends Controller
 {
@@ -16,6 +18,8 @@ class CetakController extends Controller
     public function index()
     {
         //
+        $cetaks = Cetak::all();
+        return Inertia::render('BMT/Cetak', compact('cetaks'));
     }
 
     /**
@@ -37,6 +41,12 @@ class CetakController extends Controller
     public function store(StoreCetakRequest $request)
     {
         //
+        // dd($request->validated());
+        Cetak::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class CetakController extends Controller
     public function update(UpdateCetakRequest $request, Cetak $cetak)
     {
         //
+        $cetak->update($request->validated());
+        $cetak->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class CetakController extends Controller
     public function destroy(Cetak $cetak)
     {
         //
+        $cetak->delete();
+        return redirect(route('cetak.index'));
+
     }
 }

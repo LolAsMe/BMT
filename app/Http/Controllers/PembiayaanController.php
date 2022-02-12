@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pembiayaan;
 use App\Http\Requests\StorePembiayaanRequest;
 use App\Http\Requests\UpdatePembiayaanRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class PembiayaanController extends Controller
 {
@@ -16,6 +18,8 @@ class PembiayaanController extends Controller
     public function index()
     {
         //
+        $pembiayaans = Pembiayaan::all();
+        return Inertia::render('BMT/Pembiayaan', compact('pembiayaans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class PembiayaanController extends Controller
     public function store(StorePembiayaanRequest $request)
     {
         //
+        // dd($request->validated());
+        Pembiayaan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class PembiayaanController extends Controller
     public function update(UpdatePembiayaanRequest $request, Pembiayaan $pembiayaan)
     {
         //
+        $pembiayaan->update($request->validated());
+        $pembiayaan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class PembiayaanController extends Controller
     public function destroy(Pembiayaan $pembiayaan)
     {
         //
+        $pembiayaan->delete();
+        return redirect(route('pembiayaan.index'));
+
     }
 }

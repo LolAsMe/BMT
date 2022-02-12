@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Anggunan;
 use App\Http\Requests\StoreAnggunanRequest;
 use App\Http\Requests\UpdateAnggunanRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class AnggunanController extends Controller
 {
@@ -16,6 +18,8 @@ class AnggunanController extends Controller
     public function index()
     {
         //
+        $anggunans = Anggunan::all();
+        return Inertia::render('BMT/Anggunan', compact('anggunans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class AnggunanController extends Controller
     public function store(StoreAnggunanRequest $request)
     {
         //
+        // dd($request->validated());
+        Anggunan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class AnggunanController extends Controller
     public function update(UpdateAnggunanRequest $request, Anggunan $anggunan)
     {
         //
+        $anggunan->update($request->validated());
+        $anggunan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class AnggunanController extends Controller
     public function destroy(Anggunan $anggunan)
     {
         //
+        $anggunan->delete();
+        return redirect(route('anggunan.index'));
+
     }
 }

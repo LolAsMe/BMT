@@ -1,8 +1,8 @@
 <template>
-  <app-layout title="Karyawan">
+  <app-layout title="Anggota">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Karyawan
+        Anggota
       </h2>
     </template>
     <add></add>
@@ -99,24 +99,24 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="karyawan in karyawans" :key="karyawan.id">
+            <tr v-for="anggota in anggotas" :key="anggota.id">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ karyawan.nama }}
+                      {{ anggota.nama }}
                     </div>
                     <div class="text-sm text-black">
-                      {{ karyawan.kode }}
+                      {{ anggota.kode }}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
-                  {{ karyawan.alamat }}
+                  {{ anggota.alamat }}
                 </div>
-                <div class="text-sm text-black">{{ karyawan.no_telepon }}</div>
+                <div class="text-sm text-black">{{ anggota.no_telepon }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
@@ -135,7 +135,7 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                {{ karyawan.jabatan_id }}
+                {{ anggota.jabatan_id }}
               </td>
               <td
                 class="
@@ -147,7 +147,7 @@
                 "
               >
                 <a
-                  v-on:click="$refs.editModal.show(karyawan)"
+                  v-on:click="$refs.editModal.show(anggota)"
                   href="#"
                   class="text-indigo-600 hover:text-indigo-900"
                   >Edit</a
@@ -162,7 +162,7 @@
                   font-medium
                 "
               >
-                <a  @click="deleteKaryawan(karyawan)" href="#" class="text-indigo-600 hover:text-indigo-900"
+                <a  @click="deleteAnggota(anggota)" href="#" class="text-indigo-600 hover:text-indigo-900"
                   >Delete</a
                 >
               </td>
@@ -182,8 +182,8 @@ import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-import Add from "@/Pages/BMT/Partials/KaryawanAdd.vue";
-import EditModal from "@/Pages/BMT/Partials/KaryawanEditModal.vue";
+import Add from "@/Pages/BMT/Partials/AnggotaAdd.vue";
+import EditModal from "@/Pages/BMT/Partials/AnggotaEditModal.vue";
 
 export default defineComponent({
   components: {
@@ -196,14 +196,14 @@ export default defineComponent({
     VButton,
   },
   methods: {
-    deleteKaryawan(karyawan) {
+    deleteAnggota(anggota) {
       this.$inertia.delete(
-        route("karyawan.destroy", karyawan.id)
+        route("anggota.destroy", anggota.id)
       );
     },
   },
   props: {
-    karyawans: Object,
+    anggotas: Object,
   },
 });
 </script>

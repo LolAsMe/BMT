@@ -13,7 +13,7 @@ class UpdateJenisPembiayaanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,9 @@ class UpdateJenisPembiayaanRequest extends FormRequest
     {
         return [
             //
-        ];
+            'kode' => '',
+            'nama' => 'required',
+            'bahas' => 'required'
+        ];;
     }
 }

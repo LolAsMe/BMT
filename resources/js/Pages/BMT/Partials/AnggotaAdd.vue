@@ -6,8 +6,8 @@
       >Add</v-button
     >
     <v-modal ref="addModal">
-      <template #title> Add Karyawan </template>
-      <form @submit.prevent="createKaryawan">
+      <template #title> Add Anggota </template>
+      <form @submit.prevent="createAnggota">
         <v-input :name="'kode'" v-model="form.kode"></v-input>
         <v-input :name="'nama'" v-model="form.nama"></v-input>
         <v-input :name="'alamat'" v-model="form.alamat"></v-input>
@@ -62,8 +62,8 @@ export default defineComponent({
     };
   },
   methods: {
-    async createKaryawan() {
-      await this.form.post(route("karyawan.store"), {
+    async createAnggota() {
+      await this.form.post(route("anggota.store"), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

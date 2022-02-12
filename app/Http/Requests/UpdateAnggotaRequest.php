@@ -13,7 +13,7 @@ class UpdateAnggotaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,17 @@ class UpdateAnggotaRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'nama'=>'',
+            'no_ktp'=>'',
+            'alamat'=>'',
+            'telepon'=>'',
+            'pekerjaan'=>'',
+            'tanggal_masuk'=>'',
+            'nama_ibu_kandung'=>'',
+            'jenis_kelamin'=>'',
+            'karyawan_id'=>'',
+            'keterangan'=>'',
         ];
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DetailSimpanan;
 use App\Http\Requests\StoreDetailSimpananRequest;
 use App\Http\Requests\UpdateDetailSimpananRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class DetailSimpananController extends Controller
 {
@@ -16,6 +18,8 @@ class DetailSimpananController extends Controller
     public function index()
     {
         //
+        $detailSimpanans = DetailSimpanan::all();
+        return Inertia::render('BMT/DetailSimpanan', compact('detailSimpanans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class DetailSimpananController extends Controller
     public function store(StoreDetailSimpananRequest $request)
     {
         //
+        // dd($request->validated());
+        DetailSimpanan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class DetailSimpananController extends Controller
     public function update(UpdateDetailSimpananRequest $request, DetailSimpanan $detailSimpanan)
     {
         //
+        $detailSimpanan->update($request->validated());
+        $detailSimpanan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class DetailSimpananController extends Controller
     public function destroy(DetailSimpanan $detailSimpanan)
     {
         //
+        $detailSimpanan->delete();
+        return redirect(route('detailSimpanan.index'));
+
     }
 }

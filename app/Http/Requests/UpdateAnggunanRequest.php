@@ -13,7 +13,7 @@ class UpdateAnggunanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,18 @@ class UpdateAnggunanRequest extends FormRequest
     {
         return [
             //
+            'pembiayaan_id'=>'required',
+            'kode'=>'',
+            'jenis_objek'=>'',
+            'nomor_polisi'=>'',
+            'tanggal_masuk'=>'',
+            'tanggal_ambil'=>'',
+            'tahun_pembuatan'=>'',
+            'luas_objek'=>'',
+            'letak_objek'=>'',
+            'nama_pemilik'=>'',
+            'alamat_pemilik'=>'',
+            'karyawan_id'=>'',
         ];
     }
 }

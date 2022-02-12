@@ -13,7 +13,7 @@ class StoreJenisPembiayaanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,10 @@ class StoreJenisPembiayaanRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'nama'=>'required',
+            'bahas'=>'required',
+
         ];
     }
 }

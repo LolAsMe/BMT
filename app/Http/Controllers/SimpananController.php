@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Simpanan;
 use App\Http\Requests\StoreSimpananRequest;
 use App\Http\Requests\UpdateSimpananRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class SimpananController extends Controller
 {
@@ -16,6 +18,8 @@ class SimpananController extends Controller
     public function index()
     {
         //
+        $simpanans = Simpanan::all();
+        return Inertia::render('BMT/Simpanan', compact('simpanans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class SimpananController extends Controller
     public function store(StoreSimpananRequest $request)
     {
         //
+        // dd($request->validated());
+        Simpanan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class SimpananController extends Controller
     public function update(UpdateSimpananRequest $request, Simpanan $simpanan)
     {
         //
+        $simpanan->update($request->validated());
+        $simpanan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class SimpananController extends Controller
     public function destroy(Simpanan $simpanan)
     {
         //
+        $simpanan->delete();
+        return redirect(route('simpanan.index'));
+
     }
 }

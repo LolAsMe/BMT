@@ -13,7 +13,7 @@ class StoreAnggotaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,17 @@ class StoreAnggotaRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'nama'=>'required',
+            'no_ktp'=>'required',
+            'alamat'=>'required',
+            'telepon'=>'required',
+            'pekerjaan'=>'required',
+            'tanggal_lahir'=>'required',
+            'nama_ibu_kandung'=>'required',
+            'jenis_kelamin'=>'required',
+            'karyawan_id'=>'required',
+            'keterangan'=>'required',
         ];
     }
 }

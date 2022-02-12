@@ -13,7 +13,7 @@ class StoreCetakRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,15 @@ class StoreCetakRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'tanggal'=>'',
+            'sandi'=>'',
+            'debit'=>'',
+            'kredit'=>'',
+            'saldo'=>'',
+            'karyawan_id'=>'',
+            'simpanan_id'=>'',
+            'no_urut'=>'',
         ];
     }
 }

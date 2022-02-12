@@ -13,7 +13,7 @@ class StoreJabatanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,8 @@ class StoreJabatanRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'nama'=>'required'
         ];
     }
 }

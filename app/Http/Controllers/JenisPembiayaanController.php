@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\JenisPembiayaan;
 use App\Http\Requests\StoreJenisPembiayaanRequest;
 use App\Http\Requests\UpdateJenisPembiayaanRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class JenisPembiayaanController extends Controller
 {
@@ -16,6 +18,8 @@ class JenisPembiayaanController extends Controller
     public function index()
     {
         //
+        $jenisPembiayaans = JenisPembiayaan::all();
+        return Inertia::render('BMT/JenisPembiayaan', compact('jenisPembiayaans'));
     }
 
     /**
@@ -37,6 +41,12 @@ class JenisPembiayaanController extends Controller
     public function store(StoreJenisPembiayaanRequest $request)
     {
         //
+        // dd($request->validated());
+        JenisPembiayaan::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class JenisPembiayaanController extends Controller
     public function update(UpdateJenisPembiayaanRequest $request, JenisPembiayaan $jenisPembiayaan)
     {
         //
+        $jenisPembiayaan->update($request->validated());
+        $jenisPembiayaan->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class JenisPembiayaanController extends Controller
     public function destroy(JenisPembiayaan $jenisPembiayaan)
     {
         //
+        $jenisPembiayaan->delete();
+        return redirect(route('jenisPembiayaan.index'));
+
     }
 }

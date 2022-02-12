@@ -1,6 +1,6 @@
 <template>
   <v-modal ref="editModal">
-    <template #title> Edit Karyawan </template>
+    <template #title> Edit Anggunan </template>
     <form @submit.prevent="edit">
       <v-input :name="'kode'" v-model="form.kode"></v-input>
       <v-input :name="'nama'" v-model="form.nama"></v-input>
@@ -56,21 +56,21 @@ export default defineComponent({
         no_telepon: "",
         jabatan_id: "",
       }),
-      karyawan: null,
+      anggunan: null,
     };
   },
   methods: {
-    show(karyawan) {
-      this.karyawan = karyawan;
-      this.form.kode = karyawan.kode;
-      this.form.nama = karyawan.nama;
-      this.form.alamat = karyawan.alamat;
-      this.form.no_telepon = karyawan.no_telepon;
-      this.form.jabatan_id = karyawan.jabatan_id;
+    show(anggunan) {
+      this.anggunan = anggunan;
+      this.form.kode = anggunan.kode;
+      this.form.nama = anggunan.nama;
+      this.form.alamat = anggunan.alamat;
+      this.form.no_telepon = anggunan.no_telepon;
+      this.form.jabatan_id = anggunan.jabatan_id;
       this.$refs.editModal.toggleModal();
     },
     edit() {
-      this.form.put(route("karyawan.update", this.karyawan.id), {
+      this.form.put(route("anggunan.update", this.anggunan.id), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

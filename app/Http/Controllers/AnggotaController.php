@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use App\Http\Requests\StoreAnggotaRequest;
 use App\Http\Requests\UpdateAnggotaRequest;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class AnggotaController extends Controller
 {
@@ -16,6 +18,8 @@ class AnggotaController extends Controller
     public function index()
     {
         //
+        $anggotas = Anggota::all();
+        return Inertia::render('BMT/Anggota', compact('anggotas'));
     }
 
     /**
@@ -37,6 +41,12 @@ class AnggotaController extends Controller
     public function store(StoreAnggotaRequest $request)
     {
         //
+        // dd($request->validated());
+        Anggota::create($request->validated());
+
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -71,6 +81,11 @@ class AnggotaController extends Controller
     public function update(UpdateAnggotaRequest $request, Anggota $anggota)
     {
         //
+        $anggota->update($request->validated());
+        $anggota->save();
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
     }
 
     /**
@@ -82,5 +97,8 @@ class AnggotaController extends Controller
     public function destroy(Anggota $anggota)
     {
         //
+        $anggota->delete();
+        return redirect(route('anggota.index'));
+
     }
 }
