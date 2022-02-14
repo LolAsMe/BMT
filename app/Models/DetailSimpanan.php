@@ -13,4 +13,9 @@ class DetailSimpanan extends Model
 
     protected $table = 'detail_simpanan';
     protected $guarded = [];
+
+    public function simpanan()
+    {
+        $this->belongsTo(Simpanan::class);
+    }
 }

@@ -14,4 +14,9 @@ class Pembiayaan extends Model
 
     protected $table = 'pembiayaan';
     protected $guarded = [];
+
+    public function detail()
+    {
+        return $this->hasMany(DetailPembiayaan::class);
+    }
 }

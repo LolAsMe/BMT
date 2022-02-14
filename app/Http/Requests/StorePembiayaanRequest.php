@@ -13,7 +13,7 @@ class StorePembiayaanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,23 @@ class StorePembiayaanRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'nomor'=>'',
+            'jenis_pembiayaan_id'=>'',
+            'simpanan_id'=>'',
+            'karyawan_id'=>'',
+            'tanggal_pinjam'=>'',
+            'jumlah'=>'',
+            'tanggal_jatuh_tempo'=>'',
+            'pokok'=>'',
+            'jasa'=>'',
+            'potongan_pembiayaan'=>'',
+            'total_pembiayaan'=>'',
+            'frekuensi_angsuran'=>'',
+            'jumlah_angsuran'=>'',
+            'angsuran_diterima'=>'',
+            'keterangan'=>'',
+            'status'=>'',
         ];
     }
 }

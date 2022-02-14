@@ -13,7 +13,7 @@ class UpdateDetailPembiayaanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,12 @@ class UpdateDetailPembiayaanRequest extends FormRequest
     {
         return [
             //
+            'karyawan_id'=>'',
+            'angsuran_ke'=>'',
+            'jumlah'=>'',
+            'akumulasi_angsuran'=>'',
+            'total_tanggungan'=>'',
+            'keterangan'=>'',
         ];
     }
 }

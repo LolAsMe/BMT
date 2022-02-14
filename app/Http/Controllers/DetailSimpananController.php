@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailSimpanan;
 use App\Http\Requests\StoreDetailSimpananRequest;
 use App\Http\Requests\UpdateDetailSimpananRequest;
+use App\Models\Simpanan;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -18,8 +19,8 @@ class DetailSimpananController extends Controller
     public function index()
     {
         //
-        $detailSimpanans = DetailSimpanan::all();
-        return Inertia::render('BMT/DetailSimpanan', compact('detailSimpanans'));
+        $details = DetailSimpanan::all();
+        return Inertia::render('BMT/DetailSimpanan', compact('details'));
     }
 
     /**
@@ -38,11 +39,11 @@ class DetailSimpananController extends Controller
      * @param  \App\Http\Requests\StoreDetailSimpananRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDetailSimpananRequest $request)
+    public function store(StoreDetailSimpananRequest $request,Simpanan $simpanan)
     {
         //
         // dd($request->validated());
-        DetailSimpanan::create($request->validated());
+        $detail = $simpanan->detail()->create($request->validated());
 
         return back()->with('flash', [
             'response' => 'berhasil'
@@ -52,10 +53,10 @@ class DetailSimpananController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DetailSimpanan  $detailSimpanan
+     * @param  \App\Models\DetailSimpanan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function show(DetailSimpanan $detailSimpanan)
+    public function show(DetailSimpanan $detail)
     {
         //
     }
@@ -63,10 +64,10 @@ class DetailSimpananController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DetailSimpanan  $detailSimpanan
+     * @param  \App\Models\DetailSimpanan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function edit(DetailSimpanan $detailSimpanan)
+    public function edit(DetailSimpanan $detail)
     {
         //
     }
@@ -75,14 +76,14 @@ class DetailSimpananController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateDetailSimpananRequest  $request
-     * @param  \App\Models\DetailSimpanan  $detailSimpanan
+     * @param  \App\Models\DetailSimpanan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDetailSimpananRequest $request, DetailSimpanan $detailSimpanan)
+    public function update(UpdateDetailSimpananRequest $request, DetailSimpanan $detail)
     {
         //
-        $detailSimpanan->update($request->validated());
-        $detailSimpanan->save();
+        $detail->update($request->validated());
+        $detail->save();
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);
@@ -91,14 +92,15 @@ class DetailSimpananController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DetailSimpanan  $detailSimpanan
+     * @param  \App\Models\DetailSimpanan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DetailSimpanan $detailSimpanan)
+    public function destroy(DetailSimpanan $detail)
     {
         //
-        $detailSimpanan->delete();
-        return redirect(route('detailSimpanan.index'));
+        // dd('test');
+        $detail->delete();
+        return redirect(route('simpanan.detail.index'));
 
     }
 }

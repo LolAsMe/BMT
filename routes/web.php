@@ -4,6 +4,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AnggunanController;
 use App\Http\Controllers\CetakController;
 use App\Http\Controllers\DetailNisbahController;
+use App\Http\Controllers\DetailPembiayaanController;
 use App\Http\Controllers\DetailSimpananController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\JenisPembiayaanController;
@@ -42,21 +43,51 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
-    Route::resources([
-        'anggota' => AnggotaController::class,
-        'simpanan' => SimpananController::class,
-        'anggunan' => AnggunanController::class,
-        'cetak' => CetakController::class,
-        'pembiayaan' => PembiayaanController::class,
-        'pembiayaan.detail' => DetailAngsuranController::class,
-        'simpanan.detail' => DetailSimpananController::class,
-        'karyawan' => KaryawanController::class,
-        'jabatan' => JabatanController::class,
-        'jenis-simpanan' => JenisSimpananController::class,
-        'jenis-pembiayaan' => JenisPembiayaanController::class,
-        'nisbah' => NisbahController::class,
-        'nisbah.detail' => DetailNisbahController::class,
-    ], ['parameters' => [
-        'anggota' => 'anggota'
-    ]]);
+    Route::resource('anggota', AnggotaController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ])->parameter('anggota', 'anggota');
+    Route::resource('karyawan', KaryawanController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('simpanan', SimpananController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('anggunan', AnggunanController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('cetak', CetakController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('pembiayaan', PembiayaanController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]); Route::resource('jabatan', JabatanController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('jenis-simpanan', JenisSimpananController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('jenis-pembiayaan', JenisPembiayaanController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('nisbah', NisbahController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+
+    Route::resource('nisbah/detail', DetailNisbahController::class)->only([
+        'destroy', 'update'
+    ])->shallow()->names(['destroy' => 'nisbah.detail.destroy', 'update' => 'nisbah.detail.update']);
+    Route::post('nisbah/{nisbah}/detail', [DetailNisbahController::class, 'store'])->name('nisbah.detail.store');
+    Route::get('nisbah/{nisbah}/detail', [DetailNisbahController::class, 'index'])->name('nisbah.detail.index');
+
+    Route::resource('pembiayaan/detail', DetailPembiayaanController::class)->only([
+        'destroy', 'update'
+    ])->shallow()->names(['destroy' => 'pembiayaan.detail.destroy', 'update' => 'pembiayaan.detail.update']);
+    Route::post('pembiayaan/{pembiayaan}/detail', [DetailPembiayaanController::class, 'store'])->name('pembiayaan.detail.store');
+    Route::get('pembiayaan/{pembiayaan}/detail', [DetailPembiayaanController::class, 'index'])->name('pembiayaan.detail.index');
+
+    Route::resource('simpanan/detail', DetailSimpananController::class)->only([
+        'destroy', 'update'
+    ])->shallow()->names(['destroy' => 'simpanan.detail.destroy', 'update' => 'simpanan.detail.update']);
+    Route::post('simpanan/{simpanan}/detail', [DetailSimpananController::class, 'store'])->name('simpanan.detail.store');
+    Route::get('simpanan/{simpanan}/detail', [DetailSimpananController::class, 'index'])->name('simpanan.detail.index');
 });

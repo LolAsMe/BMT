@@ -13,7 +13,7 @@ class StoreDetailSimpananRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,17 @@ class StoreDetailSimpananRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'transaksi_id'=>'',
+            'tanggal_transaksi'=>'',
+            'tanggal_slip'=>'',
+            'debit'=>'',
+            'kredit'=>'',
+            'saldo_awal'=>'',
+            'saldo_akhir'=>'',
+            'keterangan'=>'',
+            'karyawan_id'=>'',
+
         ];
     }
 }

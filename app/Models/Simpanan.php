@@ -14,4 +14,9 @@ class Simpanan extends Model
 
     protected $table = 'simpanan';
     protected $guarded = [];
+
+    public function detail()
+    {
+        return $this->hasMany(DetailSimpanan::class);
+    }
 }

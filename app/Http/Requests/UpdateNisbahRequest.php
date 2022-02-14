@@ -13,7 +13,7 @@ class UpdateNisbahRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,12 @@ class UpdateNisbahRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'bulan'=>'',
+            'simpanan_id'=>'',
+            'pengendapan'=>'',
+            'tabungan'=>'',
+            'nisbah'=>'',
         ];
     }
 }

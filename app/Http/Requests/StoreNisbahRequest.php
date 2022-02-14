@@ -13,7 +13,7 @@ class StoreNisbahRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,12 @@ class StoreNisbahRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'bulan'=>'',
+            'simpanan_id'=>'',
+            'pengendapan'=>'',
+            'tabungan'=>'',
+            'nisbah'=>'',
         ];
     }
 }

@@ -13,4 +13,9 @@ class Nisbah extends Model
 
     protected $table = 'nisbah';
     protected $guarded = [];
+
+    public function detail()
+    {
+        return $this->hasMany(DetailNisbah::class);
+    }
 }

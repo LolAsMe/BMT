@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailPembiayaan;
 use App\Http\Requests\StoreDetailPembiayaanRequest;
 use App\Http\Requests\UpdateDetailPembiayaanRequest;
+use App\Models\Pembiayaan;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -18,8 +19,8 @@ class DetailPembiayaanController extends Controller
     public function index()
     {
         //
-        $detailPembiayaans = DetailPembiayaan::all();
-        return Inertia::render('BMT/DetailPembiayaan', compact('detailPembiayaans'));
+        $details = DetailPembiayaan::all();
+        return Inertia::render('BMT/DetailPembiayaan', compact('details'));
     }
 
     /**
@@ -38,11 +39,11 @@ class DetailPembiayaanController extends Controller
      * @param  \App\Http\Requests\StoreDetailPembiayaanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDetailPembiayaanRequest $request)
+    public function store(StoreDetailPembiayaanRequest $request,Pembiayaan $pembiayaan)
     {
         //
         // dd($request->validated());
-        DetailPembiayaan::create($request->validated());
+        $detail = $pembiayaan->detail()->create($request->validated());
 
         return back()->with('flash', [
             'response' => 'berhasil'
@@ -52,10 +53,10 @@ class DetailPembiayaanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DetailPembiayaan  $detailPembiayaan
+     * @param  \App\Models\DetailPembiayaan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function show(DetailPembiayaan $detailPembiayaan)
+    public function show(DetailPembiayaan $detail)
     {
         //
     }
@@ -63,10 +64,10 @@ class DetailPembiayaanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DetailPembiayaan  $detailPembiayaan
+     * @param  \App\Models\DetailPembiayaan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function edit(DetailPembiayaan $detailPembiayaan)
+    public function edit(DetailPembiayaan $detail)
     {
         //
     }
@@ -75,14 +76,14 @@ class DetailPembiayaanController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateDetailPembiayaanRequest  $request
-     * @param  \App\Models\DetailPembiayaan  $detailPembiayaan
+     * @param  \App\Models\DetailPembiayaan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDetailPembiayaanRequest $request, DetailPembiayaan $detailPembiayaan)
+    public function update(UpdateDetailPembiayaanRequest $request, DetailPembiayaan $detail)
     {
         //
-        $detailPembiayaan->update($request->validated());
-        $detailPembiayaan->save();
+        $detail->update($request->validated());
+        $detail->save();
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);
@@ -91,14 +92,15 @@ class DetailPembiayaanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DetailPembiayaan  $detailPembiayaan
+     * @param  \App\Models\DetailPembiayaan  $detail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DetailPembiayaan $detailPembiayaan)
+    public function destroy(DetailPembiayaan $detail)
     {
         //
-        $detailPembiayaan->delete();
-        return redirect(route('detailPembiayaan.index'));
+        // dd('test');
+        $detail->delete();
+        return redirect(route('pembiayaan.detail.index'));
 
     }
 }

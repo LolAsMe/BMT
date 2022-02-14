@@ -11,6 +11,11 @@ class DetailPembiayaan extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'pembiayaan';
+    protected $table = 'detail_pembiayaan';
     protected $guarded = [];
+
+    public function pembiayaan()
+    {
+        $this->belongsTo(Pembiayaan::class);
+    }
 }

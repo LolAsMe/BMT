@@ -13,7 +13,7 @@ class StoreJenisSimpananRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,9 @@ class StoreJenisSimpananRequest extends FormRequest
     {
         return [
             //
+            'kode' => '',
+            'nama' => 'required',
+            'bahas' => 'required'
         ];
     }
 }

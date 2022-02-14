@@ -15,6 +15,7 @@ class CreateDetailNisbahsTable extends Migration
     {
         Schema::create('detail_nisbah', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('nisbah_id');
             $table->foreignId('pengendapan_id');
             $table->foreignId('detail_simpanan_id');
             $table->integer('pengendapan');

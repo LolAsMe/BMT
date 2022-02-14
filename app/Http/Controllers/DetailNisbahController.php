@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailNisbah;
 use App\Http\Requests\StoreDetailNisbahRequest;
 use App\Http\Requests\UpdateDetailNisbahRequest;
+use App\Models\Nisbah;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -38,11 +39,11 @@ class DetailNisbahController extends Controller
      * @param  \App\Http\Requests\StoreDetailNisbahRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDetailNisbahRequest $request)
+    public function store(StoreDetailNisbahRequest $request,Nisbah $nisbah)
     {
         //
         // dd($request->validated());
-        DetailNisbah::create($request->validated());
+        $nisbah->detail()->create($request->validated());
 
         return back()->with('flash', [
             'response' => 'berhasil'
@@ -78,11 +79,11 @@ class DetailNisbahController extends Controller
      * @param  \App\Models\DetailNisbah  $detailNisbah
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDetailNisbahRequest $request, DetailNisbah $detailNisbah)
+    public function update(UpdateDetailNisbahRequest $request, DetailNisbah $detail)
     {
         //
-        $detailNisbah->update($request->validated());
-        $detailNisbah->save();
+        $detail->update($request->validated());
+        $detail->save();
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);
@@ -94,10 +95,11 @@ class DetailNisbahController extends Controller
      * @param  \App\Models\DetailNisbah  $detailNisbah
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DetailNisbah $detailNisbah)
+    public function destroy(DetailNisbah $detail)
     {
         //
-        $detailNisbah->delete();
+        // dd('test');
+        $detail->delete();
         return redirect(route('detailNisbah.index'));
 
     }

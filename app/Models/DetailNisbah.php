@@ -13,4 +13,9 @@ class DetailNisbah extends Model
 
     protected $table = 'detail_nisbah';
     protected $guarded = [];
+
+    public function nisbah()
+    {
+        $this->belongsTo(Nisbah::class);
+    }
 }

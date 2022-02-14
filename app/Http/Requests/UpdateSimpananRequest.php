@@ -13,7 +13,7 @@ class UpdateSimpananRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,12 @@ class UpdateSimpananRequest extends FormRequest
     {
         return [
             //
+            'kode'=>'',
+            'anggota_id'=>'',
+            'jenis_simpanan_id'=>'',
+            'jumlah'=>'',
+            'tanggal_pembuatan'=>'',
+            'keterangan'=>'',
         ];
     }
 }

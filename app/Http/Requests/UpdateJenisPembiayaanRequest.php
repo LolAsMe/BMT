@@ -28,6 +28,6 @@ class UpdateJenisPembiayaanRequest extends FormRequest
             'kode' => '',
             'nama' => 'required',
             'bahas' => 'required'
-        ];;
+        ];
     }
 }
