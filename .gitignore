@@ -16,3 +16,4 @@ phpunit.xml
 Homestead.yaml
 Homestead.json
 /.vagrant
+phpunit.xml
