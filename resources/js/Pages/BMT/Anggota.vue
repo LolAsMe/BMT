@@ -1,9 +1,7 @@
 <template>
   <app-layout title="Anggota">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Anggota
-      </h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Anggota</h2>
     </template>
     <add></add>
     <div class="py-2">
@@ -65,7 +63,21 @@
                   tracking-wider
                 "
               >
-                Jabatan
+                Karyawan
+              </th>
+              <th scope="col" class="relative px-6 py-3">
+                <span
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs text-center
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                  >Detail</span
+                >
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
@@ -83,7 +95,6 @@
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
-
                   class="
                     px-6
                     py-3
@@ -113,29 +124,47 @@
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  {{ anggota.alamat }}
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ anggota.alamat }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ anggota.telepon }}
+                    </div>
+                  </div>
                 </div>
-                <div class="text-sm text-black">{{ anggota.no_telepon }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="
-                    px-2
-                    inline-flex
-                    text-xs
-                    leading-5
-                    font-semibold
-                    rounded-full
-                    bg-green-100
-                    text-green-800
-                  "
-                >
-                  Active
-                </span>
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ anggota.no_ktp }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ anggota.tanggal_lahir }}
+                    </div>
+                  </div>
+                </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                {{ anggota.jabatan_id }}
+                {{ anggota.karyawan_id }}
+              </td>
+              <td
+                class="
+                  px-6
+                  py-4
+                  whitespace-nowrap
+                  text-center text-sm
+                  font-medium
+                "
+              >
+                <a
+                  v-on:click="$refs.detailModal.show(anggota)"
+                  href="#"
+                  class="text-indigo-600 hover:text-indigo-900"
+                  >Detail</a
+                >
               </td>
               <td
                 class="
@@ -162,7 +191,10 @@
                   font-medium
                 "
               >
-                <a  @click="deleteAnggota(anggota)" href="#" class="text-indigo-600 hover:text-indigo-900"
+                <a
+                  @click="deleteAnggota(anggota)"
+                  href="#"
+                  class="text-indigo-600 hover:text-indigo-900"
                   >Delete</a
                 >
               </td>
@@ -170,6 +202,7 @@
           </tbody>
         </table>
         <edit-modal ref="editModal"></edit-modal>
+        <detail-modal ref="detailModal"></detail-modal>
       </v-card>
     </div>
   </app-layout>
@@ -184,6 +217,7 @@ import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
 import Add from "@/Pages/BMT/Partials/AnggotaAdd.vue";
 import EditModal from "@/Pages/BMT/Partials/AnggotaEditModal.vue";
+import DetailModal from "@/Pages/BMT/Partials/AnggotaDetailModal.vue";
 
 export default defineComponent({
   components: {
@@ -191,15 +225,14 @@ export default defineComponent({
     VModal,
     Add,
     EditModal,
+    DetailModal,
     VInput,
     VCard,
     VButton,
   },
   methods: {
     deleteAnggota(anggota) {
-      this.$inertia.delete(
-        route("anggota.destroy", anggota.id)
-      );
+      this.$inertia.delete(route("anggota.destroy", anggota.id));
     },
   },
   props: {

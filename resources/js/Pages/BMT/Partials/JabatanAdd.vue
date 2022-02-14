@@ -6,13 +6,10 @@
       >Add</v-button
     >
     <v-modal ref="addModal">
-      <template #title> Add Karyawan </template>
-      <form @submit.prevent="createKaryawan">
+      <template #title> Add Jabatan </template>
+      <form @submit.prevent="createJabatan">
         <v-input :name="'kode'" v-model="form.kode"></v-input>
         <v-input :name="'nama'" v-model="form.nama"></v-input>
-        <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-        <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-        <v-input :name="'jabatan_id'" v-model="form.jabatan_id"></v-input>
         <button
           type="submit"
           class="
@@ -55,15 +52,12 @@ export default defineComponent({
       form: this.$inertia.form({
         kode: "",
         nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
       }),
     };
   },
   methods: {
-    async createKaryawan() {
-      await this.form.post(route("karyawan.store"), {
+    async createJabatan() {
+      await this.form.post(route("jabatan.store"), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

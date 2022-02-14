@@ -98,7 +98,7 @@ class JenisPembiayaanController extends Controller
     {
         //
         $jenisPembiayaan->delete();
-        return redirect(route('jenisPembiayaan.index'));
+        return redirect(route('jenis-pembiayaan.index'));
 
     }
 }

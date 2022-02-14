@@ -1,16 +1,9 @@
 <template>
   <v-modal ref="editModal">
-    <template #title> Edit Karyawan </template>
+    <template #title> Edit Jabatan </template>
     <form @submit.prevent="edit">
       <v-input :name="'kode'" v-model="form.kode"></v-input>
       <v-input :name="'nama'" v-model="form.nama"></v-input>
-      <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-      <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-      <v-input
-        :name="'jabatan_id'"
-        :type="'number'"
-        v-model="form.jabatan_id"
-      ></v-input>
       <button
         type="submit"
         class="
@@ -52,25 +45,19 @@ export default defineComponent({
       form: this.$inertia.form({
         kode: "",
         nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
       }),
-      karyawan: null,
+      jabatan: null,
     };
   },
   methods: {
-    show(karyawan) {
-      this.karyawan = karyawan;
-      this.form.kode = karyawan.kode;
-      this.form.nama = karyawan.nama;
-      this.form.alamat = karyawan.alamat;
-      this.form.no_telepon = karyawan.no_telepon;
-      this.form.jabatan_id = karyawan.jabatan_id;
+    show(jabatan) {
+      this.jabatan = jabatan;
+      this.form.kode = jabatan.kode;
+      this.form.nama = jabatan.nama;
       this.$refs.editModal.toggleModal();
     },
     edit() {
-      this.form.put(route("karyawan.update", this.karyawan.id), {
+      this.form.put(route("jabatan.update", this.jabatan.id), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

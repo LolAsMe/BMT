@@ -98,7 +98,7 @@ class JenisSimpananController extends Controller
     {
         //
         $jenisSimpanan->delete();
-        return redirect(route('jenisSimpanan.index'));
+        return redirect(route('jenis-simpanan.index'));
 
     }
 }
