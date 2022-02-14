@@ -1,16 +1,12 @@
 <template>
   <v-modal ref="editModal">
-    <template #title> Edit Karyawan </template>
+    <template #title> Edit Simpanan </template>
     <form @submit.prevent="edit">
       <v-input :name="'kode'" v-model="form.kode"></v-input>
-      <v-input :name="'nama'" v-model="form.nama"></v-input>
-      <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-      <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-      <v-input
-        :name="'jabatan_id'"
-        :type="'number'"
-        v-model="form.jabatan_id"
-      ></v-input>
+      <v-input :name="'anggota'" v-model="form.anggota_id"></v-input>
+      <v-input :name="'jenis_simpanan'" v-model="form.jenis_simpanan_id"></v-input>
+      <v-input :type="'date'" :name="'tanggal_pembuatan'" v-model="form.tanggal_pembuatan"></v-input>
+      <v-input :name="'keterangan'" v-model="form.keterangan"></v-input>
       <button
         type="submit"
         class="
@@ -51,26 +47,26 @@ export default defineComponent({
     return {
       form: this.$inertia.form({
         kode: "",
-        nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
+        anggota: "",
+        jenis_simpanan_id: "",
+        tanggal_pembuatan: "",
+        keterangan: "",
       }),
-      karyawan: null,
+      simpanan: null,
     };
   },
   methods: {
-    show(karyawan) {
-      this.karyawan = karyawan;
-      this.form.kode = karyawan.kode;
-      this.form.nama = karyawan.nama;
-      this.form.alamat = karyawan.alamat;
-      this.form.no_telepon = karyawan.no_telepon;
-      this.form.jabatan_id = karyawan.jabatan_id;
+    show(simpanan) {
+      this.simpanan = simpanan;
+      this.form.kode = simpanan.kode;
+      this.form.anggota_id = simpanan.anggota_id;
+      this.form.jenis_simpanan_id = simpanan.jenis_simpanan_id;
+      this.form.tanggal_pembuatan = simpanan.tanggal_pembuatan;
+      this.form.keterangan = simpanan.keterangan;
       this.$refs.editModal.toggleModal();
     },
     edit() {
-      this.form.put(route("karyawan.update", this.karyawan.id), {
+      this.form.put(route("simpanan.update", this.simpanan.id), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

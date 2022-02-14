@@ -6,13 +6,14 @@
       >Add</v-button
     >
     <v-modal ref="addModal">
-      <template #title> Add Karyawan </template>
-      <form @submit.prevent="createKaryawan">
+      <template #title> Add Simpanan </template>
+      <form @submit.prevent="Simpanan">
         <v-input :name="'kode'" v-model="form.kode"></v-input>
-        <v-input :name="'nama'" v-model="form.nama"></v-input>
-        <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-        <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-        <v-input :name="'jabatan_id'" v-model="form.jabatan_id"></v-input>
+        <v-input :name="'anggota'" v-model="form.anggota_id"></v-input>
+        <v-input :name="'jenis_simpanan'" v-model="form.jenis_simpanan_id"></v-input>
+        <v-input :name="'jumlah'" v-model="form.jumlah"></v-input>
+        <v-input :type="'date'" :name="'tanggal_pembuatan'" v-model="form.tanggal_pembuatan"></v-input>
+        <v-input :name="'keterangan'" v-model="form.keterangan"></v-input>
         <button
           type="submit"
           class="
@@ -54,16 +55,17 @@ export default defineComponent({
     return {
       form: this.$inertia.form({
         kode: "",
-        nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
+        anggota_id: "",
+        jenis_simpanan_id: "",
+        jumlah: "",
+        tanggal_pembuatan: "",
+        keterangan: "",
       }),
     };
   },
   methods: {
-    async createKaryawan() {
-      await this.form.post(route("karyawan.store"), {
+    async Simpanan() {
+      await this.form.post(route("simpanan.store"), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

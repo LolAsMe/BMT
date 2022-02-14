@@ -1,8 +1,8 @@
 <template>
-  <app-layout title="Karyawan">
+  <app-layout title="Simpanan">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Karyawan
+        Simpanan
       </h2>
     </template>
     <add></add>
@@ -37,7 +37,7 @@
                   tracking-wider
                 "
               >
-                Alamat
+                Tanggal
               </th>
               <th
                 scope="col"
@@ -51,21 +51,7 @@
                   tracking-wider
                 "
               >
-                Status
-              </th>
-              <th
-                scope="col"
-                class="
-                  px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500 text-center
-                  uppercase
-                  tracking-wider
-                "
-              >
-                Jabatan
+                Jumlah
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
@@ -99,24 +85,30 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="karyawan in karyawans" :key="karyawan.id">
+            <tr v-for="simpanan in simpanans" :key="simpanan.id">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ karyawan.nama }}
+                      {{ simpanan.kode }}
                     </div>
                     <div class="text-sm text-black">
-                      {{ karyawan.kode }}
+                      {{ simpanan.jenis_simpanan_id }}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  {{ karyawan.alamat }}
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ simpanan.tanggal_pembuatan }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ simpanan.keterangan }}
+                    </div>
+                  </div>
                 </div>
-                <div class="text-sm text-black">{{ karyawan.no_telepon }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
@@ -131,11 +123,8 @@
                     text-green-800
                   "
                 >
-                  Active
+                  {{simpanan.jumlah}}
                 </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                {{ karyawan.jabatan_id }}
               </td>
               <td
                 class="
@@ -147,7 +136,7 @@
                 "
               >
                 <a
-                  v-on:click="$refs.editModal.show(karyawan)"
+                  v-on:click="$refs.editModal.show(simpanan)"
                   href="#"
                   class="text-indigo-600 hover:text-indigo-900"
                   >Edit</a
@@ -162,7 +151,7 @@
                   font-medium
                 "
               >
-                <a  @click="deleteKaryawan(karyawan)" href="#" class="text-indigo-600 hover:text-indigo-900"
+                <a  @click="Simpanan(simpanan)" href="#" class="text-indigo-600 hover:text-indigo-900"
                   >Delete</a
                 >
               </td>
@@ -182,8 +171,8 @@ import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-import Add from "@/Pages/BMT/Partials/KaryawanAdd.vue";
-import EditModal from "@/Pages/BMT/Partials/KaryawanEditModal.vue";
+import Add from "@/Pages/BMT/Partials/SimpananAdd.vue";
+import EditModal from "@/Pages/BMT/Partials/SimpananEditModal.vue";
 
 export default defineComponent({
   components: {
@@ -196,14 +185,14 @@ export default defineComponent({
     VButton,
   },
   methods: {
-    deleteKaryawan(karyawan) {
+    Simpanan(simpanan) {
       this.$inertia.delete(
-        route("karyawan.destroy", karyawan.id)
+        route("simpanan.destroy", simpanan.id)
       );
     },
   },
   props: {
-    karyawans: Object,
+    simpanans: Object,
   },
 });
 </script>
