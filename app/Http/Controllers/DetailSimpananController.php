@@ -100,7 +100,9 @@ class DetailSimpananController extends Controller
         //
         // dd('test');
         $detail->delete();
-        return redirect(route('simpanan.detail.index'));
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
 
     }
 }

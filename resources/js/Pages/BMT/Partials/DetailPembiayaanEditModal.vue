@@ -1,14 +1,19 @@
 <template>
   <v-modal ref="editModal">
-    <template #title> Edit Nisbah Detail </template>
+    <template #title> Edit Pembiayaan Detail </template>
     <form @submit.prevent="edit">
-      <v-input :name="'pengendapan_id'" v-model="form.pengendapan_id"></v-input>
+      <v-input :name="'karyawan_id'" v-model="form.karyawan_id"></v-input>
+      <v-input :name="'angsuran_ke'" v-model="form.angsuran_ke"></v-input>
+      <v-input :name="'jumlah'" v-model="form.jumlah"></v-input>
       <v-input
-        :name="'detail_simpanan_id'"
-        v-model="form.detail_simpanan_id"
+        :name="'akumulasi_angsuran'"
+        v-model="form.akumulasi_angsuran"
       ></v-input>
-      <v-input :name="'pengendapan'" v-model="form.pengendapan"></v-input>
-      <v-input :name="'hasil'" v-model="form.hasil"></v-input>
+      <v-input
+        :name="'total_tanggungan'"
+        v-model="form.total_tanggungan"
+      ></v-input>
+      <v-input :name="'keterangan'" v-model="form.keterangan"></v-input>
       <button
         type="submit"
         class="
@@ -48,16 +53,18 @@ export default defineComponent({
   data() {
     return {
       form: this.$inertia.form({
-        pengendapan_id: "",
-        detail_simpanan_id: "",
-        pengendapan: "",
-        hasil: "",
+        karyawan_id: "",
+        angsuran_ke: "",
+        jumlah: "",
+        akumulasi_angsuran: "",
+        total_tanggungan: "",
+        keterangan: "",
       }),
       karyawan: null,
     };
   },
   props: {
-    nisbah_id: {
+    pembiayaan_id: {
       type: Number,
       default: "0",
     },
@@ -65,14 +72,16 @@ export default defineComponent({
   methods: {
     show(detail) {
       this.detail = detail;
-      this.form.pengendapan_id = detail.pengendapan_id;
-      this.form.detail_simpanan_id = detail.detail_simpanan_id;
-      this.form.pengendapan = detail.pengendapan;
-      this.form.hasil = detail.hasil;
+      this.form.karyawan_id = detail.karyawan_id;
+      this.form.angsuran_ke = detail.angsuran_ke;
+      this.form.jumlah = detail.jumlah;
+      this.form.akumulasi_angsuran = detail.akumulasi_angsuran;
+      this.form.total_tanggungan = detail.total_tanggungan;
+      this.form.keterangan = detail.keterangan;
       this.$refs.editModal.toggleModal();
     },
     edit() {
-      this.form.put(route("nisbah.detail.update", this.detail.id), {
+      this.form.put(route("pembiayaan.detail.update", this.detail.id), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

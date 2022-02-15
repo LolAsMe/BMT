@@ -16,11 +16,11 @@ class DetailNisbahController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Nisbah $nisbah)
     {
         //
-        $detailNisbahs = DetailNisbah::all();
-        return Inertia::render('BMT/DetailNisbah', compact('detailNisbahs'));
+        $nisbah = $nisbah->load('detail');
+        return Inertia::render('BMT/DetailNisbah', compact('nisbah'));
     }
 
     /**
@@ -100,7 +100,9 @@ class DetailNisbahController extends Controller
         //
         // dd('test');
         $detail->delete();
-        return redirect(route('detailNisbah.index'));
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
 
     }
 }

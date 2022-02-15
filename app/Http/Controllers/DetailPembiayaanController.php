@@ -16,11 +16,12 @@ class DetailPembiayaanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Pembiayaan $pembiayaan)
     {
         //
-        $details = DetailPembiayaan::all();
-        return Inertia::render('BMT/DetailPembiayaan', compact('details'));
+        $pembiayaan = $pembiayaan->load('detail');
+        // dd($pembiayaan);
+        return Inertia::render('BMT/DetailPembiayaan', compact('pembiayaan'));
     }
 
     /**
@@ -100,7 +101,9 @@ class DetailPembiayaanController extends Controller
         //
         // dd('test');
         $detail->delete();
-        return redirect(route('pembiayaan.detail.index'));
+        return back()->with('flash', [
+            'response' => 'berhasil'
+        ]);
 
     }
 }

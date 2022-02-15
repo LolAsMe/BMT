@@ -223,7 +223,7 @@ export default defineComponent({
   },
   methods: {
     deleteDetailSimpanan(detailSimpanan) {
-      this.$inertia.delete(route("detail.simpanan.destroy", detailSimpanan.id));
+      this.$inertia.delete(route("simpanan.detail.destroy", detailSimpanan.id));
     },
   },
   props: {
