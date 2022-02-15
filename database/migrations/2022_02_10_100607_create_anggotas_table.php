@@ -21,6 +21,7 @@ class CreateAnggotasTable extends Migration
             $table->string('alamat');
             $table->string('telepon');
             $table->string('pekerjaan')->nullable();
+            $table->string('tempat_lahir');
             $table->dateTime('tanggal_lahir');
             $table->dateTime('tanggal_masuk')->useCurrent();
             $table->string('nama_ibu_kandung')->nullable();

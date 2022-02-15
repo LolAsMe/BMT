@@ -18,12 +18,12 @@ class CreateCetaksTable extends Migration
             $table->string('kode');
             $table->dateTime('tanggal')->useCurrent();
             $table->string('sandi');
-            $table->unsignedDecimal('debit');
-            $table->unsignedDecimal('kredit');
-            $table->unsignedDecimal('saldo');
-            $table->foreignId('karyawan_id');
+            $table->unsignedDecimal('debit',15);
+            $table->unsignedDecimal('kredit',15);
+            $table->unsignedDecimal('saldo',15);
+            $table->foreignId('karyawan_id')->default(0);
             $table->foreignId('simpanan_id');
-            $table->unsignedInteger('no_urut');
+            $table->unsignedInteger('no_urut')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

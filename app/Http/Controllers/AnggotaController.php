@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use App\Http\Requests\StoreAnggotaRequest;
 use App\Http\Requests\UpdateAnggotaRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -18,7 +19,10 @@ class AnggotaController extends Controller
     public function index()
     {
         //
-        $anggotas = Anggota::all();
+        $anggotas = Anggota::paginate();
+        // dd($anggotas);
+        // dd(DB::table('anggota')->get());
+
         return Inertia::render('BMT/Anggota', compact('anggotas'));
     }
 

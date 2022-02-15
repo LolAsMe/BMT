@@ -31,6 +31,7 @@ class StoreAnggotaRequest extends FormRequest
             'alamat'=>'required',
             'telepon'=>'required',
             'pekerjaan'=>'required',
+            'tempat_lahir'=>'required',
             'tanggal_lahir'=>'required',
             'nama_ibu_kandung'=>'required',
             'jenis_kelamin'=>'required',

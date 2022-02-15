@@ -13,8 +13,17 @@ class CreateTransaksisTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaksis', function (Blueprint $table) {
+        Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transaksi_id')->default(1);
+            $table->string('kode');
+            $table->string('nama');
+            $table->string('keterangan');
+            $table->decimal('debit',15,2,true)->default(0);
+            $table->decimal('kredit',15,2,true)->default(0);;
+            $table->dateTime('tanggal_transaksi')->useCurrent();
+            $table->dateTime('tanggal_slip')->useCurrent();
+            $table->foreignId('karyawan_id')->default(1);
             $table->timestamps();
         });
     }
@@ -26,6 +35,6 @@ class CreateTransaksisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksis');
+        Schema::dropIfExists('transaksi');
     }
 }

@@ -18,7 +18,7 @@ class CreateSimpanansTable extends Migration
             $table->string('kode')->nullable();
             $table->foreignId('anggota_id');
             $table->foreignId('jenis_simpanan_id');
-            $table->decimal('jumlah', 10, 2, true)->default(0);;
+            $table->decimal('jumlah', 15, 2, true)->default(0);;
             $table->dateTime('tanggal_pembuatan')->useCurrent();
             $table->string('keterangan');
             $table->softDeletes();

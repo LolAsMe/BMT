@@ -31,6 +31,8 @@ class UpdateAnggotaRequest extends FormRequest
             'alamat'=>'',
             'telepon'=>'',
             'pekerjaan'=>'',
+            'tempat_lahir'=>'',
+            'tanggal_lahir'=>'',
             'tanggal_masuk'=>'',
             'nama_ibu_kandung'=>'',
             'jenis_kelamin'=>'',
