@@ -37,7 +37,7 @@
                   tracking-wider
                 "
               >
-                Alamat
+                Tanggal
               </th>
               <th
                 scope="col"
@@ -51,21 +51,21 @@
                   tracking-wider
                 "
               >
-                Status
+                Pemilik
               </th>
-              <th
-                scope="col"
-                class="
-                  px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500 text-center
-                  uppercase
-                  tracking-wider
-                "
-              >
-                Jabatan
+              <th scope="col" class="relative px-6 py-3">
+                <span
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs text-center
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                  >Detail</span
+                >
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
@@ -104,38 +104,53 @@
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ anggunan.nama }}
+                      {{ anggunan.kode }}
                     </div>
                     <div class="text-sm text-black">
-                      {{ anggunan.kode }}
+                      {{ anggunan.pembiayaan_id }}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  {{ anggunan.alamat }}
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ anggunan.tanggal_masuk }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ anggunan.tanggal_ambil }}
+                    </div>
+                  </div>
                 </div>
-                <div class="text-sm text-black">{{ anggunan.no_telepon }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="
-                    px-2
-                    inline-flex
-                    text-xs
-                    leading-5
-                    font-semibold
-                    rounded-full
-                    bg-green-100
-                    text-green-800
-                  "
-                >
-                  Active
-                </span>
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ anggunan.nama_pemilik }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ anggunan.alamat_pemilik }}
+                    </div>
+                  </div>
+                </div>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                {{ anggunan.jabatan_id }}
+              <td
+                class="
+                  px-6
+                  py-4
+                  whitespace-nowrap
+                  text-center text-sm
+                  font-medium
+                "
+              >
+                <a
+                  v-on:click="$refs.detailModal.show(anggunan)"
+                  href="#"
+                  class="text-indigo-600 hover:text-indigo-900"
+                  >Detail</a
+                >
               </td>
               <td
                 class="
@@ -169,6 +184,7 @@
             </tr>
           </tbody>
         </table>
+        <detail-modal ref="detailModal"></detail-modal>
         <edit-modal ref="editModal"></edit-modal>
       </v-card>
     </div>
@@ -183,6 +199,7 @@ import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
 import Add from "@/Pages/BMT/Partials/AnggunanAdd.vue";
+import DetailModal from "@/Pages/BMT/Partials/AnggunanDetailModal.vue";
 import EditModal from "@/Pages/BMT/Partials/AnggunanEditModal.vue";
 
 export default defineComponent({
@@ -191,6 +208,7 @@ export default defineComponent({
     VModal,
     Add,
     EditModal,
+    DetailModal,
     VInput,
     VCard,
     VButton,

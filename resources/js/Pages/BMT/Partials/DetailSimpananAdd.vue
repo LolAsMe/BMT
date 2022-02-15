@@ -9,10 +9,15 @@
       <template #title> Add Karyawan </template>
       <form @submit.prevent="createKaryawan">
         <v-input :name="'kode'" v-model="form.kode"></v-input>
-        <v-input :name="'nama'" v-model="form.nama"></v-input>
-        <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-        <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-        <v-input :name="'jabatan_id'" v-model="form.jabatan_id"></v-input>
+        <v-input :name="'transaksi_id'" v-model="form.transaksi_id"></v-input>
+        <v-input :type="'date'" :name="'tanggal_transaksi'" v-model="form.tanggal_transaksi"></v-input>
+        <v-input :type="'date'" :name="'tanggal_slip'" v-model="form.tanggal_slip"></v-input>
+        <v-input :name="'debit'" v-model="form.debit"></v-input>
+        <v-input :name="'kredit'" v-model="form.kredit"></v-input>
+        <v-input :name="'saldo_awal'" v-model="form.saldo_awal"></v-input>
+        <v-input :name="'saldo_akhir'" v-model="form.saldo_akhir"></v-input>
+        <v-input :name="'keterangan'" v-model="form.keterangan"></v-input>
+        <v-input :name="'karyawan_id'" v-model="form.karyawan_id"></v-input>
         <button
           type="submit"
           class="
@@ -54,16 +59,27 @@ export default defineComponent({
     return {
       form: this.$inertia.form({
         kode: "",
-        nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
+        transaksi_id: "",
+        tanggal_transaksi: "",
+        tanggal_slip: "",
+        debit: "",
+        kredit: "",
+        saldo_awal: "",
+        saldo_akhir: "",
+        keterangan: "",
+        karyawan_id: "",
       }),
     };
   },
+  props: {
+    simpanan_id: {
+      type: Number,
+      default: "0",
+    }
+  },
   methods: {
     async createKaryawan() {
-      await this.form.post(route("karyawan.store"), {
+      await this.form.post(route("simpanan.detail.store",this.simpanan_id), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

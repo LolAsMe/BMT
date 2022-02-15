@@ -1,8 +1,8 @@
 <template>
-  <app-layout title="Karyawan">
+  <app-layout title="Nisbah">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Karyawan
+        Nisbah
       </h2>
     </template>
     <add></add>
@@ -37,7 +37,7 @@
                   tracking-wider
                 "
               >
-                Alamat
+                Tabungan
               </th>
               <th
                 scope="col"
@@ -51,21 +51,7 @@
                   tracking-wider
                 "
               >
-                Status
-              </th>
-              <th
-                scope="col"
-                class="
-                  px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500 text-center
-                  uppercase
-                  tracking-wider
-                "
-              >
-                Jabatan
+                Nisbah
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
@@ -99,43 +85,42 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="karyawan in karyawans" :key="karyawan.id">
+            <tr v-for="nisbah in nisbahs" :key="nisbah.id">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ karyawan.nama }}
+                      {{ nisbah.kode }}
                     </div>
                     <div class="text-sm text-black">
-                      {{ karyawan.kode }}
+                      {{ nisbah.bulan }}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  {{ karyawan.alamat }}
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ nisbah.simpanan_id }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ nisbah.tabungan }}
+                    </div>
+                  </div>
                 </div>
-                <div class="text-sm text-black">{{ karyawan.no_telepon }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="
-                    px-2
-                    inline-flex
-                    text-xs
-                    leading-5
-                    font-semibold
-                    rounded-full
-                    bg-green-100
-                    text-green-800
-                  "
-                >
-                  Active
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                {{ karyawan.jabatan_id }}
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ nisbah.pengendapan }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ nisbah.nisbah }}
+                    </div>
+                  </div>
+                </div>
               </td>
               <td
                 class="
@@ -147,7 +132,7 @@
                 "
               >
                 <a
-                  v-on:click="$refs.editModal.show(karyawan)"
+                  v-on:click="$refs.editModal.show(nisbah)"
                   href="#"
                   class="text-indigo-600 hover:text-indigo-900"
                   >Edit</a
@@ -162,7 +147,7 @@
                   font-medium
                 "
               >
-                <a  @click="deleteKaryawan(karyawan)" href="#" class="text-indigo-600 hover:text-indigo-900"
+                <a  @click="deleteNisbah(nisbah)" href="#" class="text-indigo-600 hover:text-indigo-900"
                   >Delete</a
                 >
               </td>
@@ -182,8 +167,8 @@ import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-import Add from "@/Pages/BMT/Partials/KaryawanAdd.vue";
-import EditModal from "@/Pages/BMT/Partials/KaryawanEditModal.vue";
+import Add from "@/Pages/BMT/Partials/NisbahAdd.vue";
+import EditModal from "@/Pages/BMT/Partials/NisbahEditModal.vue";
 
 export default defineComponent({
   components: {
@@ -196,14 +181,14 @@ export default defineComponent({
     VButton,
   },
   methods: {
-    deleteKaryawan(karyawan) {
+    deleteNisbah(nisbah) {
       this.$inertia.delete(
-        route("karyawan.destroy", karyawan.id)
+        route("nisbah.destroy", nisbah.id)
       );
     },
   },
   props: {
-    karyawans: Object,
+    nisbahs: Object,
   },
 });
 </script>

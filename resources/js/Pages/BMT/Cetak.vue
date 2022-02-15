@@ -1,9 +1,7 @@
 <template>
-  <app-layout title="Karyawan">
+  <app-layout title="Cetak">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Karyawan
-      </h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Cetak</h2>
     </template>
     <add></add>
     <div class="py-2">
@@ -37,7 +35,7 @@
                   tracking-wider
                 "
               >
-                Alamat
+                Tanggal
               </th>
               <th
                 scope="col"
@@ -51,7 +49,7 @@
                   tracking-wider
                 "
               >
-                Status
+                Debit/Kredit
               </th>
               <th
                 scope="col"
@@ -65,7 +63,7 @@
                   tracking-wider
                 "
               >
-                Jabatan
+                Simpanan
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
@@ -83,7 +81,6 @@
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span
-
                   class="
                     px-6
                     py-3
@@ -99,43 +96,54 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="karyawan in karyawans" :key="karyawan.id">
+            <tr v-for="cetak in cetaks" :key="cetak.id">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ karyawan.nama }}
+                      {{ cetak.kode }}
                     </div>
                     <div class="text-sm text-black">
-                      {{ karyawan.kode }}
+                      {{ cetak.karyawan_id }}
                     </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  {{ karyawan.alamat }}
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ cetak.tanggal }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ cetak.saldo }}
+                    </div>
+                  </div>
                 </div>
-                <div class="text-sm text-black">{{ karyawan.no_telepon }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="
-                    px-2
-                    inline-flex
-                    text-xs
-                    leading-5
-                    font-semibold
-                    rounded-full
-                    bg-green-100
-                    text-green-800
-                  "
-                >
-                  Active
-                </span>
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ cetak.debit }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ cetak.kredit }}
+                    </div>
+                  </div>
+                </div>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                {{ karyawan.jabatan_id }}
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="ml-0">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{ cetak.simpanan_id }}
+                    </div>
+                    <div class="text-sm text-black">
+                      {{ cetak.no_urut }}
+                    </div>
+                  </div>
+                </div>
               </td>
               <td
                 class="
@@ -147,7 +155,7 @@
                 "
               >
                 <a
-                  v-on:click="$refs.editModal.show(karyawan)"
+                  v-on:click="$refs.editModal.show(cetak)"
                   href="#"
                   class="text-indigo-600 hover:text-indigo-900"
                   >Edit</a
@@ -162,7 +170,10 @@
                   font-medium
                 "
               >
-                <a  @click="deleteKaryawan(karyawan)" href="#" class="text-indigo-600 hover:text-indigo-900"
+                <a
+                  @click="deleteCetak(cetak)"
+                  href="#"
+                  class="text-indigo-600 hover:text-indigo-900"
                   >Delete</a
                 >
               </td>
@@ -182,8 +193,8 @@ import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-import Add from "@/Pages/BMT/Partials/KaryawanAdd.vue";
-import EditModal from "@/Pages/BMT/Partials/KaryawanEditModal.vue";
+import Add from "@/Pages/BMT/Partials/CetakAdd.vue";
+import EditModal from "@/Pages/BMT/Partials/CetakEditModal.vue";
 
 export default defineComponent({
   components: {
@@ -196,14 +207,12 @@ export default defineComponent({
     VButton,
   },
   methods: {
-    deleteKaryawan(karyawan) {
-      this.$inertia.delete(
-        route("karyawan.destroy", karyawan.id)
-      );
+    deleteCetak(cetak) {
+      this.$inertia.delete(route("cetak.destroy", cetak.id));
     },
   },
   props: {
-    karyawans: Object,
+    cetaks: Object,
   },
 });
 </script>

@@ -16,11 +16,11 @@ class DetailSimpananController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Simpanan $simpanan)
     {
         //
-        $details = DetailSimpanan::all();
-        return Inertia::render('BMT/DetailSimpanan', compact('details'));
+        $simpanan = $simpanan->load('detail');
+        return Inertia::render('BMT/DetailSimpanan', compact('simpanan'));
     }
 
     /**

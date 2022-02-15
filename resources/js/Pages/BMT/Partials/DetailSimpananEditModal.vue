@@ -2,15 +2,16 @@
   <v-modal ref="editModal">
     <template #title> Edit Karyawan </template>
     <form @submit.prevent="edit">
-      <v-input :name="'kode'" v-model="form.kode"></v-input>
-      <v-input :name="'nama'" v-model="form.nama"></v-input>
-      <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-      <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-      <v-input
-        :name="'jabatan_id'"
-        :type="'number'"
-        v-model="form.jabatan_id"
-      ></v-input>
+        <v-input :name="'kode'" v-model="form.kode"></v-input>
+        <v-input :name="'transaksi_id'" v-model="form.transaksi_id"></v-input>
+        <v-input :type="'date'" :name="'tanggal_transaksi'" v-model="form.tanggal_transaksi"></v-input>
+        <v-input :type="'date'" :name="'tanggal_slip'" v-model="form.tanggal_slip"></v-input>
+        <v-input :name="'debit'" v-model="form.debit"></v-input>
+        <v-input :name="'kredit'" v-model="form.kredit"></v-input>
+        <v-input :name="'saldo_awal'" v-model="form.saldo_awal"></v-input>
+        <v-input :name="'saldo_akhir'" v-model="form.saldo_akhir"></v-input>
+        <v-input :name="'keterangan'" v-model="form.keterangan"></v-input>
+        <v-input :name="'karyawan_id'" v-model="form.karyawan_id"></v-input>
       <button
         type="submit"
         class="
@@ -51,26 +52,42 @@ export default defineComponent({
     return {
       form: this.$inertia.form({
         kode: "",
-        nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
+        transaksi_id: "",
+        tanggal_transaksi: "",
+        tanggal_slip: "",
+        debit: "",
+        kredit: "",
+        saldo_awal: "",
+        saldo_akhir: "",
+        keterangan: "",
+        karyawan_id: "",
       }),
       karyawan: null,
     };
   },
+  props: {
+    simpanan_id: {
+      type: Number,
+      default: "0",
+    }
+  },
   methods: {
-    show(karyawan) {
-      this.karyawan = karyawan;
-      this.form.kode = karyawan.kode;
-      this.form.nama = karyawan.nama;
-      this.form.alamat = karyawan.alamat;
-      this.form.no_telepon = karyawan.no_telepon;
-      this.form.jabatan_id = karyawan.jabatan_id;
+    show(detail) {
+      this.detail = detail;
+      this.form.kode = detail.kode;
+      this.form.transaksi_id = detail.transaksi_id;
+      this.form.tanggal_transaksi = detail.tanggal_transaksi;
+      this.form.tanggal_slip = detail.tanggal_slip;
+      this.form.debit = detail.debit;
+      this.form.kredit = detail.kredit;
+      this.form.saldo_awal = detail.saldo_awal;
+      this.form.saldo_akhir = detail.saldo_akhir;
+      this.form.keterangan = detail.keterangan;
+      this.form.karyawan_id = detail.karyawan_id;
       this.$refs.editModal.toggleModal();
     },
     edit() {
-      this.form.put(route("karyawan.update", this.karyawan.id), {
+      this.form.put(route("simpanan.detail.update", this.detail.id), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();

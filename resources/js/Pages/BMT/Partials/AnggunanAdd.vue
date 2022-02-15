@@ -8,12 +8,33 @@
     <v-modal ref="addModal">
       <template #title> Add Anggunan </template>
       <form @submit.prevent="createAnggunan">
+        <v-input :name="'pembiayaan_id'" v-model="form.pembiayaan_id"></v-input>
         <v-input :name="'kode'" v-model="form.kode"></v-input>
-        <v-input :name="'nama'" v-model="form.nama"></v-input>
-        <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-        <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-        <v-input :name="'jabatan_id'" v-model="form.jabatan_id"></v-input>
-        <button
+        <v-input :name="'jenis_objek'" v-model="form.jenis_objek"></v-input>
+        <v-input :name="'nomor_polisi'" v-model="form.nomor_polisi"></v-input>
+        <v-input
+          :type="'date'"
+          :name="'tanggal_masuk'"
+          v-model="form.tanggal_masuk"
+        ></v-input>
+        <v-input
+          :type="'date'"
+          :name="'tanggal_ambil'"
+          v-model="form.tanggal_ambil"
+        ></v-input>
+        <v-input
+          :name="'tahun_pembuatan'"
+          v-model="form.tahun_pembuatan"
+        ></v-input>
+        <v-input :name="'luas_objek'" v-model="form.luas_objek"></v-input>
+        <v-input :name="'letak_objek'" v-model="form.letak_objek"></v-input>
+        <v-input :name="'nama_pemilik'" v-model="form.nama_pemilik"></v-input>
+        <v-input
+          :name="'alamat_pemilik'"
+          v-model="form.alamat_pemilik"
+        ></v-input>
+        <v-input :name="'karyawan_id'" v-model="form.karyawan_id"></v-input
+        ><button
           type="submit"
           class="
             text-white
@@ -53,11 +74,18 @@ export default defineComponent({
   data() {
     return {
       form: this.$inertia.form({
+        pembiayaan_id: "",
         kode: "",
-        nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
+        jenis_objek: "",
+        nomor_polisi: "",
+        tanggal_masuk: "",
+        tanggal_ambil: "",
+        tahun_pembuatan: "",
+        luas_objek: "",
+        letak_objek: "",
+        nama_pemilik: "",
+        alamat_pemilik: "",
+        karyawan_id: "",
       }),
     };
   },

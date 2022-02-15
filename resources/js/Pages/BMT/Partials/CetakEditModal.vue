@@ -1,16 +1,21 @@
 <template>
   <v-modal ref="editModal">
-    <template #title> Edit Karyawan </template>
+    <template #title> Edit Cetak </template>
     <form @submit.prevent="edit">
-      <v-input :name="'kode'" v-model="form.kode"></v-input>
-      <v-input :name="'nama'" v-model="form.nama"></v-input>
-      <v-input :name="'alamat'" v-model="form.alamat"></v-input>
-      <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-      <v-input
-        :name="'jabatan_id'"
-        :type="'number'"
-        v-model="form.jabatan_id"
-      ></v-input>
+        <v-input :name="'kode'" v-model="form.kode"></v-input>
+        <v-input
+          :type="'date'"
+          :name="'tanggal'"
+          v-model="form.tanggal"
+        ></v-input>
+        <v-input :name="'sandi'" v-model="form.sandi"></v-input>
+        <v-input :name="'debit'" v-model="form.debit"></v-input>
+        <v-input :name="'kredit'" v-model="form.kredit"></v-input>
+        <v-input :name="'saldo'" v-model="form.saldo"></v-input>
+        <v-input :name="'karyawan_id'" v-model="form.karyawan_id"></v-input>
+        <v-input :name="'simpanan_id'" v-model="form.simpanan_id"></v-input>
+        <v-input :name="'no_urut'" v-model="form.no_urut"></v-input>
+
       <button
         type="submit"
         class="
@@ -51,26 +56,34 @@ export default defineComponent({
     return {
       form: this.$inertia.form({
         kode: "",
-        nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
+        tanggal: "",
+        sandi: "",
+        debit: "",
+        kredit: "",
+        saldo: "",
+        karyawan_id: "",
+        simpanan_id: "",
+        no_urut: "",
       }),
-      karyawan: null,
+      cetak: null,
     };
   },
   methods: {
-    show(karyawan) {
-      this.karyawan = karyawan;
-      this.form.kode = karyawan.kode;
-      this.form.nama = karyawan.nama;
-      this.form.alamat = karyawan.alamat;
-      this.form.no_telepon = karyawan.no_telepon;
-      this.form.jabatan_id = karyawan.jabatan_id;
+    show(cetak) {
+      this.cetak = cetak;
+      this.form.kode = cetak.kode;
+      this.form.tanggal = cetak.tanggal;
+      this.form.sandi = cetak.sandi;
+      this.form.debit = cetak.debit;
+      this.form.kredit = cetak.kredit;
+      this.form.saldo = cetak.saldo;
+      this.form.karyawan_id = cetak.karyawan_id;
+      this.form.simpanan_id = cetak.simpanan_id;
+      this.form.no_urut = cetak.no_urut;
       this.$refs.editModal.toggleModal();
     },
     edit() {
-      this.form.put(route("karyawan.update", this.karyawan.id), {
+      this.form.put(route("cetak.update", this.cetak.id), {
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();
