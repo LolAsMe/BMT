@@ -41,7 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified','jabatan:manajer'])->group(function () {
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('anggota', AnggotaController::class)->only([
         'index', 'destroy', 'update', 'store'

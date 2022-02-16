@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -14,5 +16,13 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'karyawan_id' => 1,
+            'email_verified_at' => now(),
+            'password' => '$2y$10$82OArwdY7cD4N0AwKOmpdOD0H1NkvfNn81XZSoprbw5ZKMV3RRe7a', // password 123456
+            'remember_token' => Str::random(10), 'updated_at' => now(), 'created_at' => now()
+        ]);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    protected $with = ['karyawan:id,nama,jabatan_id', 'karyawan.jabatan:id,nama'];
+
 
     /**
      * The attributes that are mass assignable.
@@ -58,4 +61,16 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class);
+    }
+
+    public function hasJabatan($jabatan)
+    {
+        $jabatan = Str::lower($jabatan);
+        $jabatan =  ucfirst($jabatan);
+        return $jabatan == $this->karyawan->jabatan->nama ? true : false;
+    }
 }
