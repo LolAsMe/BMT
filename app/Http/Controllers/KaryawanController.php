@@ -18,7 +18,7 @@ class KaryawanController extends Controller
     public function index()
     {
         //
-        $karyawans = Karyawan::all();
+        $karyawans = Karyawan::with('jabatan:id,nama')->get();
         return Inertia::render('BMT/Karyawan', compact('karyawans'));
     }
 

@@ -11,8 +11,8 @@
         <v-input :name="'kode'" v-model="form.kode"></v-input>
         <v-input :name="'nama'" v-model="form.nama"></v-input>
         <v-input :name="'alamat'" v-model="form.alamat"></v-input>
+        <v-select :options="$inertia.page.props.jabatan" :name="'jabatan'" v-model="form.jabatan_id"></v-select>
         <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
-        <v-input :name="'jabatan_id'" v-model="form.jabatan_id"></v-input>
         <button
           type="submit"
           class="
@@ -42,12 +42,14 @@
 import { defineComponent } from "vue";
 import VButton from "@/Components/Button.vue";
 import VInput from "@/Components/Input.vue";
+import VSelect from "@/Components/InputSelect.vue";
 import VModal from "@/Components/Modal.vue";
 
 export default defineComponent({
   components: {
     VModal,
     VInput,
+    VSelect,
     VButton,
   },
   data() {

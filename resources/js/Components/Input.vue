@@ -20,7 +20,7 @@
         focus:outline-none focus:ring-0 focus:border-blue-600
         peer
       "
-      placeholder=" "
+      placeholder=""
     />
     <label
       :for="name"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -38,6 +39,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             //
+            'jabatan'=> fn() => Jabatan::all() ? Jabatan::get(['id','nama']) : null
         ]);
     }
 }

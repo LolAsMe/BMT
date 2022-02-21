@@ -134,7 +134,7 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
-                {{ karyawan.jabatan_id }}
+                {{ karyawan.jabatan.nama }}
               </td>
               <td
                 class="
