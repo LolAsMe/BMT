@@ -22,4 +22,9 @@ class Anggota extends Model
     {
         return $this->hasOne(Simpanan::class);
     }
+
+    public function group()
+    {
+        return $this->belongsToMany(Group::class, 'group_anggota', 'anggota_id', 'group_id');
+    }
 }

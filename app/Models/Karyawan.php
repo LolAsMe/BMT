@@ -20,6 +20,11 @@ class Karyawan extends Model
         return $this->hasOne(User::class);
     }
 
+    public function group()
+    {
+        return $this->hasMany(Group::class);
+    }
+
     public function jabatan()
     {
         return $this->belongsTo(Jabatan::class);

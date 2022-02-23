@@ -6,6 +6,7 @@ use App\Http\Controllers\CetakController;
 use App\Http\Controllers\DetailNisbahController;
 use App\Http\Controllers\DetailPembiayaanController;
 use App\Http\Controllers\DetailSimpananController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\JenisPembiayaanController;
 use App\Http\Controllers\JenisSimpananController;
@@ -41,14 +42,22 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified','jabatan:manajer'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(function () {
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('anggota', AnggotaController::class)->only([
         'index', 'destroy', 'update', 'store'
     ])->parameter('anggota', 'anggota');
     Route::resource('karyawan', KaryawanController::class)->only([
-        'index', 'destroy', 'update', 'store','show'
+        'index', 'destroy', 'update', 'store', 'show'
     ]);
+
+
+    Route::resource('group', GroupController::class)->only([
+        'index', 'destroy', 'update', 'store', 'show'
+    ]);
+    Route::post('/group/{group}/add/{anggota}',[GroupController::class,'addAnggota'])->name('group.anggota.add');
+
+
     Route::resource('simpanan', SimpananController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);
@@ -60,7 +69,8 @@ Route::middleware(['auth:sanctum', 'verified','jabatan:manajer'])->group(functio
     ]);
     Route::resource('pembiayaan', PembiayaanController::class)->only([
         'index', 'destroy', 'update', 'store'
-    ]); Route::resource('jabatan', JabatanController::class)->only([
+    ]);
+    Route::resource('jabatan', JabatanController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('jenis-simpanan', JenisSimpananController::class)->only([

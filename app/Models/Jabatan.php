@@ -13,9 +13,9 @@ class Jabatan extends Model
     protected $table = 'jabatan';
     protected $guarded = [];
 
-    public function jabatan()
+    public function anggota()
     {
-        return $this->hasMany(Jabatan::class);
+        return $this->hasMany(Anggota::class);
     }
 
     /**
