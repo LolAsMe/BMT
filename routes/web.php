@@ -47,7 +47,7 @@ Route::middleware(['auth:sanctum', 'verified','jabatan:manajer'])->group(functio
         'index', 'destroy', 'update', 'store'
     ])->parameter('anggota', 'anggota');
     Route::resource('karyawan', KaryawanController::class)->only([
-        'index', 'destroy', 'update', 'store'
+        'index', 'destroy', 'update', 'store','show'
     ]);
     Route::resource('simpanan', SimpananController::class)->only([
         'index', 'destroy', 'update', 'store'

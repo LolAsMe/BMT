@@ -13,4 +13,13 @@ class Anggota extends Model
 
     protected $table = 'anggota';
     protected $guarded = [];
+
+    public function karyawan()
+    {
+        return $this->hasOne(Karyawan::class);
+    }
+    public function simpanan()
+    {
+        return $this->hasOne(Simpanan::class);
+    }
 }

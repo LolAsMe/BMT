@@ -24,6 +24,12 @@ class Karyawan extends Model
     {
         return $this->belongsTo(Jabatan::class);
     }
+
+    public function anggota()
+    {
+        return $this->hasMany(Anggota::class);
+    }
+
     public function getNamaAttribute($value)
     {
         $value2 = Str::lower($value);

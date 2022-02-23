@@ -19,4 +19,9 @@ class Simpanan extends Model
     {
         return $this->hasMany(DetailSimpanan::class);
     }
+
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class);
+    }
 }

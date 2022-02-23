@@ -136,6 +136,21 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
                 {{ karyawan.jabatan.nama }}
               </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
+                <Link
+                  :href="route('karyawan.show', karyawan.id)"
+                  class="
+                    text-blue-500
+                    px-6
+                    py-4
+                    whitespace-nowrap
+                    text-center text-sm
+                    font-medium
+                  "
+                >
+                  Detail
+                </Link>
+              </td>
               <td
                 class="
                   px-6
@@ -183,6 +198,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import VModal from "@/Components/Modal.vue";
 import Add from "@/Pages/BMT/Partials/KaryawanAdd.vue";
 import EditModal from "@/Pages/BMT/Partials/KaryawanEditModal.vue";
@@ -195,6 +211,7 @@ export default defineComponent({
     EditModal,
     VInput,
     VCard,
+    Link,
     VButton,
   },
   methods: {

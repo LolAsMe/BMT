@@ -58,6 +58,10 @@ class KaryawanController extends Controller
     public function show(Karyawan $karyawan)
     {
         //
+        $karyawan->load(['jabatan:id,nama','anggota.simpanan', 'user']);
+
+        // dd($karyawan);
+        return Inertia::render('BMT/KaryawanDetail', compact('karyawan'));
     }
 
     /**
