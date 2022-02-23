@@ -18,6 +18,9 @@ class CheckJabatan
     public function handle(Request $request, Closure $next, ...$jabatans)
     {
         $jabatans = empty($jabatans) ? [null] : $jabatans;
+        // if (env('APP_ENV') === 'testing') {
+        //     return $next($request);
+        // }
 
         foreach ($jabatans as $jabatan) {
             if ($request->user()->hasJabatan($jabatan)) {

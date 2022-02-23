@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->foreignId('karyawan_id');
+            $table->foreignId('karyawan_id')->default(1);
             $table->timestamps();
         });
     }

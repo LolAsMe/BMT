@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Anggota;
+use App\Models\Karyawan;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

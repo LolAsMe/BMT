@@ -22,7 +22,7 @@ class JabatanSeeder extends Seeder
         // J05	Landing
         // J06	ACC
         // J07	ACCOUNTING
-        Jabatan::insert([
+        DB::table('jabatan')->insert([
             ['kode'=>'J01', 'nama'=>'Manajer','updated_at'=>now(),'created_at'=>now()],
             ['kode'=>'J02', 'nama'=>'Teller','updated_at'=>now(),'created_at'=>now()],
             ['kode'=>'J03', 'nama'=>'Accounting','updated_at'=>now(),'created_at'=>now()],
