@@ -3,7 +3,7 @@
     <v-button class="block mr-4 sm:mr-10 ml-auto mt-4" v-show="showAdd"
       >Add</v-button
     >
-    <form @submit.prevent="">
+    <form @submit.prevent="searchAnggota()">
       <div class="flex pt-2 px-2">
         <v-input
           class="odd:bg-gray-100"
@@ -33,7 +33,6 @@
       </div>
       <button
         type="submit"
-        @click="searchAnggota()"
         class="
           text-white
           bg-blue-700
@@ -137,12 +136,26 @@
           <td
             class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium"
           >
-            <a
-              @click="addAnggota(id)"
-              href="#"
-              class="text-indigo-600 hover:text-indigo-900"
-              >Add</a
+            <button
+              @click="addAnggota(anggota.id)"
+              class="
+                text-white
+                bg-blue-700
+                hover:bg-blue-800
+                focus:ring-4 focus:ring-blue-300
+                font-medium
+                rounded-lg
+                text-sm
+                w-full
+                sm:w-auto
+                px-5
+                py-2.5
+                text-center
+                dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+              "
             >
+              Add
+            </button>
           </td>
         </tr>
       </tbody>
@@ -186,8 +199,17 @@ export default defineComponent({
   },
   methods: {
     addAnggota(id) {
+      //   this.form.viit(
+      //     route("group.anggota.add", [this.$inertia.page.props.group, id]),
+      //     {
+      //       preserveScroll: true,
+      //     }
+      //   );
+      //   this.$Inertia.reload({ only: ['anggotas'] })
+
       this.$inertia.visit(
-        route("group.anggota.add", [1, 1]),{method:'post'}
+        route("group.anggota.add", [this.$inertia.page.props.group, id]),
+        { method: "post", preserveScroll: true }
       );
     },
     searchAnggota() {
@@ -204,6 +226,7 @@ export default defineComponent({
         route("group.show", [{ id: this.$inertia.page.props.group.id }]),
         {
           data: parameter,
+          preserveScroll: true,
         }
       );
     },

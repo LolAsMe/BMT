@@ -64,6 +64,7 @@ class GroupController extends Controller
 
         $anggotas = $bmt->searchAnggota($request->all());
         $group->load(['anggota.simpanan','karyawan']);
+        // dd($anggotas);
         return Inertia::render('BMT/GroupDetail', [
             'parameter' => fn () => $request->all(),
             'group' => fn () =>  $group,
@@ -112,8 +113,9 @@ class GroupController extends Controller
         return redirect(route('group.index'));
     }
 
-    public function addAnggota(Group $group, Request $request)
+    public function addAnggota(Group $group, Request $request,Anggota $anggota)
     {
+        $group->anggota()->attach($anggota,['ke'=>1]);
         return back();
     }
 }
