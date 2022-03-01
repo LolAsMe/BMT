@@ -118,4 +118,9 @@ class GroupController extends Controller
         $group->anggota()->attach($anggota,['ke'=>1]);
         return back();
     }
+    public function removeAnggota(Group $group, Request $request,Anggota $anggota)
+    {
+        $group->anggota()->detach($anggota);
+        return back();
+    }
 }

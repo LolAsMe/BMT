@@ -56,6 +56,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(functi
         'index', 'destroy', 'update', 'store', 'show'
     ]);
     Route::post('/group/{group}/add/{anggota}',[GroupController::class,'addAnggota'])->name('group.anggota.add');
+    Route::delete('/group/{group}/remove/{anggota}',[GroupController::class,'removeAnggota'])->name('group.anggota.remove');
 
 
     Route::resource('simpanan', SimpananController::class)->only([

@@ -165,7 +165,6 @@
               >
                 <a
                   @click="deleteAnggota(anggota)"
-                  href="#"
                   class="text-indigo-600 hover:text-indigo-900"
                   >Delete</a
                 >
@@ -202,9 +201,13 @@ export default defineComponent({
     VButton,
   },
   methods: {
-    deleteGroup(group) {
-      this.$inertia.delete(route("group.destroy", group.id));
+    deleteAnggota(anggota) {
+      this.$inertia.visit(
+        route("group.anggota.remove", [this.group.id,anggota.id]),
+        { method: "delete", preserveScroll: true }
+      );
     },
+
   },
   props: {
     group: Object,
