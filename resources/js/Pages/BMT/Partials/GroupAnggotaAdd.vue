@@ -211,6 +211,7 @@ export default defineComponent({
         route("group.anggota.add", [this.$inertia.page.props.group, id]),
         { method: "post", preserveScroll: true }
       );
+
     },
     searchAnggota() {
       let parameter = {};

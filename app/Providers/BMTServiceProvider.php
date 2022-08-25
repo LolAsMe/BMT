@@ -16,7 +16,7 @@ class BMTServiceProvider extends ServiceProvider
     {
         //
         $this->app->bind(BMTService::class, function($app){
-            return new BMTService();
+            return new BMTService(config('bmt.default_karyawan_password','123456'));
         });
     }
 

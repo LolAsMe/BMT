@@ -20,7 +20,7 @@
         @inertia
 
         @env ('local')
-            <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
+            <script src="http://192.168.1.220:3000/browser-sync/browser-sync-client.js"></script>
         @endenv
     </body>
 </html>

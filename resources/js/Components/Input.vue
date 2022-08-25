@@ -6,7 +6,7 @@
       :name="name"
       :id="name"
       :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', $event.target.value)"
       class="
         block
         py-2.5
@@ -20,7 +20,6 @@
         focus:outline-none focus:ring-0 focus:border-blue-600
         peer
       "
-      placeholder=""
     />
     <label
       :for="name"
@@ -61,7 +60,7 @@ export default defineComponent({
       type: undefined,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   computed: {
     // a computed getter
     Name() {

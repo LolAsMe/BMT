@@ -6,7 +6,12 @@ use App\Models\Anggota;
 
 class BMTService
 {
-    public function searchAnggota(?array $parameter=[])
+    private string $default_password;
+    public function __construct($default_password = '123456')
+    {
+        $this->default_password = $default_password;
+    }
+    public function searchAnggota(?array $parameter = [])
     {
         $anggotas = Anggota::searchAnggota($parameter);
         $anggotas->whereDoesntHave('group');

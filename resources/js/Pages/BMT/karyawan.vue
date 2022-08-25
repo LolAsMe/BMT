@@ -217,6 +217,7 @@ export default defineComponent({
   methods: {
     deleteKaryawan(karyawan) {
       this.$inertia.delete(route("karyawan.destroy", karyawan.id));
+      console.log(this.$inertia);
     },
   },
   props: {

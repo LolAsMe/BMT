@@ -39,6 +39,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    $re=2;
     return Inertia::render('Dashboard');
 })->name('dashboard');
 

@@ -30,6 +30,7 @@ class StoreKaryawanRequest extends FormRequest
             'alamat'=>'required',
             'no_telepon'=>'required',
             'jabatan_id'=>'required',
+
         ];
     }
 }

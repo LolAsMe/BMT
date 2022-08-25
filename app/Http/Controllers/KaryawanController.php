@@ -42,7 +42,9 @@ class KaryawanController extends Controller
     {
         //
         // dd($request->validated());
-        Karyawan::create($request->validated());
+
+        $karyawan = Karyawan::create($request->validated());
+        $karyawan->user()->create();
 
         return back()->with('flash', [
             'response' => 'berhasil'

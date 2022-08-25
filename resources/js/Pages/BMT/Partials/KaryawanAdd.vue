@@ -10,6 +10,8 @@
       <form @submit.prevent="createKaryawan">
         <v-input :name="'kode'" v-model="form.kode"></v-input>
         <v-input :name="'nama'" v-model="form.nama"></v-input>
+        <v-input :name="'username'" v-model="form.username"></v-input>
+        <v-input :type="'password'" :name="'password'" v-model="form.password"></v-input>
         <v-input :name="'alamat'" v-model="form.alamat"></v-input>
         <v-select :options="$inertia.page.props.jabatan" :name="'jabatan'" v-model="form.jabatan_id"></v-select>
         <v-input :name="'no_telepon'" v-model="form.no_telepon"></v-input>
@@ -55,11 +57,13 @@ export default defineComponent({
   data() {
     return {
       form: this.$inertia.form({
-        kode: "",
-        nama: "",
-        alamat: "",
-        no_telepon: "",
-        jabatan_id: "",
+        kode: undefined,
+        nama: undefined,
+        alamat: undefined,
+        no_telepon: undefined,
+        username:undefined,
+        password:"123456",
+        jabatan_id: 1,
       }),
     };
   },
