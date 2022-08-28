@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTransaksiTable extends Migration
+class AddTransaksiColoumn extends Migration
 {
     /**
      * Run the migrations.
@@ -14,6 +14,9 @@ class AddTransaksiTable extends Migration
     public function up()
     {
         //
+        Schema::table('transaksi', function (Blueprint $table) {
+            $table->morphs('log');
+        });
     }
 
     /**
@@ -24,5 +27,8 @@ class AddTransaksiTable extends Migration
     public function down()
     {
         //
+        Schema::table('transaksi', function (Blueprint $table) {
+            $table->dropMorphs('log');
+        });
     }
 }

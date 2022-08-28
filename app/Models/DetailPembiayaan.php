@@ -52,4 +52,9 @@ class DetailPembiayaan extends Model
     {
         $this->belongsTo(Pembiayaan::class);
     }
+
+    public function transaksi()
+    {
+        return $this->morphOne(Transaksi::class,'log');
+    }
 }

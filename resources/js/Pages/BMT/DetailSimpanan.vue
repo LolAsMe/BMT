@@ -58,7 +58,7 @@
                 class="
                   px-6
                   py-3
-                  text-left text-xs
+                text-xs
                   font-medium
                   text-gray-500 text-center
                   uppercase
@@ -72,7 +72,7 @@
                 class="
                   px-6
                   py-3
-                  text-left text-xs
+                  text-xs
                   font-medium
                   text-gray-500 text-center
                   uppercase
@@ -86,7 +86,7 @@
                   class="
                     px-6
                     py-3
-                    text-left text-xs text-center
+                    text-xs text-center
                     font-medium
                     text-gray-500
                     uppercase

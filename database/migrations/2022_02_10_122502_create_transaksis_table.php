@@ -15,7 +15,6 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_id')->default(1);
             $table->string('kode');
             $table->string('nama');
             $table->string('keterangan');

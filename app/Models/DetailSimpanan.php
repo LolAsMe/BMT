@@ -60,4 +60,9 @@ class DetailSimpanan extends Model
     {
         $this->belongsTo(Simpanan::class);
     }
+
+    public function transaksi()
+    {
+        return $this->morphOne(Transaksi::class,'log');
+    }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\NisbahController;
 use App\Http\Controllers\PembiayaanController;
 use App\Http\Controllers\SimpananController;
+use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,6 +46,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(function () {
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
+    Route::resource('test', TestController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ])->parameter('anggota', 'anggota');
     Route::resource('anggota', AnggotaController::class)->only([
         'index', 'destroy', 'update', 'store'
     ])->parameter('anggota', 'anggota');
