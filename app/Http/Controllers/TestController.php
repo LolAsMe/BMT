@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembiayaan;
 use App\Models\Simpanan;
 use App\Models\Transaksi;
 use App\Services\BMTService;
@@ -18,9 +19,9 @@ class TestController extends Controller
      */
     public function index(BMTService $bmt)
     {
-        //
-        // $bmt->setCurrentSimpanan(Simpanan::find(2));
-        $bmt->kasKeluar(15000000);
+        // $bmt->tambahPembiayaan();
+        $bmt->setCurrentPembiayaan(Pembiayaan::find(11));
+        $bmt->angsur(4);
         $transaksi = Transaksi::latest()->with('log')->take(1)->get();
         return Inertia::render('BMT/Test', compact('transaksi'));
     }

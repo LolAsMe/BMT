@@ -16,10 +16,10 @@ class CreateDetailPembiayaansTable extends Migration
         Schema::create('detail_pembiayaan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pembiayaan_id');
-            $table->unsignedInteger('angsuran_ke');
-            $table->decimal('jumlah');
-            $table->unsignedDecimal('akumulasi_angsuran');
-            $table->unsignedDecimal('total_tanggungan');
+            $table->unsignedInteger('angsuran_ke',);
+            $table->decimal('jumlah',13,2);
+            $table->unsignedDecimal('akumulasi_angsuran',13);
+            $table->unsignedDecimal('total_tanggungan',13);
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
