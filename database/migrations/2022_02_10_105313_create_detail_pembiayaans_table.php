@@ -16,7 +16,6 @@ class CreateDetailPembiayaansTable extends Migration
         Schema::create('detail_pembiayaan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pembiayaan_id');
-            $table->foreignId('karyawan_id');
             $table->unsignedInteger('angsuran_ke');
             $table->decimal('jumlah');
             $table->unsignedDecimal('akumulasi_angsuran');

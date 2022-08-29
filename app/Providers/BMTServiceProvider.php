@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\BMTService;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class BMTServiceProvider extends ServiceProvider
@@ -28,5 +29,10 @@ class BMTServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Relation::morphMap([
+            'DetailSimpanan' => 'App\Models\DetailSimpanan',
+            'DetailPembiayaan' => 'App\Models\DetailPembiayaan',
+            'DetailKas' => 'App\Models\DetailKas',
+        ]);
     }
 }

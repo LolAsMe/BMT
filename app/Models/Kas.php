@@ -42,21 +42,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Simpanan withoutTrashed()
  * @mixin \Eloquent
  */
-class Simpanan extends \Eloquent
+class Kas extends \Eloquent
 {
     use HasFactory;
-    use SoftDeletes;
 
-    protected $table = 'simpanan';
+    protected $table = 'kas';
     protected $guarded = [];
 
     public function detail()
     {
-        return $this->hasMany(DetailSimpanan::class);
-    }
-
-    public function anggota()
-    {
-        return $this->belongsTo(Anggota::class);
+        return $this->hasMany(DetailKas::class);
     }
 }

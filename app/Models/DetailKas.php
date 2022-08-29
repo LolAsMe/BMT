@@ -48,7 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|DetailSimpanan withoutTrashed()
  * @mixin \Eloquent
  */
-class DetailSimpanan extends Model
+class DetailKas extends Model
 {
     // 'kode'=>'kode1',
     //         'tanggal_transaksi'=>now(),
@@ -62,12 +62,12 @@ class DetailSimpanan extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'detail_simpanan';
+    protected $table = 'detail_kas';
     protected $guarded = [];
 
-    public function simpanan()
+    public function kas()
     {
-        $this->belongsTo(Simpanan::class);
+        $this->belongsTo(Kas::class);
     }
 
     public function transaksi()
