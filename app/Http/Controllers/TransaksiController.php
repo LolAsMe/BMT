@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
+use App\Models\Simpanan;
+use Illuminate\Http\Request;
+use App\Services\BMTService;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -99,6 +102,13 @@ class TransaksiController extends Controller
         //
         $transaksi->delete();
         return redirect(route('transaksi.index'));
+
+    }
+
+    public function tarik(Request $request, Simpanan $simpanan, BMTService $bmt)
+    {
+        $bmt->setCurrentSimpanan($simpanan)->tarik($request->jumlah);
+        return redirect()->back();
 
     }
 }

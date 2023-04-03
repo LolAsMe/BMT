@@ -3,4 +3,12 @@ To Do
 2. Karyawan akses dan cetak list rekening
 3. karyawan setor, teller input
 
-print
+
+pembiayaaan
+kas
+ transaksi
+neraca
+nisbah
+view print
+ laporan kmm
+

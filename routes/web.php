@@ -16,6 +16,7 @@ use App\Http\Controllers\PembiayaanController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\SimpananController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -59,6 +60,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::get('setor',[SetorController::class, 'index'])->name('setor');
     Route::get('setor/batch',[SetorController::class, 'batch'])->name('setor/batch');
     Route::post('setor/{simpanan}',[SetorController::class, 'setor'])->name('setor.store');
+    Route::post('transaksi/tarik/{simpanan}',[TransaksiController::class, 'tarik'])->name('tarik');
 
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([

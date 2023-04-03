@@ -13,12 +13,35 @@
                         Setor
                     </div>
                     <div>
-                        Batch Setor
-                    </div>
-                    <div>
                         <form @submit.prevent="submit">
                             <v-input :name="'id'" v-model="form.id"></v-input>
                             <v-input :name="'jumlah'" v-model="form.jumlah"></v-input>
+                            <button type="submit" class="
+                              text-white
+                              bg-blue-700
+                              hover:bg-blue-800
+                              focus:ring-4 focus:ring-blue-300
+                              font-medium
+                              rounded-lg
+                              text-sm
+                              w-full
+                              sm:w-auto
+                              px-5
+                              py-2.5
+                              text-center
+                              dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                            ">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                    <div>
+                        Tarik
+                    </div>
+                    <div>
+                        <form @submit.prevent="tarik">
+                            <v-input :name="'id'" v-model="form2.id"></v-input>
+                            <v-input :name="'jumlah'" v-model="form2.jumlah"></v-input>
                             <button type="submit" class="
                               text-white
                               bg-blue-700
@@ -67,6 +90,10 @@ export default defineComponent({
                 id: "",
                 jumlah: "",
             }),
+            form2: this.$inertia.form({
+                id: "",
+                jumlah: "",
+            }),
             anggota: null,
         };
     },
@@ -76,6 +103,14 @@ export default defineComponent({
                 preserveScroll: true,
                 onSuccess: () => {
                     this.form.reset();
+                },
+            });
+        },
+        tarik() {
+            this.form2.post(route("tarik", this.form2.id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.form2.reset();
                 },
             });
         },
