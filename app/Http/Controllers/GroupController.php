@@ -58,12 +58,12 @@ class GroupController extends Controller
      * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function show(Group $group,Request $request, BMTService $bmt)
+    public function show(Group $group, Request $request, BMTService $bmt)
     {
         //
 
         $anggotas = $bmt->searchAnggota($request->all());
-        $group->load(['anggota.simpanan','karyawan']);
+        $group->load(['anggota.simpanan', 'karyawan']);
         // dd($anggotas);
         return Inertia::render('BMT/GroupDetail', [
             'parameter' => fn () => $request->all(),
@@ -113,14 +113,20 @@ class GroupController extends Controller
         return redirect(route('group.index'));
     }
 
-    public function addAnggota(Group $group, Request $request,Anggota $anggota)
+    public function addAnggota(Group $group, Request $request, Anggota $anggota)
     {
-        $group->anggota()->attach($anggota,['ke'=>2]);
+        $group->anggota()->attach($anggota, ['ke' => 2]);
         return back();
     }
-    public function removeAnggota(Group $group, Request $request,Anggota $anggota)
+    public function removeAnggota(Group $group, Request $request, Anggota $anggota)
     {
         $group->anggota()->detach($anggota);
         return back();
+    }
+
+    public function TakeOne(Group $group)
+    {
+        $group->load('anggota');
+        return $group;
     }
 }

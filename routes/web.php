@@ -13,6 +13,7 @@ use App\Http\Controllers\JenisSimpananController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\NisbahController;
 use App\Http\Controllers\PembiayaanController;
+use App\Http\Controllers\SetorController;
 use App\Http\Controllers\SimpananController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
@@ -55,6 +56,10 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding'])->group(functi
 
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
 
+    Route::get('setor',[SetorController::class, 'index'])->name('setor');
+    Route::get('setor/batch',[SetorController::class, 'batch'])->name('setor/batch');
+    Route::post('setor/{simpanan}',[SetorController::class, 'setor'])->name('setor.store');
+
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([
         'index', 'destroy', 'update', 'store'
@@ -70,7 +75,9 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::resource('group', GroupController::class)->only([
         'index', 'destroy', 'update', 'store', 'show'
     ]);
+
     Route::post('/group/{group}/add/{anggota}', [GroupController::class, 'addAnggota'])->name('group.anggota.add');
+    route::get('/group/takeOne/{group}',[GroupController::class, 'takeOne'])->name('group.takeOne');
     Route::delete('/group/{group}/remove/{anggota}', [GroupController::class, 'removeAnggota'])->name('group.anggota.remove');
 
 

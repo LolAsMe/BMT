@@ -18,7 +18,7 @@ class SimpananController extends Controller
     public function index()
     {
         //
-        $simpanans = Simpanan::all();
+        $simpanans = Simpanan::take(100)->orderByDesc('id')->get();
         return Inertia::render('BMT/Simpanan', compact('simpanans'));
     }
 
