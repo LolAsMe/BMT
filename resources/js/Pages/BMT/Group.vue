@@ -1,5 +1,6 @@
 <template>
   <app-layout title="Group">
+    {{ group }}
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Group</h2>
     </template>
@@ -87,10 +88,10 @@
                 <div class="flex items-center">
                   <div class="ml-0">
                     <div class="text-sm font-medium text-gray-900">
-                      {{ group.nama }}
+                      <!-- {{ group.nama }} -->
                     </div>
                     <div class="text-sm text-black">
-                      {{ group.kode }}
+                      <!-- {{ group.kode }} -->
                     </div>
                   </div>
                 </div>

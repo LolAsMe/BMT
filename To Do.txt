@@ -1,0 +1,5 @@
+To Do
+1. Admin assign rekening
+2. Karyawan akses dan cetak list rekening
+3. karyawan setor, teller input
+

@@ -40,7 +40,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    $re=2;
+    $re = 2;
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
@@ -60,8 +60,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(functi
     Route::resource('group', GroupController::class)->only([
         'index', 'destroy', 'update', 'store', 'show'
     ]);
-    Route::post('/group/{group}/add/{anggota}',[GroupController::class,'addAnggota'])->name('group.anggota.add');
-    Route::delete('/group/{group}/remove/{anggota}',[GroupController::class,'removeAnggota'])->name('group.anggota.remove');
+    Route::post('/group/{group}/add/{anggota}', [GroupController::class, 'addAnggota'])->name('group.anggota.add');
+    Route::delete('/group/{group}/remove/{anggota}', [GroupController::class, 'removeAnggota'])->name('group.anggota.remove');
 
 
     Route::resource('simpanan', SimpananController::class)->only([
@@ -106,4 +106,5 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(functi
     ])->shallow()->names(['destroy' => 'simpanan.detail.destroy', 'update' => 'simpanan.detail.update']);
     Route::post('simpanan/{simpanan}/detail', [DetailSimpananController::class, 'store'])->name('simpanan.detail.store');
     Route::get('simpanan/{simpanan}/detail', [DetailSimpananController::class, 'index'])->name('simpanan.detail.index');
+
 });
