@@ -1,10 +1,11 @@
 <template>
   <app-layout title="Group">
-    {{ group }}
+    {{ groups }}
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Group</h2>
     </template>
-    <add></add>
+    <!-- <add ></add> -->
+    <button @click="assignAnggota">add</button>
     <div class="py-2">
       <v-card>
         <table class="min-w-full divide-y divide-gray-200">
@@ -56,7 +57,7 @@
                   class="
                     px-6
                     py-3
-                    text-left text-xs text-center
+                    text-xs text-center
                     font-medium
                     text-gray-500
                     uppercase
@@ -107,7 +108,7 @@
                   tracking-wider
                 "
               >
-                {{ group.karyawan.nama }}
+                <!-- {{ group.karyawan.nama }} -->
               </th>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-black">
                 <Link
@@ -143,7 +144,6 @@
             </tr>
           </tbody>
         </table>
-        <edit-modal ref="editModal"></edit-modal>
       </v-card>
     </div>
   </app-layout>
@@ -175,6 +175,12 @@ export default defineComponent({
     deleteGroup(group) {
       this.$inertia.delete(route("group.destroy", group.id));
     },
+    assignAnggota(){
+        this.$inertia.visit(
+        route("group.anggota.remove", [2,5]),
+        { method: "delete", preserveScroll: true }
+      );
+    }
   },
   props: {
     groups: Object,

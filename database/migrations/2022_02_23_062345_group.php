@@ -25,7 +25,7 @@ class Group extends Migration
             $table->foreignId('anggota_id');
             $table->primary(['group_id', 'anggota_id']);
             $table->integer('ke');
-            $table->enum('status',['inactive','active']);
+            $table->enum('status',['active','inactive']);
         });
     }
 

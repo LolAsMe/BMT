@@ -40,11 +40,21 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    $re = 2;
-    return Inertia::render('Dashboard');
+    if(Auth::user()->hasJabatan('funding')){
+        $group = Auth::user()->karyawan->group;
+        $group->load('anggota:id,nama');
+        return Inertia::render('DashboardKaryawan', compact('group'));
+    }else if(Auth::user()->hasJabatan('Manajer') || Auth::user()->hasJabatan('Teller')){
+        return Inertia::render('Dashboard');
+    };
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding'])->group(function () {
+
+});
+
+Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
+
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([
         'index', 'destroy', 'update', 'store'
@@ -107,4 +117,5 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(functi
     Route::post('simpanan/{simpanan}/detail', [DetailSimpananController::class, 'store'])->name('simpanan.detail.store');
     Route::get('simpanan/{simpanan}/detail', [DetailSimpananController::class, 'index'])->name('simpanan.detail.index');
 
+    Route::get('assign-rekening-to-karyawan', [DetailSimpananController::class, 'index'])->name('simpanan.detail.index');
 });

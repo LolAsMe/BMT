@@ -3,3 +3,4 @@ To Do
 2. Karyawan akses dan cetak list rekening
 3. karyawan setor, teller input
 
+print

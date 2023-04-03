@@ -20,9 +20,6 @@ class TestController extends Controller
     public function index(BMTService $bmt)
     {
         // $bmt->tambahPembiayaan();
-        $bmt->setCurrentPembiayaan(Pembiayaan::find(11));
-        $bmt->angsur(4);
-        $transaksi = Transaksi::latest()->with('log')->take(1)->get();
-        return Inertia::render('BMT/Test', compact('transaksi'));
+        dd('5');
     }
 }

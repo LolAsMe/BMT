@@ -21,7 +21,7 @@ class GroupController extends Controller
     public function index()
     {
         //
-        $groups = Group::with('karyawan:id,nama')->get();
+        $groups = Group::with(['karyawan:id,nama', 'anggota:id,nama'])->get();
         return Inertia::render('BMT/Group', compact('groups'));
     }
 
@@ -115,7 +115,7 @@ class GroupController extends Controller
 
     public function addAnggota(Group $group, Request $request,Anggota $anggota)
     {
-        $group->anggota()->attach($anggota,['ke'=>1]);
+        $group->anggota()->attach($anggota,['ke'=>2]);
         return back();
     }
     public function removeAnggota(Group $group, Request $request,Anggota $anggota)
