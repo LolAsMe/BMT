@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Anggota;
+use App\Models\DetailPembiayaan;
 use App\Models\Kas;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
@@ -12,6 +13,7 @@ class BMTService
     private string $default_password;
     private Simpanan $currentSimpanan;
     private Pembiayaan $currentPembiayaan;
+    private ?DetailPembiayaan $lastDetailPembiayaan;
     private $kasBrankas;
     private $kasBMT;
     private $user;
@@ -37,11 +39,13 @@ class BMTService
     public function SetorBrankas(int $jumlah)
     {
         $this->kasKeluar($jumlah);
+        $this->kasMasuk($jumlah, 2);
     }
 
     public function TarikBrankas(int $jumlah)
     {
         $this->kasMasuk($jumlah);
+        $this->kasKeluar($jumlah, 2);
     }
 
     public function searchAnggota(?array $parameter = [])
@@ -121,81 +125,61 @@ class BMTService
 
     // option 1 untuk kas BMt
     // option 2 untuk brankas
-    public function kasMasuk(int $kasMasuk, $option = 1)
+    public function kasMasuk(int $kasMasuk, $option = 1, $keterangan = "ok")
     {
         if ($option == 1) {
-            $this->kasBrankas->detail()->create([
-                'kode' => 'kode1',
-                'tanggal' => now(),
-                'debit' => $kasMasuk,
-                'kredit' => 0,
-                'saldo_awal' => $this->kasBrankas->jumlah,
-                'saldo_akhir' => $this->kasBrankas->jumlah + $kasMasuk,
-                'keterangan' => 'OK',
-                'karyawan_id' => $this->user->karyawan_id,
-            ]);
-            $detailKasBMT = $this->kasBrankas->detail()->latest()->first();
-            $detailKasBMT->transaksi()->create(
-                [
-                    'kode' => 'KAS00001',
-                    'nama' => 'Kas Masuk',
-                    'keterangan' => 'OK',
-                    'debit' => $kasMasuk,
-                    'kredit' => 0,
-                    'tanggal_transaksi' => now(),
-                    'tanggal_slip' => now(),
-                    'karyawan_id' => $this->user->karyawan_id,
-                ]
-            );
-
-            $this->kasBrankas->increment('jumlah', $kasMasuk);
+            $kas = $this->kasBMT;
         } else if ($option == 2) {
-            $this->kasBrankas->detail()->create([
-                'kode' => 'kode1',
-                'tanggal' => now(),
+            $kas = $this->kasBrankas;
+        }
+        $kas->detail()->create([
+            'kode' => 'kode1',
+            'tanggal' => now(),
+            'debit' => $kasMasuk,
+            'kredit' => 0,
+            'saldo_awal' => $kas->jumlah,
+            'saldo_akhir' => $kas->jumlah + $kasMasuk,
+            'keterangan' => $keterangan,
+            'karyawan_id' => $this->user->karyawan_id,
+        ]);
+
+        $detailKasBMT = $kas->detail()->latest()->first();
+        $detailKasBMT->transaksi()->create(
+            [
+                'kode' => 'KAS00001',
+                'nama' => 'Kas Masuk',
+                'keterangan' => 'OK',
                 'debit' => $kasMasuk,
                 'kredit' => 0,
-                'saldo_awal' => $this->kasBrankas->jumlah,
-                'saldo_akhir' => $this->kasBrankas->jumlah + $kasMasuk,
-                'keterangan' => 'OK',
+                'tanggal_transaksi' => now(),
+                'tanggal_slip' => now(),
                 'karyawan_id' => $this->user->karyawan_id,
-            ]);
-            $detailKasBMT = $this->kasBrankas->detail()->latest()->first();
-            $detailKasBMT->transaksi()->create(
-                [
-                    'kode' => 'KAS00001',
-                    'nama' => 'Kas Masuk',
-                    'keterangan' => 'OK',
-                    'debit' => $kasMasuk,
-                    'kredit' => 0,
-                    'tanggal_transaksi' => now(),
-                    'tanggal_slip' => now(),
-                    'karyawan_id' => $this->user->karyawan_id,
-                ]
-            );
+            ]
+        );
 
-            $this->kasBrankas->increment('jumlah', $kasMasuk);
-        }
+        $kas->increment('jumlah', $kasMasuk);
     }
 
     // option 1 untuk kas BMt
     // option 2 untuk brankas
-    public function kasKeluar(int $kasKeluar)
+    public function kasKeluar(int $kasKeluar, $option = 1, $keterangan = "ok")
     {
         if ($option == 1) {
+            $kas = $this->kasBMT;
         } else if ($option == 2) {
+            $kas = $this->kasBrankas;
         }
-        $this->kasBMT->detail()->create([
+        $kas->detail()->create([
             'kode' => 'kode1',
             'tanggal' => now(),
             'debit' => 0,
             'kredit' => $kasKeluar,
-            'saldo_awal' => $this->kasBMT->jumlah,
-            'saldo_akhir' => $this->kasBMT->jumlah - $kasKeluar,
-            'keterangan' => 'OK',
+            'saldo_awal' => $kas->jumlah,
+            'saldo_akhir' => $kas->jumlah - $kasKeluar,
+            'keterangan' => $keterangan,
             'karyawan_id' => $this->user->karyawan_id,
         ]);
-        $detailKasBMT = $this->kasBMT->detail()->latest()->first();
+        $detailKasBMT = $kas->detail()->latest()->first();
         $detailKasBMT->transaksi()->create(
             [
                 'kode' => 'KAS00001',
@@ -209,7 +193,7 @@ class BMTService
             ]
         );
 
-        $this->kasBMT->decrement('jumlah', $kasKeluar);
+        $kas->decrement('jumlah', $kasKeluar);
     }
 
 
@@ -332,7 +316,7 @@ class BMTService
 
     public function isAngsuranSelesai()
     {
-        return $this->currentPembiayaan->status == 'selesai';
+        return $this->currentPembiayaan->status == 'selesai' && $this->lastDetailPembiayaan->total_tanggungan != 0;
     }
     public function attempToAngsur()
     {
@@ -395,5 +379,14 @@ class BMTService
         //     }
         // $this->currentPembiayaan->save();
         // }
+    }
+
+    public function kasTambah($jumlah, $keterangan)
+    {
+        if ($jumlah < 0) {
+            $this->kasKeluar(-$jumlah, 1, $keterangan);
+        } else {
+            $this->kasMasuk($jumlah, 1, $keterangan);
+        }
     }
 }

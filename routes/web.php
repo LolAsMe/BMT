@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AnggunanController;
 use App\Http\Controllers\CetakController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailNisbahController;
 use App\Http\Controllers\DetailPembiayaanController;
 use App\Http\Controllers\DetailSimpananController;
@@ -41,15 +42,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    if(Auth::user()->hasJabatan('funding')){
-        $group = Auth::user()->karyawan->group;
-        $group->load('anggota:id,nama');
-        return Inertia::render('DashboardKaryawan', compact('group'));
-    }else if(Auth::user()->hasJabatan('Manajer') || Auth::user()->hasJabatan('Teller')){
-        return Inertia::render('Dashboard');
-    };
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard',[DashboardController::class, 'index']
+)->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding'])->group(function () {
 
@@ -65,6 +59,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::post('brakas/tarik',[TransaksiController::class, 'tarikBrankas'])->name('brankas.tarik');
     Route::post('brakas/setor',[TransaksiController::class, 'setorBrankas'])->name('brankas.setor');
 
+    Route::post('harian/',[TransaksiController::class, 'makeHarian'])->name('harian.store');
+    Route::post('kas/',[TransaksiController::class, 'tambahKas'])->name('kas.tambah');
 
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([

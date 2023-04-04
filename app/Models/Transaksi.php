@@ -54,4 +54,9 @@ class Transaksi extends Model
     {
         return $this->morphTo();
     }
+
+    public function transaksiHarian()
+    {
+        return $this->belongsTo(TransaksiHarian::class);
+    }
 }

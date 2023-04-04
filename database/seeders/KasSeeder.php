@@ -26,5 +26,6 @@ class KasSeeder extends Seeder
             ['kode'=>'kas', 'nama'=>'Kas Utama','updated_at'=>now(),'created_at'=>now(), 'jumlah'=>1000000000],
             ['kode'=>'kas1', 'nama'=>'Kas BMT','updated_at'=>now(),'created_at'=>now(), 'jumlah'=>50000000],
         ]);
+
     }
 }

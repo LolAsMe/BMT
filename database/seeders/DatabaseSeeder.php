@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             KaryawanSeeder::class,
             UserSeeder::class,
             KasSeeder::class,
+            TransaksiSeeder::class,
             // CommentSeeder::class,
         ]);
     }

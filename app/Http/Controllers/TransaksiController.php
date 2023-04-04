@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
+use App\Models\TransaksiHarian;
 use Illuminate\Http\Request;
 use App\Services\BMTService;
 use Illuminate\Support\Facades\Redirect;
@@ -123,10 +124,26 @@ class TransaksiController extends Controller
     public function setorBrankas(Request $request , BMTService $bmt)
     {
         $bmt->setorBrankas($request->jumlah);
+        return redirect()->back();
+
     }
 
     public function tarikBrankas(Request $request , BMTService $bmt)
     {
         $bmt->tarikBrankas($request->jumlah);
+        return redirect()->back();
+
+    }
+
+    public function makeHarian()
+    {
+        TransaksiHarian::create(['kode'=>"000", "jumlah"=>0]);
+        return redirect()->back();
+    }
+
+    public function tambahKas(Request $request, BMTService $bmt)
+    {
+        $bmt->kasTambah($request->jumlah, $request->keterangan);
+        return redirect()->back();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use DB;
 use Illuminate\Database\Seeder;
 
 class TransaksiSeeder extends Seeder
@@ -14,5 +15,8 @@ class TransaksiSeeder extends Seeder
     public function run()
     {
         //
+        DB::table('transaksi_harian')->insert([
+            ['kode'=>'000', 'jumlah'=>0,'updated_at'=>now(),'created_at'=>now()],
+        ]);
     }
 }

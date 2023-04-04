@@ -12,17 +12,63 @@
                     {{ kas }}
                     {{ brankas }}
                     <div>
+                        Kas Tambah/kurang
+                        Keterangan<input type="text" v-model="formTambah.keterangan">
+                        jumlah<input type="number" v-model="formTambah.jumlah">
+                        <button @click="tambahKas">submit</button>
+                    </div>
+                    <div>
                         Kas & Brankas
-                        <form @submit.prevent="keBrankas">
+                        <!-- <form @submit.prevent="keBrankas">
                             Kas Ke Brankas
-                            <Input v-model="form4.jumlah">Kas Brankas</Input>
-                            <button>Submit</button>
+                            <Input :name="'jumlah'" v-model="form4.jumlah">Kas Brankas</Input>
+                            <button type="submit">Submit</button>
+                        </form> -->
+                        <form @submit.prevent="keBrankas">
+                            <v-input :name="'jumlah'" v-model="form4.jumlah"></v-input>
+                            <button type="submit" class="
+                                                                  text-white
+                                                                  bg-blue-700
+                                                                  hover:bg-blue-800
+                                                                  focus:ring-4 focus:ring-blue-300
+                                                                  font-medium
+                                                                  rounded-lg
+                                                                  text-sm
+                                                                  w-full
+                                                                  sm:w-auto
+                                                                  px-5
+                                                                  py-2.5
+                                                                  text-center
+                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                ">
+                                Submit
+                            </button>
                         </form>
                         <form @submit.prevent="dariBrankas">
+                            <v-input :name="'jumlah'" v-model="form5.jumlah"></v-input>
+                            <button type="submit" class="
+                                                                  text-white
+                                                                  bg-blue-700
+                                                                  hover:bg-blue-800
+                                                                  focus:ring-4 focus:ring-blue-300
+                                                                  font-medium
+                                                                  rounded-lg
+                                                                  text-sm
+                                                                  w-full
+                                                                  sm:w-auto
+                                                                  px-5
+                                                                  py-2.5
+                                                                  text-center
+                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                ">
+                                Submit
+                            </button>
+                        </form>
+                        <!-- <form @submit.prevent="dariBrankas">
                             Ambil Brankas ke Kas
                             <Input v-model="form5.jumlah">Kas Brankas</Input>
-                            <button>Submit</button>
-                        </form>
+                            <button type="submit">Submit</button>
+                        </form> -->
                     </div>
                     <div>
                         Setor
@@ -32,20 +78,20 @@
                             <v-input :name="'id'" v-model="form.id"></v-input>
                             <v-input :name="'jumlah'" v-model="form.jumlah"></v-input>
                             <button type="submit" class="
-                                                  text-white
-                                                  bg-blue-700
-                                                  hover:bg-blue-800
-                                                  focus:ring-4 focus:ring-blue-300
-                                                  font-medium
-                                                  rounded-lg
-                                                  text-sm
-                                                  w-full
-                                                  sm:w-auto
-                                                  px-5
-                                                  py-2.5
-                                                  text-center
-                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-                                                ">
+                                                                  text-white
+                                                                  bg-blue-700
+                                                                  hover:bg-blue-800
+                                                                  focus:ring-4 focus:ring-blue-300
+                                                                  font-medium
+                                                                  rounded-lg
+                                                                  text-sm
+                                                                  w-full
+                                                                  sm:w-auto
+                                                                  px-5
+                                                                  py-2.5
+                                                                  text-center
+                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                ">
                                 Submit
                             </button>
                         </form>
@@ -58,20 +104,20 @@
                             <v-input :name="'id'" v-model="form2.id"></v-input>
                             <v-input :name="'jumlah'" v-model="form2.jumlah"></v-input>
                             <button type="submit" class="
-                                                  text-white
-                                                  bg-blue-700
-                                                  hover:bg-blue-800
-                                                  focus:ring-4 focus:ring-blue-300
-                                                  font-medium
-                                                  rounded-lg
-                                                  text-sm
-                                                  w-full
-                                                  sm:w-auto
-                                                  px-5
-                                                  py-2.5
-                                                  text-center
-                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-                                                ">
+                                                                  text-white
+                                                                  bg-blue-700
+                                                                  hover:bg-blue-800
+                                                                  focus:ring-4 focus:ring-blue-300
+                                                                  font-medium
+                                                                  rounded-lg
+                                                                  text-sm
+                                                                  w-full
+                                                                  sm:w-auto
+                                                                  px-5
+                                                                  py-2.5
+                                                                  text-center
+                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                ">
                                 Submit
                             </button>
                         </form>
@@ -101,6 +147,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import VButton from "@/Components/Button.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
+import { ok } from "assert";
 export default defineComponent({
     components: {
         AppLayout,
@@ -130,6 +177,7 @@ export default defineComponent({
             form3: this.$inertia.form(),
             form4: this.$inertia.form({ jumlah: 0 }),
             form5: this.$inertia.form({ jumlah: 0 }),
+            formTambah: this.$inertia.form({ keterangan: null, jumlah: 0 }),
             anggota: null,
         };
     },
@@ -185,7 +233,8 @@ export default defineComponent({
             });
         },
 
-        keBrankas(){
+        keBrankas() {
+            console.log('test')
             this.form4.post(route("brankas.setor"), {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -193,11 +242,19 @@ export default defineComponent({
                 },
             });
         },
-        dariBrankas(){
+        dariBrankas() {
             this.form5.post(route("brankas.tarik"), {
                 preserveScroll: true,
                 onSuccess: () => {
                     this.form5.reset();
+                },
+            });
+        }
+        , tambahKas() {
+            this.formTambah.post(route('kas.tambah'), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.formTambah.reset();
                 },
             });
         }
