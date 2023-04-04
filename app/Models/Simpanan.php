@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -58,5 +59,24 @@ class Simpanan extends \Eloquent
     public function anggota()
     {
         return $this->belongsTo(Anggota::class);
+    }
+
+    public function tambahInvestasi($attribute = [])
+    {
+        if ($this->jenis_simpanan_id == 11) {
+            $attribute;
+            $this->nisbah()->create([
+                'kode' => '0001',
+                'tanggal_awal' => now(),
+                'tanggal_selesai' => now()->addMonth(3),
+                'awal' => '3000000',
+                'jumlah' => '0',
+            ]);
+        }
+    }
+
+    public function nisbah()
+    {
+        return $this->hasMany(Nisbah::class);
     }
 }

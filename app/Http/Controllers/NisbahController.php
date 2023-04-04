@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Nisbah;
 use App\Http\Requests\StoreNisbahRequest;
 use App\Http\Requests\UpdateNisbahRequest;
+use App\Models\Simpanan;
+use App\Services\BMTService;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -15,10 +17,24 @@ class NisbahController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BMTService $bmt)
     {
         //
         $nisbahs = Nisbah::all();
+        $simpanans= Simpanan::whereJenisSimpananId(11)->get()->toArray();
+        //simpanan mudhorobah 664
+        // $simpanan->tambahInvestasi();
+
+        //hitung nisbah
+
+
+        //tambah setor mudhorobah
+        $simpanan = Simpanan::find(664);
+
+
+        $bmt->hitungNisbah();
+
+        debugbar()->addMessage($simpanans);
         return Inertia::render('BMT/Nisbah', compact('nisbahs'));
     }
 

@@ -5,15 +5,20 @@ namespace App\Services;
 use App\Models\Anggota;
 use App\Models\DetailPembiayaan;
 use App\Models\Kas;
+use App\Models\Nisbah;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
+use App\Models\TransaksiHarian;
+use Carbon\Carbon;
 
 class BMTService
 {
     private string $default_password;
     private Simpanan $currentSimpanan;
     private Pembiayaan $currentPembiayaan;
+    private TransaksiHarian $transaksiHarian;
     private ?DetailPembiayaan $lastDetailPembiayaan;
+    private $nisbahRate;
     private $kasBrankas;
     private $kasBMT;
     private $user;
@@ -28,12 +33,14 @@ class BMTService
         $this->user = auth('web')->user();
         $this->kasBrankas = Kas::find(1);
         $this->kasBMT = Kas::find(2);
+        $this->transaksiHarian = TransaksiHarian::whereDate('tanggal', now())->first();
+        $this->nisbahRate = 0.5;
     }
 
     public function createPembiayaan($attribute)
     {
         Pembiayaan::create($attribute);
-        $this->kasKeluar($attribute['pokok']);
+        $this->kasKeluar($attribute['pokok'], 1, "Pembiayaan Baru", 1);
     }
 
     public function SetorBrankas(int $jumlah)
@@ -88,6 +95,7 @@ class BMTService
             ]
         );
         $this->currentSimpanan->increment('jumlah', $jumlahSetoran);
+        $this->transaksiHarian->increment('debit', $jumlahSetoran);
         $this->kasMasuk($jumlahSetoran);
     }
 
@@ -109,7 +117,7 @@ class BMTService
         $detail->transaksi()->create(
             [
                 'kode' => 'kode1',
-                'nama' => 'SET Mudhorobah',
+                'nama' => 'PEN Mudhorobah',
                 'keterangan' => 'OK',
                 'debit' => 0,
                 'kredit' => $jumlahTarikan,
@@ -119,13 +127,16 @@ class BMTService
             ]
         );
         $this->currentSimpanan->decrement('jumlah', $jumlahTarikan);
+        $this->transaksiHarian->increment('kredit', $jumlahTarikan);
+
         $this->kasKeluar($jumlahTarikan);
     }
 
 
     // option 1 untuk kas BMt
     // option 2 untuk brankas
-    public function kasMasuk(int $kasMasuk, $option = 1, $keterangan = "ok")
+    // pilih 1 di with transaksi untuk memasukan ke transaksi
+    public function kasMasuk(int $kasMasuk, $option = 1, $keterangan = "ok", $withTransaksi = 0)
     {
         if ($option == 1) {
             $kas = $this->kasBMT;
@@ -143,26 +154,31 @@ class BMTService
             'karyawan_id' => $this->user->karyawan_id,
         ]);
 
-        $detailKasBMT = $kas->detail()->latest()->first();
-        $detailKasBMT->transaksi()->create(
-            [
-                'kode' => 'KAS00001',
-                'nama' => 'Kas Masuk',
-                'keterangan' => 'OK',
-                'debit' => $kasMasuk,
-                'kredit' => 0,
-                'tanggal_transaksi' => now(),
-                'tanggal_slip' => now(),
-                'karyawan_id' => $this->user->karyawan_id,
-            ]
-        );
+        if ($withTransaksi == 1) {
+            $detailKasBMT = $kas->detail()->latest()->first();
+            $detailKasBMT->transaksi()->create(
+                [
+                    'kode' => 'KAS00001',
+                    'nama' => 'Kas Masuk',
+                    'keterangan' => 'OK',
+                    'debit' => $kasMasuk,
+                    'kredit' => 0,
+                    'tanggal_transaksi' => now(),
+                    'tanggal_slip' => now(),
+                    'karyawan_id' => $this->user->karyawan_id,
+                ]
+            );
+
+            $this->transaksiHarian->increment('debit', $kasMasuk);
+        }
 
         $kas->increment('jumlah', $kasMasuk);
     }
 
     // option 1 untuk kas BMt
     // option 2 untuk brankas
-    public function kasKeluar(int $kasKeluar, $option = 1, $keterangan = "ok")
+    // pilih 1 di with transaksi untuk memasukan ke transaksi
+    public function kasKeluar(int $kasKeluar, $option = 1, $keterangan = "ok", $withTransaksi = 0)
     {
         if ($option == 1) {
             $kas = $this->kasBMT;
@@ -180,18 +196,22 @@ class BMTService
             'karyawan_id' => $this->user->karyawan_id,
         ]);
         $detailKasBMT = $kas->detail()->latest()->first();
-        $detailKasBMT->transaksi()->create(
-            [
-                'kode' => 'KAS00001',
-                'nama' => 'Kas Keluar',
-                'keterangan' => 'OK',
-                'debit' => 0,
-                'kredit' => $kasKeluar,
-                'tanggal_transaksi' => now(),
-                'tanggal_slip' => now(),
-                'karyawan_id' => $this->user->karyawan_id,
-            ]
-        );
+        if ($withTransaksi == 1) {
+
+            $detailKasBMT->transaksi()->create(
+                [
+                    'kode' => 'KAS00001',
+                    'nama' => 'Kas Keluar',
+                    'keterangan' => 'OK',
+                    'debit' => 0,
+                    'kredit' => $kasKeluar,
+                    'tanggal_transaksi' => now(),
+                    'tanggal_slip' => now(),
+                    'karyawan_id' => $this->user->karyawan_id,
+                ]
+            );
+            $this->transaksiHarian->increment('kredit', $kasKeluar);
+        }
 
         $kas->decrement('jumlah', $kasKeluar);
     }
@@ -266,6 +286,8 @@ class BMTService
                 'karyawan_id' => $this->user->karyawan_id,
             ]
         );
+
+        $this->transaksiHarian->increment('debit', $this->currentPembiayaan->jumlah_angsuran);
         $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
     }
 
@@ -292,6 +314,7 @@ class BMTService
                 'karyawan_id' => $this->user->karyawan_id,
             ]
         );
+        $this->transaksiHarian->increment('debit', $this->currentPembiayaan->jumlah_angsuran);
         $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->angsuran_diterima + $this->currentPembiayaan->jumlah_angsuran;
         $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
     }
@@ -384,9 +407,65 @@ class BMTService
     public function kasTambah($jumlah, $keterangan)
     {
         if ($jumlah < 0) {
-            $this->kasKeluar(-$jumlah, 1, $keterangan);
+            $this->kasKeluar(-$jumlah, 1, $keterangan, 1);
         } else {
-            $this->kasMasuk($jumlah, 1, $keterangan);
+            $this->kasMasuk($jumlah, 1, $keterangan, 1);
         }
+    }
+
+    public function hitungNisbah()
+    {
+        $laba = 4000000;
+        $bulan = now()->format('m-Y');
+        $nisbahs = Nisbah::whereStatus('ongoing')->get();
+        foreach ($nisbahs as $key => $nisbah) {
+            $tanggal_awal = Carbon::createFromDate($nisbah->tanggal_awal);
+            $tanggal_selesai = Carbon::createFromDate($nisbah->tanggal_selesai);
+
+            //check valid tanggal
+            // dd(now()->gte($tanggal_awal) && now()->lte($tanggal_selesai));
+            if (now()->gte($tanggal_awal) && now()->lte($tanggal_selesai)) {
+                if ($tanggal_awal->format('m') == now()->format('m')) {
+                    $hariSatuBulan = now()->daysInMonth;
+                    $hari = (int)$tanggal_awal->format('d');
+                    $pengendapan = $hariSatuBulan - $hari;
+
+                    $saldoRataRata = $pengendapan * $nisbah->awal / $hariSatuBulan;
+                } else if ($tanggal_selesai->format('m') == now()->format('m')) {
+                    $hariSatuBulan = now()->daysInMonth;
+                    $pengendapan = $tanggal_selesai->format('d');
+                    $saldoRataRata = $pengendapan * $nisbah->awal / $hariSatuBulan;
+                } else {
+                    $hariSatuBulan = now()->daysInMonth;
+                    $pengendapan = $hariSatuBulan;
+                    $saldoRataRata = $nisbah->awal;
+                }
+                $hasil = 0;
+                $detail = $nisbah->detail()->create([
+                    'pengendapan' => $pengendapan,
+                    'bulan' => $bulan,
+                    'saldo_rata_rata' => $saldoRataRata,
+                    'hasil' => $hasil
+                ]);
+            }
+        }
+        $nisbahs->load(['detail' => function ($query) {
+            return $query->whereStatus('ongoing');
+        }]);
+        $totalSaldo = 0;
+        foreach ($nisbahs as $key => $nisbah) {
+            $totalSaldo += $nisbah->detail[0]->saldo_rata_rata;
+        }
+
+        foreach ($nisbahs as $key => $nisbah) {
+            $hasil = $nisbah->detail[0]->saldo_rata_rata * $this->nisbahRate * $laba / $totalSaldo;
+            $nisbah->detail[0]->hasil = $hasil;
+            $nisbah->detail[0]->status = "selesai";
+            $nisbah->detail[0]->save();
+            $nisbah->jumlah += $hasil;
+            $nisbah->save();
+        }
+
+        dd('selesai');
     }
 }

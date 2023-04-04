@@ -32556,7 +32556,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   scope: "col",
   "class": "relative px-6 py-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "px-6 py-3 text-left text-xs text-center font-medium text-gray-500 uppercase tracking-wider"
+  "class": "px-6 py-3 text-xs text-center font-medium text-gray-500 uppercase tracking-wider"
 }, "Edit")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col",
   "class": "relative px-6 py-3"

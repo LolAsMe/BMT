@@ -52,4 +52,9 @@ class Nisbah extends Model
     {
         return $this->hasMany(DetailNisbah::class);
     }
+
+    public function Simpanan()
+    {
+        return $this->belongsTo(Simpanan::class);
+    }
 }

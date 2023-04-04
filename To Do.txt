@@ -4,8 +4,11 @@ To Do
 3. karyawan setor, teller input
 pembiayaaan
 kas
-
 transaksi
+
+laba
+pembiayaan laba
+labaa baru
 neraca
 nisbah
 calculate
@@ -14,5 +17,6 @@ response
 view
  print
  tidy up code
+ Checker
  laporan kmm
 
