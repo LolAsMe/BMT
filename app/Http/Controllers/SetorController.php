@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Pembiayaan;
 use App\Models\Simpanan;
 use App\Services\BMTService;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class SetorController extends Controller
     public function index()
     {
         //
-        return Inertia::render('BMT/Setor/Index');
+        $angsuran = Pembiayaan::latest()->first();
+        return Inertia::render('BMT/Setor/Index', compact('angsuran'));
     }
 
     public function batch()

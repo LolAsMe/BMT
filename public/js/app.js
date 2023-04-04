@@ -24233,6 +24233,9 @@ __webpack_require__.r(__webpack_exports__);
     VButton: _Components_Button_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_3__.Link
   },
+  props: {
+    angsuran: Object
+  },
   data: function data() {
     return {
       form: this.$inertia.form({
@@ -24243,6 +24246,7 @@ __webpack_require__.r(__webpack_exports__);
         id: "",
         jumlah: ""
       }),
+      form3: this.$inertia.form(),
       anggota: null
     };
   },
@@ -24264,6 +24268,44 @@ __webpack_require__.r(__webpack_exports__);
         preserveScroll: true,
         onSuccess: function onSuccess() {
           _this2.form2.reset();
+        }
+      });
+    },
+    tambahPembiayaan: function tambahPembiayaan() {
+      var _this3 = this;
+
+      this.form3.post(route("pembiayaan.store", {
+        'kode': 'Pembiayaan5',
+        'nomor': '2135',
+        'jenis_pembiayaan_id': '1',
+        'simpanan_id': '1',
+        'karyawan_id': '8',
+        'jumlah': 20000000,
+        'tanggal_pinjam': '4/4/23',
+        'tanggal_jatuh_tempo': '4/4/25',
+        'pokok': '3000000',
+        'jasa': '1000000',
+        'potongan_pembiayaan': 0,
+        'total_pembiayaan': '3000000',
+        'frekuensi_angsuran': '3',
+        'jumlah_angsuran': '1000000',
+        'angsuran_diterima': 0,
+        'keterangan': 'test2',
+        'status': 'ongoing'
+      }), {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          _this3.form2.reset();
+        }
+      });
+    },
+    angsur: function angsur() {
+      var _this4 = this;
+
+      this.form3.post(route("angsur", this.angsuran.id), {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          _this4.form2.reset();
         }
       });
     }
@@ -36236,7 +36278,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), _hoisted_8], 32
       /* HYDRATE_EVENTS */
-      )])])])])];
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.angsuran), 1
+      /* TEXT */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[6] || (_cache[6] = function () {
+          return _ctx.tambahPembiayaan && _ctx.tambahPembiayaan.apply(_ctx, arguments);
+        })
+      }, "tambah anngsuran")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[7] || (_cache[7] = function () {
+          return _ctx.angsur && _ctx.angsur.apply(_ctx, arguments);
+        })
+      }, " angsur")])])])])])];
     }),
     _: 1
     /* STABLE */

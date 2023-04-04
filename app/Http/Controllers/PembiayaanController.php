@@ -41,7 +41,6 @@ class PembiayaanController extends Controller
     public function store(StorePembiayaanRequest $request)
     {
         //
-        // dd($request->validated());
         Pembiayaan::create($request->validated());
 
         return back()->with('flash', [

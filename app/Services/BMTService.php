@@ -15,6 +15,10 @@ class BMTService
     private $kasUtama;
     private $kasBMT;
     private $user;
+
+    private $angsuranKe = null;
+
+
     public function __construct($default_password = '123456')
     {
         $this->default_password = $default_password;
@@ -225,29 +229,27 @@ class BMTService
     public function handleFirstAngsuran()
     {
         debugbar()->addMessage('handle first Angsuran');
-        if ($this->angsuranKe == 1) {
-            $this->currentPembiayaan->detail()->create([
-                'angsuran_ke' => 1,
-                'jumlah' => $this->currentPembiayaan->jumlah_angsuran,
-                'akumulasi_angsuran' => $this->currentPembiayaan->jumlah_angsuran,
-                'total_tanggungan' => $this->currentPembiayaan->total_pembiayaan - $this->currentPembiayaan->jumlah_angsuran,
-                'keterangan' => 'Ok',
-            ]);
-            $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->jumlah_angsuran;
-            $this->lastDetailPembiayaan = $this->currentPembiayaan->detail()->latest()->first();
-            $this->lastDetailPembiayaan->transaksi()->create(
-                [
-                    'kode' => 'PEMB 012930',
-                    'nama' => 'PEM Mudhorobah',
-                    'keterangan' => 'OK',
-                    'debit' => $this->currentPembiayaan->jumlah_angsuran,
-                    'kredit' => 0,
-                    'tanggal_transaksi' => now(),
-                    'tanggal_slip' => now(),
-                    'karyawan_id' => $this->user->karyawan_id,
-                ]
-            );
-        }
+        $this->currentPembiayaan->detail()->create([
+            'angsuran_ke' => 1,
+            'jumlah' => $this->currentPembiayaan->jumlah_angsuran,
+            'akumulasi_angsuran' => $this->currentPembiayaan->jumlah_angsuran,
+            'total_tanggungan' => $this->currentPembiayaan->total_pembiayaan - $this->currentPembiayaan->jumlah_angsuran,
+            'keterangan' => 'Ok',
+        ]);
+        $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->jumlah_angsuran;
+        $this->lastDetailPembiayaan = $this->currentPembiayaan->detail()->latest()->first();
+        $this->lastDetailPembiayaan->transaksi()->create(
+            [
+                'kode' => 'PEMB 012930',
+                'nama' => 'PEM Mudhorobah',
+                'keterangan' => 'OK',
+                'debit' => $this->currentPembiayaan->jumlah_angsuran,
+                'kredit' => 0,
+                'tanggal_transaksi' => now(),
+                'tanggal_slip' => now(),
+                'karyawan_id' => $this->user->karyawan_id,
+            ]
+        );
     }
 
     public function handleAngsuran()
@@ -283,9 +285,8 @@ class BMTService
     public function isValidAngsuran()
     {
         debugbar()->addMessage('Check Angsuran Yg Valid');
-        debugbar()->addMessage($this->lastDetailPembiayaan->angsuran_ke < $this->currentPembiayaan->frekuensi_angsuran && $this->lastDetailPembiayaan->angsuran_ke + 1 == $this->angsuranKe);
-
-        return $this->lastDetailPembiayaan->angsuran_ke < $this->currentPembiayaan->frekuensi_angsuran && $this->lastDetailPembiayaan->angsuran_ke + 1 == $this->angsuranKe;
+        $this->angsuranKe = $this->lastDetailPembiayaan === null ? 1 : $this->lastDetailPembiayaan->angsuran_ke+1;
+        return $this->angsuranKe <= $this->currentPembiayaan->frekuensi_angsuran;
     }
     public function checkStatusAngsuran()
     {
@@ -301,11 +302,12 @@ class BMTService
     }
     public function attempToAngsur()
     {
+
         debugbar()->addMessage('isFirstAngsuran ?' . $this->isFirstAngsuran());
 
-        $this->isFirstAngsuran()
+        $this->isValidAngsuran() ?  ($this->isFirstAngsuran()
             ? $this->handleFirstAngsuran()
-            : ($this->isValidAngsuran() ? $this->handleAngsuran() : null);
+            : $this->handleAngsuran()) : null;
 
         $this->checkStatusAngsuran();
         $this->currentPembiayaan->save();

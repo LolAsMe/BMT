@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
+use App\Models\Pembiayaan;
 use App\Models\Simpanan;
 use Illuminate\Http\Request;
 use App\Services\BMTService;
@@ -108,6 +109,13 @@ class TransaksiController extends Controller
     public function tarik(Request $request, Simpanan $simpanan, BMTService $bmt)
     {
         $bmt->setCurrentSimpanan($simpanan)->tarik($request->jumlah);
+        return redirect()->back();
+
+    }
+
+    public function angsur(Request $request, Pembiayaan $pembiayaan, BMTService $bmt)
+    {
+        $bmt->setCurrentPembiayaan($pembiayaan)->attempToAngsur();
         return redirect()->back();
 
     }
