@@ -7,9 +7,15 @@ To Do
 pembiayaaan
 
 kas
+
  transaksi
 neraca
 nisbah
-view print
+calculate
+generate kode database
+response
+view
+ print
+ tidy up code
  laporan kmm
 

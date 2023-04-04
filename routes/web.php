@@ -62,6 +62,9 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::post('setor/{simpanan}',[SetorController::class, 'setor'])->name('setor.store');
     Route::post('transaksi/tarik/{simpanan}',[TransaksiController::class, 'tarik'])->name('tarik');
     Route::post('transaksi/angsur/{pembiayaan}',[TransaksiController::class, 'angsur'])->name('angsur');
+    Route::post('brakas/tarik',[TransaksiController::class, 'tarikBrankas'])->name('brankas.tarik');
+    Route::post('brakas/setor',[TransaksiController::class, 'setorBrankas'])->name('brankas.setor');
+
 
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([

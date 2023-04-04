@@ -12,7 +12,7 @@ class BMTService
     private string $default_password;
     private Simpanan $currentSimpanan;
     private Pembiayaan $currentPembiayaan;
-    private $kasUtama;
+    private $kasBrankas;
     private $kasBMT;
     private $user;
 
@@ -24,9 +24,26 @@ class BMTService
         $this->default_password = $default_password;
         // $this->currentSimpanan = Simpanan::find(1);
         $this->user = auth('web')->user();
-        $this->kasUtama = Kas::find(1);
+        $this->kasBrankas = Kas::find(1);
         $this->kasBMT = Kas::find(2);
     }
+
+    public function createPembiayaan($attribute)
+    {
+        Pembiayaan::create($attribute);
+        $this->kasKeluar($attribute['pokok']);
+    }
+
+    public function SetorBrankas(int $jumlah)
+    {
+        $this->kasKeluar($jumlah);
+    }
+
+    public function TarikBrankas(int $jumlah)
+    {
+        $this->kasMasuk($jumlah);
+    }
+
     public function searchAnggota(?array $parameter = [])
     {
         $anggotas = Anggota::searchAnggota($parameter);
@@ -67,6 +84,7 @@ class BMTService
             ]
         );
         $this->currentSimpanan->increment('jumlah', $jumlahSetoran);
+        $this->kasMasuk($jumlahSetoran);
     }
 
     public function tarik(int $jumlahTarikan)
@@ -97,51 +115,76 @@ class BMTService
             ]
         );
         $this->currentSimpanan->decrement('jumlah', $jumlahTarikan);
+        $this->kasKeluar($jumlahTarikan);
     }
 
 
-    public function kasMasuk(int $kasMasuk)
+    // option 1 untuk kas BMt
+    // option 2 untuk brankas
+    public function kasMasuk(int $kasMasuk, $option = 1)
     {
-        $this->kasBMT->detail()->create([
-            'kode' => 'kode1',
-            'tanggal' => now(),
-            'debit' => $kasMasuk,
-            'kredit' => 0,
-            'saldo_awal' => $this->kasBMT->jumlah,
-            'saldo_akhir' => $this->kasBMT->jumlah + $kasMasuk,
-            'keterangan' => 'OK',
-            'karyawan_id' => $this->user->karyawan_id,
-        ]);
-        $this->kasUtama->detail()->create([
-            'kode' => 'kode1',
-            'tanggal' => now(),
-            'debit' => 0,
-            'kredit' => $kasMasuk,
-            'saldo_awal' => $this->kasUtama->jumlah,
-            'saldo_akhir' => $this->kasUtama->jumlah - $kasMasuk,
-            'keterangan' => 'OK',
-            'karyawan_id' => $this->user->karyawan_id,
-        ]);
-        $detailKasBMT = $this->kasBMT->detail()->latest()->first();
-        $detailKasBMT->transaksi()->create(
-            [
-                'kode' => 'KAS00001',
-                'nama' => 'Kas Masuk',
-                'keterangan' => 'OK',
+        if ($option == 1) {
+            $this->kasBrankas->detail()->create([
+                'kode' => 'kode1',
+                'tanggal' => now(),
                 'debit' => $kasMasuk,
                 'kredit' => 0,
-                'tanggal_transaksi' => now(),
-                'tanggal_slip' => now(),
+                'saldo_awal' => $this->kasBrankas->jumlah,
+                'saldo_akhir' => $this->kasBrankas->jumlah + $kasMasuk,
+                'keterangan' => 'OK',
                 'karyawan_id' => $this->user->karyawan_id,
-            ]
-        );
+            ]);
+            $detailKasBMT = $this->kasBrankas->detail()->latest()->first();
+            $detailKasBMT->transaksi()->create(
+                [
+                    'kode' => 'KAS00001',
+                    'nama' => 'Kas Masuk',
+                    'keterangan' => 'OK',
+                    'debit' => $kasMasuk,
+                    'kredit' => 0,
+                    'tanggal_transaksi' => now(),
+                    'tanggal_slip' => now(),
+                    'karyawan_id' => $this->user->karyawan_id,
+                ]
+            );
 
-        $this->kasBMT->increment('jumlah', $kasMasuk);
-        $this->kasUtama->decrement('jumlah', $kasMasuk);
+            $this->kasBrankas->increment('jumlah', $kasMasuk);
+        } else if ($option == 2) {
+            $this->kasBrankas->detail()->create([
+                'kode' => 'kode1',
+                'tanggal' => now(),
+                'debit' => $kasMasuk,
+                'kredit' => 0,
+                'saldo_awal' => $this->kasBrankas->jumlah,
+                'saldo_akhir' => $this->kasBrankas->jumlah + $kasMasuk,
+                'keterangan' => 'OK',
+                'karyawan_id' => $this->user->karyawan_id,
+            ]);
+            $detailKasBMT = $this->kasBrankas->detail()->latest()->first();
+            $detailKasBMT->transaksi()->create(
+                [
+                    'kode' => 'KAS00001',
+                    'nama' => 'Kas Masuk',
+                    'keterangan' => 'OK',
+                    'debit' => $kasMasuk,
+                    'kredit' => 0,
+                    'tanggal_transaksi' => now(),
+                    'tanggal_slip' => now(),
+                    'karyawan_id' => $this->user->karyawan_id,
+                ]
+            );
+
+            $this->kasBrankas->increment('jumlah', $kasMasuk);
+        }
     }
 
+    // option 1 untuk kas BMt
+    // option 2 untuk brankas
     public function kasKeluar(int $kasKeluar)
     {
+        if ($option == 1) {
+        } else if ($option == 2) {
+        }
         $this->kasBMT->detail()->create([
             'kode' => 'kode1',
             'tanggal' => now(),
@@ -149,16 +192,6 @@ class BMTService
             'kredit' => $kasKeluar,
             'saldo_awal' => $this->kasBMT->jumlah,
             'saldo_akhir' => $this->kasBMT->jumlah - $kasKeluar,
-            'keterangan' => 'OK',
-            'karyawan_id' => $this->user->karyawan_id,
-        ]);
-        $this->kasUtama->detail()->create([
-            'kode' => 'kode1',
-            'tanggal' => now(),
-            'debit' => $kasKeluar,
-            'kredit' => 0,
-            'saldo_awal' => $this->kasUtama->jumlah,
-            'saldo_akhir' => $this->kasUtama->jumlah + $kasKeluar,
             'keterangan' => 'OK',
             'karyawan_id' => $this->user->karyawan_id,
         ]);
@@ -177,7 +210,6 @@ class BMTService
         );
 
         $this->kasBMT->decrement('jumlah', $kasKeluar);
-        $this->kasUtama->increment('jumlah', $kasKeluar);
     }
 
 
@@ -250,6 +282,7 @@ class BMTService
                 'karyawan_id' => $this->user->karyawan_id,
             ]
         );
+        $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
     }
 
     public function handleAngsuran()
@@ -276,6 +309,7 @@ class BMTService
             ]
         );
         $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->angsuran_diterima + $this->currentPembiayaan->jumlah_angsuran;
+        $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
     }
 
     public function isFirstAngsuran()
@@ -285,7 +319,7 @@ class BMTService
     public function isValidAngsuran()
     {
         debugbar()->addMessage('Check Angsuran Yg Valid');
-        $this->angsuranKe = $this->lastDetailPembiayaan === null ? 1 : $this->lastDetailPembiayaan->angsuran_ke+1;
+        $this->angsuranKe = $this->lastDetailPembiayaan === null ? 1 : $this->lastDetailPembiayaan->angsuran_ke + 1;
         return $this->angsuranKe <= $this->currentPembiayaan->frekuensi_angsuran;
     }
     public function checkStatusAngsuran()

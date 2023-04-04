@@ -119,4 +119,14 @@ class TransaksiController extends Controller
         return redirect()->back();
 
     }
+
+    public function setorBrankas(Request $request , BMTService $bmt)
+    {
+        $bmt->setorBrankas($request->jumlah);
+    }
+
+    public function tarikBrankas(Request $request , BMTService $bmt)
+    {
+        $bmt->tarikBrankas($request->jumlah);
+    }
 }
