@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Anggota;
+use App\Models\DetailNisbah;
 use App\Models\DetailPembiayaan;
 use App\Models\Kas;
 use App\Models\Nisbah;
@@ -417,6 +418,10 @@ class BMTService
     {
         $laba = 4000000;
         $bulan = now()->format('m-Y');
+        $lastDetail = DetailNisbah::whereStatus("selesai")->latest()->first();
+        if ( $lastDetail && $lastDetail->bulan == $bulan) {
+            dd("bulan ini Sudah");
+        }
         $nisbahs = Nisbah::whereStatus('ongoing')->get();
         foreach ($nisbahs as $key => $nisbah) {
             $tanggal_awal = Carbon::createFromDate($nisbah->tanggal_awal);
@@ -435,6 +440,7 @@ class BMTService
                     $hariSatuBulan = now()->daysInMonth;
                     $pengendapan = $tanggal_selesai->format('d');
                     $saldoRataRata = $pengendapan * $nisbah->awal / $hariSatuBulan;
+                    $nisbah->status = "selesai";
                 } else {
                     $hariSatuBulan = now()->daysInMonth;
                     $pengendapan = $hariSatuBulan;
