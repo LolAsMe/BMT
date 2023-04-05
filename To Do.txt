@@ -6,14 +6,13 @@ pembiayaaan
 kas
 transaksi
 nisbah
-
-
-
-constrained law
 laba
 pembiayaan laba
 labaa baru
-neraca
+
+execption
+test case
+constrained law
 calculate
 generate kode database
 response

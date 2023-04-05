@@ -137,7 +137,7 @@ class TransaksiController extends Controller
 
     public function makeHarian()
     {
-        TransaksiHarian::create(['kode'=>"000", "debet"=>0,"kredit"=>0]);
+        TransaksiHarian::create(['kode'=>"000", "debit"=>0,"kredit"=>0]);
         return redirect()->back();
     }
 

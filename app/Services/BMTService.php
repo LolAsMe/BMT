@@ -216,7 +216,7 @@ class BMTService
             );
             $this->transaksiHarian->increment('kredit', $kasKeluar);
             $attribute=['kode'=>"Kas006", 'keterangan'=>$keterangan];
-            $this->labaMasuk($kasMasuk, $attribute);
+            $this->labaKeluar($kasKeluar, $attribute);
         }
 
         $kas->decrement('jumlah', $kasKeluar);
@@ -440,7 +440,7 @@ class BMTService
 
     public function hitungNisbah()
     {
-        $laba = 4000000;
+        $laba = Laba::labaThisMonth()->jumlah;
         $bulan = now()->format('m-Y');
         $lastDetail = DetailNisbah::whereStatus("selesai")->latest()->first();
         if ($lastDetail && $lastDetail->bulan == $bulan) {
@@ -516,7 +516,17 @@ class BMTService
         //     'keterangan'=>'ok'
         // ];
     }
-    public function labaKeluar()
+    public function labaKeluar($jumlah, $attribute = [])
     {
+        $laba = Laba::labaThisMonth();
+        $laba->detail()->create([
+            'kode' => $attribute['kode'] ?? "Laba",
+            'kredit' => $jumlah,
+            'saldo_awal' => $laba->jumlah,
+            'saldo_akhir' => $laba->jumlah - $jumlah,
+            'keterangan' => $attribute['keterangan'] ?? "Ok"
+        ]);
+        $laba->jumlah -= $jumlah;
+        $laba->save();
     }
 }

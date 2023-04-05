@@ -32,4 +32,9 @@ class JenisSimpanan extends Model
 
     protected $table = 'jenis_simpanan';
     protected $guarded = [];
+
+    public function simpanan()
+    {
+        return $this->hasOne(Simpanan::class);
+    }
 }

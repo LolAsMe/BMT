@@ -79,4 +79,8 @@ class Simpanan extends \Eloquent
     {
         return $this->hasMany(Nisbah::class);
     }
+    public function jenisSimpanan()
+    {
+        return $this->belongsTo(JenisSimpanan::class);
+    }
 }

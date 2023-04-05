@@ -18,7 +18,9 @@ class SimpananController extends Controller
     public function index()
     {
         //
-        $simpanans = Simpanan::take(100)->orderByDesc('id')->get();
+        $simpanans = Simpanan::take(25)->orderByDesc('id')->get();
+        $simpanans->load('anggota','jenisSimpanan');
+        debugbar()->addMessage($simpanans->toArray());
         return Inertia::render('BMT/Simpanan', compact('simpanans'));
     }
 
@@ -57,7 +59,10 @@ class SimpananController extends Controller
      */
     public function show(Simpanan $simpanan)
     {
+        $simpanan->load('anggota','jenisSimpanan');
         //
+        return Inertia::render('BMT/Simpanan/ShowOneSimpanan', compact('simpanan'));
+
     }
 
     /**

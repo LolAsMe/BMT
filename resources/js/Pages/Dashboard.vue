@@ -1,17 +1,16 @@
 <template>
     <app-layout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
 
-        <div class="py-12">
+
+        <div class="py-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     {{ transaksiHarian }}
+                    tes
                     <div class="block">
-                        <button v-if="transaksiHarian.length == 0" @click="makeHarian"> Start The Day</button>
+                        <button
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                            v-if="transaksiHarian.length == 0" @click="makeHarian"> Start The Day</button>
                         <div>
                             <Link :href="route('anggota.index')">Anggota</Link>
                         </div>

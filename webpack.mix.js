@@ -11,9 +11,10 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.browserSync({
-    proxy: '192.168.1.220:1234',
-    open: false,
+ mix.browserSync({
+    // proxy: 'something.test',
+    // host: 'something.test',
+    // open: 'external'
 });
 
 mix.js('resources/js/app.js', 'public/js').vue()

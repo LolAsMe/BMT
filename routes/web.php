@@ -86,7 +86,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
 
 
     Route::resource('simpanan', SimpananController::class)->only([
-        'index', 'destroy', 'update', 'store'
+        'index', 'destroy', 'update', 'store','show'
     ]);
 
     Route::resource('laba', LabaController::class)->only([
@@ -103,6 +103,9 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('jabatan', JabatanController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::resource('transaksi', TransaksiController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('jenis-simpanan', JenisSimpananController::class)->only([
