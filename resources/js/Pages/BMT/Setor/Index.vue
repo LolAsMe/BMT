@@ -15,6 +15,8 @@
                         Kas Tambah/kurang
                         Keterangan<input type="text" v-model="formTambah.keterangan">
                         jumlah<input type="number" v-model="formTambah.jumlah">
+                        <!-- <input type="checkbox" id="checkbox" v-model="formTambah.checked" /> -->
+                        <!-- <label for="checkbox">Masuk Laba?</label> -->
                         <button @click="tambahKas">submit</button>
                     </div>
                     <div>
@@ -27,40 +29,40 @@
                         <form @submit.prevent="keBrankas">
                             <v-input :name="'jumlah'" v-model="form4.jumlah"></v-input>
                             <button type="submit" class="
-                                                                  text-white
-                                                                  bg-blue-700
-                                                                  hover:bg-blue-800
-                                                                  focus:ring-4 focus:ring-blue-300
-                                                                  font-medium
-                                                                  rounded-lg
-                                                                  text-sm
-                                                                  w-full
-                                                                  sm:w-auto
-                                                                  px-5
-                                                                  py-2.5
-                                                                  text-center
-                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-                                                                ">
+                                                                          text-white
+                                                                          bg-blue-700
+                                                                          hover:bg-blue-800
+                                                                          focus:ring-4 focus:ring-blue-300
+                                                                          font-medium
+                                                                          rounded-lg
+                                                                          text-sm
+                                                                          w-full
+                                                                          sm:w-auto
+                                                                          px-5
+                                                                          py-2.5
+                                                                          text-center
+                                                                          dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                        ">
                                 Submit
                             </button>
                         </form>
                         <form @submit.prevent="dariBrankas">
                             <v-input :name="'jumlah'" v-model="form5.jumlah"></v-input>
                             <button type="submit" class="
-                                                                  text-white
-                                                                  bg-blue-700
-                                                                  hover:bg-blue-800
-                                                                  focus:ring-4 focus:ring-blue-300
-                                                                  font-medium
-                                                                  rounded-lg
-                                                                  text-sm
-                                                                  w-full
-                                                                  sm:w-auto
-                                                                  px-5
-                                                                  py-2.5
-                                                                  text-center
-                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-                                                                ">
+                                                                          text-white
+                                                                          bg-blue-700
+                                                                          hover:bg-blue-800
+                                                                          focus:ring-4 focus:ring-blue-300
+                                                                          font-medium
+                                                                          rounded-lg
+                                                                          text-sm
+                                                                          w-full
+                                                                          sm:w-auto
+                                                                          px-5
+                                                                          py-2.5
+                                                                          text-center
+                                                                          dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                        ">
                                 Submit
                             </button>
                         </form>
@@ -78,20 +80,20 @@
                             <v-input :name="'id'" v-model="form.id"></v-input>
                             <v-input :name="'jumlah'" v-model="form.jumlah"></v-input>
                             <button type="submit" class="
-                                                                  text-white
-                                                                  bg-blue-700
-                                                                  hover:bg-blue-800
-                                                                  focus:ring-4 focus:ring-blue-300
-                                                                  font-medium
-                                                                  rounded-lg
-                                                                  text-sm
-                                                                  w-full
-                                                                  sm:w-auto
-                                                                  px-5
-                                                                  py-2.5
-                                                                  text-center
-                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-                                                                ">
+                                                                          text-white
+                                                                          bg-blue-700
+                                                                          hover:bg-blue-800
+                                                                          focus:ring-4 focus:ring-blue-300
+                                                                          font-medium
+                                                                          rounded-lg
+                                                                          text-sm
+                                                                          w-full
+                                                                          sm:w-auto
+                                                                          px-5
+                                                                          py-2.5
+                                                                          text-center
+                                                                          dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                        ">
                                 Submit
                             </button>
                         </form>
@@ -104,20 +106,20 @@
                             <v-input :name="'id'" v-model="form2.id"></v-input>
                             <v-input :name="'jumlah'" v-model="form2.jumlah"></v-input>
                             <button type="submit" class="
-                                                                  text-white
-                                                                  bg-blue-700
-                                                                  hover:bg-blue-800
-                                                                  focus:ring-4 focus:ring-blue-300
-                                                                  font-medium
-                                                                  rounded-lg
-                                                                  text-sm
-                                                                  w-full
-                                                                  sm:w-auto
-                                                                  px-5
-                                                                  py-2.5
-                                                                  text-center
-                                                                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-                                                                ">
+                                                                          text-white
+                                                                          bg-blue-700
+                                                                          hover:bg-blue-800
+                                                                          focus:ring-4 focus:ring-blue-300
+                                                                          font-medium
+                                                                          rounded-lg
+                                                                          text-sm
+                                                                          w-full
+                                                                          sm:w-auto
+                                                                          px-5
+                                                                          py-2.5
+                                                                          text-center
+                                                                          dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                                                                        ">
                                 Submit
                             </button>
                         </form>
@@ -177,7 +179,11 @@ export default defineComponent({
             form3: this.$inertia.form(),
             form4: this.$inertia.form({ jumlah: 0 }),
             form5: this.$inertia.form({ jumlah: 0 }),
-            formTambah: this.$inertia.form({ keterangan: null, jumlah: 0 }),
+            formTambah: this.$inertia.form({
+                keterangan: null,
+                checked: true,
+                jumlah: 0
+            }),
             anggota: null,
         };
     },
@@ -208,12 +214,12 @@ export default defineComponent({
                 'jumlah': 20000000,
                 'tanggal_pinjam': '4/4/23',
                 'tanggal_jatuh_tempo': '4/4/25',
-                'pokok': '3000000',
-                'jasa': '1000000',
+                'pokok': '5000000',
+                'jasa': '5000000',
                 'potongan_pembiayaan': 0,
-                'total_pembiayaan': '3000000',
+                'total_pembiayaan': '30000000',
                 'frekuensi_angsuran': '3',
-                'jumlah_angsuran': '1000000',
+                'jumlah_angsuran': 10000000,
                 'angsuran_diterima': 0,
                 'keterangan': 'test2',
                 'status': 'ongoing',

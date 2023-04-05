@@ -12,6 +12,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\JenisPembiayaanController;
 use App\Http\Controllers\JenisSimpananController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\LabaController;
 use App\Http\Controllers\NisbahController;
 use App\Http\Controllers\PembiayaanController;
 use App\Http\Controllers\SetorController;
@@ -42,25 +43,26 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard',[DashboardController::class, 'index']
+Route::middleware(['auth:sanctum', 'verified'])->get(
+    '/dashboard',
+    [DashboardController::class, 'index']
 )->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding'])->group(function () {
-
 });
 
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
 
-    Route::get('setor',[SetorController::class, 'index'])->name('setor');
-    Route::get('setor/batch',[SetorController::class, 'batch'])->name('setor/batch');
-    Route::post('setor/{simpanan}',[SetorController::class, 'setor'])->name('setor.store');
-    Route::post('transaksi/tarik/{simpanan}',[TransaksiController::class, 'tarik'])->name('tarik');
-    Route::post('transaksi/angsur/{pembiayaan}',[TransaksiController::class, 'angsur'])->name('angsur');
-    Route::post('brakas/tarik',[TransaksiController::class, 'tarikBrankas'])->name('brankas.tarik');
-    Route::post('brakas/setor',[TransaksiController::class, 'setorBrankas'])->name('brankas.setor');
+    Route::get('setor', [SetorController::class, 'index'])->name('setor');
+    Route::get('setor/batch', [SetorController::class, 'batch'])->name('setor/batch');
+    Route::post('setor/{simpanan}', [SetorController::class, 'setor'])->name('setor.store');
+    Route::post('transaksi/tarik/{simpanan}', [TransaksiController::class, 'tarik'])->name('tarik');
+    Route::post('transaksi/angsur/{pembiayaan}', [TransaksiController::class, 'angsur'])->name('angsur');
+    Route::post('brakas/tarik', [TransaksiController::class, 'tarikBrankas'])->name('brankas.tarik');
+    Route::post('brakas/setor', [TransaksiController::class, 'setorBrankas'])->name('brankas.setor');
 
-    Route::post('harian/',[TransaksiController::class, 'makeHarian'])->name('harian.store');
-    Route::post('kas/',[TransaksiController::class, 'tambahKas'])->name('kas.tambah');
+    Route::post('harian/', [TransaksiController::class, 'makeHarian'])->name('harian.store');
+    Route::post('kas/', [TransaksiController::class, 'tambahKas'])->name('kas.tambah');
 
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([
@@ -79,13 +81,18 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     ]);
 
     Route::post('/group/{group}/add/{anggota}', [GroupController::class, 'addAnggota'])->name('group.anggota.add');
-    route::get('/group/takeOne/{group}',[GroupController::class, 'takeOne'])->name('group.takeOne');
+    route::get('/group/takeOne/{group}', [GroupController::class, 'takeOne'])->name('group.takeOne');
     Route::delete('/group/{group}/remove/{anggota}', [GroupController::class, 'removeAnggota'])->name('group.anggota.remove');
 
 
     Route::resource('simpanan', SimpananController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);
+
+    Route::resource('laba', LabaController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+
     Route::resource('anggunan', AnggunanController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);

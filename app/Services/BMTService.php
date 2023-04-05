@@ -6,6 +6,7 @@ use App\Models\Anggota;
 use App\Models\DetailNisbah;
 use App\Models\DetailPembiayaan;
 use App\Models\Kas;
+use App\Models\Laba;
 use App\Models\Nisbah;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
@@ -136,7 +137,7 @@ class BMTService
 
     // option 1 untuk kas BMt
     // option 2 untuk brankas
-    // pilih 1 di with transaksi untuk memasukan ke transaksi
+    // pilih 1 di with transaksi untuk memasukan ke transaksi, bila masuk transaksi otomatis masuk laba
     public function kasMasuk(int $kasMasuk, $option = 1, $keterangan = "ok", $withTransaksi = 0)
     {
         if ($option == 1) {
@@ -171,6 +172,8 @@ class BMTService
             );
 
             $this->transaksiHarian->increment('debit', $kasMasuk);
+            $attribute=['kode'=>"Kas006", 'keterangan'=>$keterangan];
+            $this->labaMasuk($kasMasuk, $attribute);
         }
 
         $kas->increment('jumlah', $kasMasuk);
@@ -212,6 +215,8 @@ class BMTService
                 ]
             );
             $this->transaksiHarian->increment('kredit', $kasKeluar);
+            $attribute=['kode'=>"Kas006", 'keterangan'=>$keterangan];
+            $this->labaMasuk($kasMasuk, $attribute);
         }
 
         $kas->decrement('jumlah', $kasKeluar);
@@ -290,6 +295,15 @@ class BMTService
 
         $this->transaksiHarian->increment('debit', $this->currentPembiayaan->jumlah_angsuran);
         $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
+        $attribute = [
+            'kode' => 'Setor',
+            'keterangan' => 'ok'
+        ];
+        $total = $this->currentPembiayaan->total_pembiayaan;
+        $jumlah = $this->currentPembiayaan->jumlah;
+        $frekuensi = $this->currentPembiayaan->frekuensi_angsuran;
+        $laba = ($total - $jumlah) / $frekuensi;
+        $this->labaMasuk($laba, $attribute);
     }
 
     public function handleAngsuran()
@@ -303,6 +317,7 @@ class BMTService
             'keterangan' => 'Ok',
         ]);
         $this->lastDetailPembiayaan = $this->currentPembiayaan->detail()->latest()->first();
+        $this->currentPembiayaan->angsuran_diterima += $this->currentPembiayaan->jumlah_angsuran;
         $this->lastDetailPembiayaan->transaksi()->create(
             [
                 'kode' => 'PEMB 012930',
@@ -316,8 +331,17 @@ class BMTService
             ]
         );
         $this->transaksiHarian->increment('debit', $this->currentPembiayaan->jumlah_angsuran);
-        $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->angsuran_diterima + $this->currentPembiayaan->jumlah_angsuran;
+        $attribute = [
+            'kode' => 'Setor',
+            'keterangan' => 'ok'
+        ];
+        $total = $this->currentPembiayaan->total_pembiayaan;
+        $jumlah = $this->currentPembiayaan->jumlah;
+        $frekuensi = $this->currentPembiayaan->frekuensi_angsuran;
+        $laba = ($total - $jumlah) / $frekuensi;
+        $this->labaMasuk($laba, $attribute);
         $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
+        $this->currentPembiayaan->save();
     }
 
     public function isFirstAngsuran()
@@ -419,7 +443,7 @@ class BMTService
         $laba = 4000000;
         $bulan = now()->format('m-Y');
         $lastDetail = DetailNisbah::whereStatus("selesai")->latest()->first();
-        if ( $lastDetail && $lastDetail->bulan == $bulan) {
+        if ($lastDetail && $lastDetail->bulan == $bulan) {
             dd("bulan ini Sudah");
         }
         $nisbahs = Nisbah::whereStatus('ongoing')->get();
@@ -473,5 +497,26 @@ class BMTService
         }
 
         dd('selesai');
+    }
+
+    public function labaMasuk($jumlah, $attribute = [])
+    {
+        $laba = Laba::labaThisMonth();
+        $laba->detail()->create([
+            'kode' => $attribute['kode'] ?? "Laba",
+            'debit' => $jumlah,
+            'saldo_awal' => $laba->jumlah,
+            'saldo_akhir' => $laba->jumlah + $jumlah,
+            'keterangan' => $attribute['keterangan'] ?? "Ok"
+        ]);
+        $laba->jumlah += $jumlah;
+        $laba->save();
+        // $attribute = [
+        //     'kode'=>'Setor',
+        //     'keterangan'=>'ok'
+        // ];
+    }
+    public function labaKeluar()
+    {
     }
 }
