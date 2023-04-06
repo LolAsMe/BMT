@@ -2,7 +2,7 @@
     <app-layout title="Simpanan ">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                SIMPANAN {{ simpanan.anggota.nama }} {{ simpanan.kode }} {{ simpanan.jenis_simpanan.nama }}
+                SIMPANAN {{ simpanan.jenis_simpanan.nama }} / {{ simpanan.anggota.nama }} / {{ simpanan.kode }}
             </h2>
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -146,6 +146,110 @@
                             </div>
                         </div>
                     </div>
+                    <table class="min-w-full divide-y divide-gray-200 mt-5">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
+                                No
+                            </th>
+                            <th scope="col" class="
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
+                                Nama
+                            </th>
+                            <th scope="col" class="
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
+                                Simpanan
+                            </th>
+                            <th scope="col" class="
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
+                                Jumlah Simpanan
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr v-for="(detail, index) in simpanan.detail" :key="detail.id" @dblclick="detail(detail.id)" :class="index%2==0? 'bg-white':'bg-gray-50'">
+                            <td class="text-center">{{ index + 1 }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="ml-0">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            Kode :{{ detail.kode }} <span
+                                                class="bg-green-100 rounded-full border-2 border-green-100">  </span>
+                                        </div>
+                                        <div class="text-sm text-black">
+                                            Tanggal :{{ detail.tanggal_transaksi.substring(0,10) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="ml-0">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            Debit :{{ "IDR " + detail.debit.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
+                                        </div>
+                                        <div class="text-sm text-black text">
+                                            Kredit :{{ "IDR " + detail.kredit.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="ml-0">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            Saldo Awal :{{ "IDR " + detail.saldo_awal.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
+                                        </div>
+                                        <div class="text-sm text-black">
+                                            Saldo Akhir :{{ "IDR " + detail.saldo_akhir.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="ml-0">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            {{ detail.keterangan }}
+                                        </div>
+                                        <div class="text-sm text-black">
+                                            {{ detail.karyawan_id }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 </div>
             </div>
         </div>

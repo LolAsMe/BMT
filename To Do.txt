@@ -10,6 +10,9 @@ laba
 pembiayaan laba
 labaa baru
 
+add simpanan
+next prev bttn
+
 execption
 test case
 constrained law

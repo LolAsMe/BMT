@@ -60,7 +60,10 @@ class SimpananController extends Controller
      */
     public function show(Request $request, Simpanan $simpanan)
     {
-        $simpanan->load('anggota', 'jenisSimpanan');
+        $simpanan->load(['anggota', 'jenisSimpanan','detail'=>function($query){
+            return $query->take(20)->latest()->orderBy('id','desc');
+        }]);
+        debugbar()->addMessage($simpanan);
         //
         return Inertia::render('BMT/Simpanan/ShowOneSimpanan', compact('simpanan'));
     }

@@ -71,7 +71,8 @@ class Anggota extends Model
     }
     public function simpanan()
     {
-        return $this->hasOne(Simpanan::class);
+        //coba ganti hasOne hasMany
+        return $this->hasMany(Simpanan::class);
     }
 
     public function group()
