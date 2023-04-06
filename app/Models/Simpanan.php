@@ -88,4 +88,5 @@ class Simpanan extends \Eloquent
         return (int)$value;
     }
 
+
 }

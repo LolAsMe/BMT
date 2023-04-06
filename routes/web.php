@@ -92,6 +92,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
 
     Route::get('search/simpanan', [SimpananController::class, 'search'])
         ->name('simpanan.search');
+    Route::get('search/pembiayaan', [PembiayaanController::class, 'search'])
+        ->name('pembiayaan.search');
     Route::resource('simpanan', SimpananController::class)->only([
         'index', 'destroy', 'update', 'store', 'search'
     ]);
@@ -108,7 +110,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('pembiayaan', PembiayaanController::class)->only([
-        'index', 'destroy', 'update', 'store'
+        'index', 'destroy', 'update', 'store', 'show'
     ]);
     Route::resource('jabatan', JabatanController::class)->only([
         'index', 'destroy', 'update', 'store'

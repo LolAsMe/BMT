@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Pembiayaan;
 use App\Http\Requests\StorePembiayaanRequest;
 use App\Http\Requests\UpdatePembiayaanRequest;
-use App\Services\BMTService;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Anggota;
+use App\Models\JenisPembiayaan;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PembiayaanController extends Controller
@@ -19,8 +21,12 @@ class PembiayaanController extends Controller
     public function index()
     {
         //
-        $pembiayaans = Pembiayaan::all();
-        return Inertia::render('BMT/Pembiayaan', compact('pembiayaans'));
+        $pembiayaans = Pembiayaan::take(25)->orderByDesc('id')->get();
+        $pembiayaans->load('anggota', 'jenisPembiayaan');
+        $jenisPembiayaan = JenisPembiayaan::all('id','nama');
+        debugbar()->addMessage($pembiayaans->toArray());
+        debugbar()->addMessage($jenisPembiayaan->toArray());
+        return Inertia::render('BMT/Pembiayaan/Index', compact('pembiayaans','jenisPembiayaan'));
     }
 
     /**
@@ -39,11 +45,12 @@ class PembiayaanController extends Controller
      * @param  \App\Http\Requests\StorePembiayaanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePembiayaanRequest $request, BMTService $bmt)
+    public function store(StorePembiayaanRequest $request)
     {
         //
+        // dd($request->validated());
+        Pembiayaan::create($request->validated());
 
-        $bmt->createPembiayaan($request->validated());
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);
@@ -55,9 +62,44 @@ class PembiayaanController extends Controller
      * @param  \App\Models\Pembiayaan  $pembiayaan
      * @return \Illuminate\Http\Response
      */
-    public function show(Pembiayaan $pembiayaan)
+    public function show(Request $request, Pembiayaan $pembiayaan)
     {
-        //
+        // dd($request->all!=null);
+        debugbar()->addMessage($request->all());
+        $pembiayaan->load([
+            'anggota', 'jenisPembiayaan'
+        ]);
+
+        //filter tanggal, bulan, tahun,bulan_tahun
+        $filter = $request->filter;
+        $filterValue = $request->filterValue;
+        if ($filter == 'tanggal') {
+            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereDate('tanggal_transaksi', $filterValue);
+            }]);
+        } else if ($filter == 'bulan') {
+            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereMonth('tanggal_transaksi', $filterValue);
+            }]);
+        } else if ($filter == 'tahun') {
+            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereYear('tanggal_transaksi', $filterValue);
+            }]);
+        } else if ($filter == 'bulan_tahun') {
+            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
+                $year = substr($filterValue, 0, 4);
+                $month = substr($filterValue, 5);
+                return $query->whereYear('tanggal_transaksi', $year)->whereMonth('tanggal_transaksi', $month);
+            }]);
+        } else {
+            $pembiayaan->load(['detail' => function ($query) {
+                return $query->take(20)->latest()->orderBy('id', 'desc');
+            }]);
+        }
+
+        debugbar()->addMessage($pembiayaan);
+
+        return Inertia::render('BMT/Pembiayaan/ShowOnePembiayaan', compact('pembiayaan'));
     }
 
     /**
@@ -81,8 +123,22 @@ class PembiayaanController extends Controller
     public function update(UpdatePembiayaanRequest $request, Pembiayaan $pembiayaan)
     {
         //
-        $pembiayaan->update($request->validated());
+        dd($request->all());
+        $pembiayaan->load('anggota');
+        $request->jenis_pembiayaan_id ? $pembiayaan->jenis_pembiayaan_id = $request->jenis_pembiayaan_id : null;
+        $request->nama_anggota ? $pembiayaan->anggota->nama = $request->nama_anggota : null;
+        $request->nomer_ktp ? $pembiayaan->anggota->no_ktp =  $request->nomer_ktp : null;
+        $request->jenis_kelamin ? $pembiayaan->anggota->jenis_kelamin = $request->jenis_kelamin : null;
+        $request->alamat ? $pembiayaan->anggota->alamat = $request->alamat : null;
+        $request->telepon ? $pembiayaan->anggota->telepon = $request->telepon : null;
+        $request->pekerjaan ? $pembiayaan->anggota->pekerjaan = $request->pekerjaan : null;
+        $request->tempat_lahir ? $pembiayaan->anggota->tempat_lahir = $request->tempat_lahir : null;
+        $request->tanggal_lahir ? $pembiayaan->anggota->tanggal_lahir = $request->tanggal_lahir : null;
+        $request->keterangan ? $pembiayaan->keterangan = $request->keterangan : null;
+        $request->nama_ibu_kandung ? $pembiayaan->anggota->nama_ibu_kandung = $request->nama_ibu_kandung : null;
+        // $pembiayaan->update($request->validated());
         $pembiayaan->save();
+        $pembiayaan->anggota->save();
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);
@@ -99,6 +155,31 @@ class PembiayaanController extends Controller
         //
         $pembiayaan->delete();
         return redirect(route('pembiayaan.index'));
+    }
 
+    public function search(Request $request)
+    {
+        $pembiayaans = Pembiayaan::orderBy('id');
+        $request->nama ? $pembiayaans->whereHas(
+            'anggota',
+            function (Builder $query) use ($request) {
+                return $query->where('nama', 'like', '%' . $request->nama . '%');
+            }
+        ) : null;
+        $request->alamat ? $pembiayaans->whereHas(
+            'anggota',
+            function (Builder $query) use ($request) {
+                return $query->where('alamat', 'like', '%' . $request->alamat . '%');
+            }
+        ) : null;
+        $request->kode ? $pembiayaans->where('kode', 'like', '%' . $request->kode . '%')  : null;
+        $request->kodeAnggota ? $pembiayaans->whereHas(
+            'anggota',
+            function (Builder $query) use ($request) {
+                return $query->where('kode', 'like', '%' . $request->kodeAnggota . '%');
+            }
+        ) : null;
+        $pembiayaans = $pembiayaans->with('anggota', 'jenisPembiayaan')->take(25)->get();
+        return Inertia::render('BMT/Pembiayaan/Index', compact('pembiayaans'));
     }
 }

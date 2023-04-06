@@ -75,4 +75,59 @@ class Pembiayaan extends Model
     {
         return $this->hasMany(DetailPembiayaan::class);
     }
+
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class);
+    }
+
+    public function jenisPembiayaan()
+    {
+        return $this->belongsTo(JenisPembiayaan::class);
+    }
+
+    public function getTanggalPinjamAttribute($value)
+    {
+        return substr($value, 0, 10);
+    }
+    public function getTanggalJatuhTempoAttribute($value)
+    {
+        return substr($value, 0, 10);
+    }
+    public function getPokokAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getJasaAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getPotonganPembiayaanAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getTotalPembiayaanAngsuranAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function getJumlahAngsuranAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getAngsuranDiterimaAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getJumlahAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getTotalPembiayaanAttribute($value)
+    {
+        return (int)$value;
+    }
+
+
+
 }

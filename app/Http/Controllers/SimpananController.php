@@ -175,10 +175,10 @@ class SimpananController extends Controller
             }
         ) : null;
         $request->kode ? $simpanans->where('kode', 'like', '%' . $request->kode . '%')  : null;
-        $request->kode_anggota ? $simpanans->whereHas(
+        $request->kodeAnggota ? $simpanans->whereHas(
             'anggota',
             function (Builder $query) use ($request) {
-                return $query->where('kode', 'like', '%' . $request->kode . '%');
+                return $query->where('kode', 'like', '%' . $request->kodeAnggota . '%');
             }
         ) : null;
         $simpanans = $simpanans->with('anggota', 'jenisSimpanan')->take(25)->get();

@@ -13,6 +13,7 @@ labaa baru
 add simpanan
 next prev bttn
 
+alert
 execption
 test case
 constrained law

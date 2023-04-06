@@ -35,6 +35,6 @@ class JenisSimpanan extends Model
 
     public function simpanan()
     {
-        return $this->hasOne(Simpanan::class);
+        return $this->hasMany(Simpanan::class);
     }
 }

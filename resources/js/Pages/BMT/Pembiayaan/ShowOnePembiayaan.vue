@@ -2,7 +2,7 @@
     <app-layout title="Simpanan ">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                SIMPANAN {{ simpanan.jenis_simpanan.nama }} / {{ simpanan.anggota.nama }} / {{ simpanan.kode }}
+                PEMBIAYAAN {{ pembiayaan.jenis_pembiayaan.nama }} / {{ pembiayaan.anggota.nama }} / {{ pembiayaan.kode }}
             </h2>
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -19,7 +19,7 @@
                                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            <jet-nav-link :href="route('simpanan.index')" :active="route().current('simpanan.index')">
+                            <jet-nav-link :href="route('pembiayaan.index')" :active="route().current('pembiayaan.index')">
                                 Simpanan
                             </jet-nav-link>
                         </div>
@@ -33,7 +33,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                             <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">Simpanan {{
-                                simpanan.anggota.nama }}</span>
+                                pembiayaan.anggota.nama }}</span>
 
                         </div>
                     </li>
@@ -44,13 +44,13 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <div class="flex flex-row-reverse">
-                        <button v-if="simpanan.deleted_at == null" @click="deleteSimpanan"
+                        <button v-if="pembiayaan.deleted_at == null" @click="deleteSimpanan"
                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             DEACTIVE</button>
                         <button v-else @click="deleteSimpanan"
                             class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             ACTIVE</button>
-                        <button @click="$refs.editModal.show(simpanan)"
+                        <button @click="$refs.editModal.show(pembiayaan)"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             EDIT</button>
                     </div>
@@ -59,89 +59,89 @@
                             <div class="table-row">
                                 <div class="table-cell">ID</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.id }}</div>
+                                <div class="table-cell">{{ pembiayaan.id }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">No Rekening</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.kode }}</div>
+                                <div class="table-cell">{{ pembiayaan.kode }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Jenis Simpanan</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">Simpanan {{ simpanan.jenis_simpanan.nama }}</div>
+                                <div class="table-cell">Simpanan {{ pembiayaan.jenis_pembiayaan.nama }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Nama Anggota</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.nama }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.nama }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Nomer Anggota</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.kode }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.kode }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Nomer KTP</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.no_ktp }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.no_ktp }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Jenis Kelamin</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.jenis_kelamin }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.jenis_kelamin }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Jumlah Simpanan</div>
                                 <div class="table-cell">:</div>
                                 <div class="table-cell">{{
-                                    "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+                                    "IDR " + pembiayaan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
                                 }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Alamat</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.alamat }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.alamat }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Telepon</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.telepon ?? "-" }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.telepon ?? "-" }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Pekerjaan</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.pekerjaan ?? "-" }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.pekerjaan ?? "-" }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Tempat Lahir</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.tempat_lahir ?? "-" }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.tempat_lahir ?? "-" }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Tanggal Lahir</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.tanggal_lahir }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.tanggal_lahir }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Tanggal Masuk</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.tanggal_masuk }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.tanggal_masuk }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Nama Ibu Kandung</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.anggota.nama_ibu_kandung }}</div>
+                                <div class="table-cell">{{ pembiayaan.anggota.nama_ibu_kandung }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Keterangan</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell">{{ simpanan.keterangan }}</div>
+                                <div class="table-cell">{{ pembiayaan.keterangan }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Status</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell " v-if="simpanan.deleted_at != null">
+                                <div class="table-cell " v-if="pembiayaan.deleted_at != null">
                                     <span class="bg-red-400 text-white">{{ "Tidak Aktif" }}</span></div>
                                 <div v-else class="table-cell "><span class="bg-green-400 text-white">{{ "Aktif" }}</span></div>
                             </div>
@@ -236,7 +236,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="(detail, index) in simpanan.detail" :key="detail.id" @dblclick="doFilter"
+                            <tr v-for="(detail, index) in pembiayaan.detail" :key="detail.id" @dblclick="doFilter"
                                 :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'">
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -309,7 +309,7 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetNavLink from '@/Jetstream/NavLink.vue'
 import Welcome from "@/Jetstream/Welcome.vue";
-import EditModal from "@/Pages/BMT/Partials/SimpananEditModal.vue";
+import EditModal from "@/Pages/BMT/Pembiayaan/EditModal.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 export default defineComponent({
     components: {
@@ -319,11 +319,11 @@ export default defineComponent({
         Link, JetNavLink
     },
     props: {
-        simpanan: Object
+        pembiayaan: Object
     },
     data() {
         return {
-            tanggal: this.simpanan.detail.length != 0 ? this.simpanan.detail[0].tanggal_transaksi.substring(0, 10) : new Date().toJSON().substring(0, 10),
+            tanggal: this.pembiayaan.detail.length != 0 ? this.pembiayaan.detail[0].tanggal_transaksi.substring(0, 10) : new Date().toJSON().substring(0, 10),
             tahunSelect: new Date().getFullYear(),
             tahun: new Date().getFullYear(),
             bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
@@ -341,7 +341,7 @@ export default defineComponent({
         deleteSimpanan() {
             console.log('test')
             this.$inertia.delete(
-                route("simpanan.destroy", this.simpanan.id)
+                route("pembiayaan.destroy", this.pembiayaan.id)
             );
         },
         test() {
@@ -369,7 +369,7 @@ export default defineComponent({
                     }
             console.log(this.formSearch.filter + this.formSearch.filterValue)
             this.formSearch.get(
-                route("simpanan.show", this.simpanan.id),
+                route("pembiayaan.show", this.pembiayaan.id),
             );
         }
     },

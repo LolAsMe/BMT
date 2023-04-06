@@ -32,4 +32,9 @@ class JenisPembiayaan extends Model
 
     protected $table = 'jenis_pembiayaan';
     protected $guarded = [];
+
+    public function Pembiayaan()
+    {
+        return $this->hasMany(Pembiayaan::class);
+    }
 }

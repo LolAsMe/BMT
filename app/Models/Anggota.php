@@ -75,6 +75,12 @@ class Anggota extends Model
         return $this->hasOne(Simpanan::class);
     }
 
+    public function pembiayaan()
+    {
+        //coba ganti hasOne hasMany
+        return $this->hasOne(Pembiayaan::class);
+    }
+
     public function group()
     {
         return $this->belongsToMany(Group::class, 'group_anggota', 'anggota_id', 'group_id');
