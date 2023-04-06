@@ -55,4 +55,13 @@ class TransaksiHarian extends Model
     {
         return $this->hasMany(Transaksi::class);
     }
+    public function getDebitAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function getKreditAttribute($value)
+    {
+        return (int)$value;
+    }
 }

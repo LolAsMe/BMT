@@ -74,4 +74,21 @@ class DetailKas extends Model
     {
         return $this->morphOne(Transaksi::class,'log');
     }
+    public function getDebitAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function getKreditAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getSaldoAwalAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getSaldoAkhirAttribute($value)
+    {
+        return (int)$value;
+    }
 }

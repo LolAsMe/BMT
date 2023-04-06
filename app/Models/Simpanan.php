@@ -83,4 +83,9 @@ class Simpanan extends \Eloquent
     {
         return $this->belongsTo(JenisSimpanan::class);
     }
+    public function getJumlahAttribute($value)
+    {
+        return (int)$value;
+    }
+
 }

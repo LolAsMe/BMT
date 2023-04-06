@@ -53,4 +53,9 @@ class Kas extends \Eloquent
     {
         return $this->hasMany(DetailKas::class);
     }
+    public function getJumlahAttribute($value)
+    {
+        return (int)$value;
+    }
+
 }

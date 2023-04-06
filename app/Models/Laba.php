@@ -27,4 +27,8 @@ class Laba extends Model
         ]);
         return $laba;
     }
+    public function getJumlahAttribute($value)
+    {
+        return (int)$value;
+    }
 }

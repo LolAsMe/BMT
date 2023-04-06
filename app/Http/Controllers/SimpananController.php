@@ -60,11 +60,41 @@ class SimpananController extends Controller
      */
     public function show(Request $request, Simpanan $simpanan)
     {
-        $simpanan->load(['anggota', 'jenisSimpanan','detail'=>function($query){
-            return $query->take(20)->latest()->orderBy('id','desc');
-        }]);
+        // dd($request->all!=null);
+        debugbar()->addMessage($request->all());
+        $simpanan->load([
+            'anggota', 'jenisSimpanan'
+        ]);
+
+        //filter tanggal, bulan, tahun,bulan_tahun
+        $filter = $request->filter;
+        $filterValue = $request->filterValue;
+        if ($filter == 'tanggal') {
+            $simpanan->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereDate('tanggal_transaksi', $filterValue);
+            }]);
+        } else if ($filter == 'bulan') {
+            $simpanan->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereMonth('tanggal_transaksi', $filterValue);
+            }]);
+        } else if ($filter == 'tahun') {
+            $simpanan->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereYear('tanggal_transaksi', $filterValue);
+            }]);
+        } else if ($filter == 'bulan_tahun') {
+            $simpanan->load(['detail' => function ($query) use ($filterValue) {
+                $year = substr($filterValue, 0, 4);
+                $month = substr($filterValue, 5);
+                return $query->whereYear('tanggal_transaksi', $year)->whereMonth('tanggal_transaksi', $month);
+            }]);
+        } else {
+            $simpanan->load(['detail' => function ($query) {
+                return $query->take(20)->latest()->orderBy('id', 'desc');
+            }]);
+        }
+
         debugbar()->addMessage($simpanan);
-        //
+
         return Inertia::render('BMT/Simpanan/ShowOneSimpanan', compact('simpanan'));
     }
 
@@ -138,7 +168,7 @@ class SimpananController extends Controller
                 return $query->where('alamat', 'like', '%' . $request->alamat . '%');
             }
         ) : null;
-        $request->kode ? $simpanans->where('kode', 'like', '%' . $request->kode. '%')  : null;
+        $request->kode ? $simpanans->where('kode', 'like', '%' . $request->kode . '%')  : null;
         $request->kode_anggota ? $simpanans->whereHas(
             'anggota',
             function (Builder $query) use ($request) {
