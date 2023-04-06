@@ -84,10 +84,18 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     route::get('/group/takeOne/{group}', [GroupController::class, 'takeOne'])->name('group.takeOne');
     Route::delete('/group/{group}/remove/{anggota}', [GroupController::class, 'removeAnggota'])->name('group.anggota.remove');
 
+    Route::get('simpanan/{simpanan}', [SimpananController::class, 'show'])
+        ->name('simpanan.show')
+        ->withTrashed();
 
+
+
+    Route::get('search/simpanan', [SimpananController::class, 'search'])
+        ->name('simpanan.search');
     Route::resource('simpanan', SimpananController::class)->only([
-        'index', 'destroy', 'update', 'store','show'
+        'index', 'destroy', 'update', 'store', 'search'
     ]);
+
 
     Route::resource('laba', LabaController::class)->only([
         'index', 'destroy', 'update', 'store'

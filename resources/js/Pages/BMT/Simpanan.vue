@@ -9,54 +9,113 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row-reverse flex-nowrap">
                     <add></add>
+                    <button v-show="!searchShow" @click="searchShow = true"
+                        class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
+                    <button v-show="searchShow" @click="searchShow = false, $inertia.get(route('simpanan.index'))"
+                        class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Collapse</button>
                 </div>
+                <v-card class="my-5 mb-5">
+                    <div v-show="searchShow" class="grid grid-cols-4 p-6">
+                        <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
+                            Nama
+                        </h5>
+                        <div class="flex justify-center col-span-3">
+                            <div class="mb-3 xl:w-full">
+                                <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+                                    <input type="search" v-model="formSearch.nama"
+                                        class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
+                                        placeholder="Nama" aria-label="Search" aria-describedby="button-addon1" />
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
+                            Alamat
+                        </h5>
+                        <div class="flex justify-center col-span-3">
+                            <div class="mb-3 xl:w-full">
+                                <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+                                    <input type="search" v-model="formSearch.alamat"
+                                        class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
+                                        placeholder="Alamat" aria-label="Search" aria-describedby="button-addon1" />
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
+                            Rekening
+                        </h5>
+                        <div class="flex justify-center col-span-3">
+                            <div class="mb-3 xl:w-full">
+                                <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+                                    <input type="search" v-model="formSearch.kode"
+                                        class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
+                                        placeholder="Rekening" aria-label="Search" aria-describedby="button-addon1" />
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
+                            Kode Anggota
+                        </h5>
+                        <div class="flex justify-center col-span-3">
+                            <div class="mb-3 xl:w-full">
+                                <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+                                    <input type="search" v-model="formSearch.kodeAnggota"
+                                        class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
+                                        placeholder="kode Anggota" aria-label="Search" aria-describedby="button-addon1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-end-2" @click="search"><button
+                                class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
+                        </div>
+                    </div>
+                </v-card>
             </div>
             <v-card>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                 No
                             </th>
                             <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                 Nama
                             </th>
                             <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                 Simpanan
                             </th>
                             <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                 Jumlah Simpanan
                             </th>
                             <!-- <th scope="col" class="relative px-6 py-3">
@@ -84,13 +143,15 @@ tracking-wider
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="(simpanan, index) in simpanans" :key="simpanan.id" @click="detail(simpanan.id)">
+                        <tr v-for="(simpanan, index) in simpanans" :key="simpanan.id" @dblclick="detail(simpanan.id)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="ml-0">
                                         <div class="text-sm font-medium text-gray-900">
-                                            {{ simpanan.anggota.nama }}
+                                            {{ simpanan.anggota.nama }} <span
+                                                class="bg-green-100 rounded-full border-2 border-green-100"> {{
+                                                    simpanan.anggota.kode }} </span>
                                         </div>
                                         <div class="text-sm text-black">
                                             {{ simpanan.anggota.alamat }}
@@ -112,15 +173,15 @@ tracking-wider
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right">
                                 <span class="
-                                    px-2
-                                    inline-flex
-                                    text-xs
-                                    leading-5
-                                    font-semibold
-                                    rounded-full
-                                    bg-green-100
-                                    text-green-800
-                                    ">
+                                                px-2
+                                                inline-flex
+                                                text-xs
+                                                leading-5
+                                                font-semibold
+                                                rounded-full
+                                                bg-green-100
+                                                text-green-800
+                                                ">
                                     {{
                                         "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
                                     }}
@@ -178,6 +239,13 @@ export default defineComponent({
     data() {
         return {
             form: this.$inertia.form(),
+            formSearch: this.$inertia.form({
+                nama: null,
+                alamat: null,
+                kode: null,
+                kodeAnggota: null
+            }),
+            searchShow: false
         };
     },
     methods: {
@@ -189,12 +257,31 @@ export default defineComponent({
         detail(simpananId) {
             console.log("ini Detail" + simpananId)
             console.log(this.route('simpanan.index'))
-            window.location.href = this.route('simpanan.show',simpananId);
+            window.location.href = this.route('simpanan.show', simpananId);
 
+        },
+        search() {
+            console.log(this.formSearch)
+            this.formSearch.nama == null ? delete this.formSearch.nama : null,
+                this.formSearch.alamat == null ? delete this.formSearch.alamat : null,
+                this.formSearch.kode == null ? delete this.formSearch.kode : null,
+                this.formSearch.kodeAnggota == null ? delete this.formSearch.kodeAnggota : null,
+                this.formSearch.get(this.route('simpanan.search'));
         }
     },
     props: {
         simpanans: Object,
     },
+    mounted() {
+        let urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('nama') || urlParams.has('alamat') || urlParams.has('kode') || urlParams.has('kodeAnggota')) {
+            this.searchShow = true
+        }
+        this.formSearch.nama = urlParams.get('nama')
+        this.formSearch.alamat = urlParams.get('alamat')
+        this.formSearch.kode = urlParams.get('kode')
+        this.formSearch.kodeAnggota = urlParams.get('kodeAnggota')
+    }
+
 });
 </script>
