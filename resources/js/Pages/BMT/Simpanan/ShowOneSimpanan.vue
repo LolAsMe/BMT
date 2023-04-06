@@ -141,16 +141,13 @@
                             <div class="table-row">
                                 <div class="table-cell">Status</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell bg-red-400 text-white" v-if="simpanan.deleted_at != null">
-                                    {{ "Tidak Aktif" }}</div>
-                                <div v-else class="table-cell bg-green-400 text-white">{{ "Aktif" }}</div>
+                                <div class="table-cell " v-if="simpanan.deleted_at != null">
+                                    <span class="bg-red-400 text-white">{{ "Tidak Aktif" }}</span></div>
+                                <div v-else class="table-cell "><span class="bg-green-400 text-white">{{ "Aktif" }}</span></div>
                             </div>
                         </div>
                     </div>
-                    {{ checkedTanggal }}
-                    {{ checkedBulan }}
-                    {{ checkedTahun }}
-                    <div class="grid grid-cols-3">
+                    <div class="grid grid-cols-3 mt-3">
                         <div>
                             <input type="checkbox" name="filter" id="filter" class="mr-1" :checked="checkedTanggal"
                                 @change="checkedTanggal = !checkedTanggal; checkedBulan = false; checkedTahun = false; doFilter(); ">
@@ -193,47 +190,47 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="
-                                                                                    px-6
-                                                                                    py-3
-                                                                                    text-left text-xs
-                                                                                    font-medium
-                                                                                    text-gray-500
-                                                                                    uppercase
-                                                                                    tracking-wider
-                                                                                    ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     No
                                 </th>
                                 <th scope="col" class="
-                                                                                    px-6
-                                                                                    py-3
-                                                                                    text-left text-xs
-                                                                                    font-medium
-                                                                                    text-gray-500
-                                                                                    uppercase
-                                                                                    tracking-wider
-                                                                                    ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     Nama
                                 </th>
                                 <th scope="col" class="
-                                                                                    px-6
-                                                                                    py-3
-                                                                                    text-left text-xs
-                                                                                    font-medium
-                                                                                    text-gray-500
-                                                                                    uppercase
-                                                                                    tracking-wider
-                                                                                    ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     Simpanan
                                 </th>
                                 <th scope="col" class="
-                                                                                    px-6
-                                                                                    py-3
-                                                                                    text-left text-xs
-                                                                                    font-medium
-                                                                                    text-gray-500
-                                                                                    uppercase
-                                                                                    tracking-wider
-                                                                                    ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     Jumlah Simpanan
                                 </th>
                             </tr>
