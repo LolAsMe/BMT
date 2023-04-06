@@ -30,7 +30,7 @@
         <div class="py-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row-reverse flex-nowrap">
-                    <add></add>
+                    <add :anggotas="anggotaTanpaSimpanan" :jenisSimpanan="jenisSimpanan"></add>
                     <button v-show="!searchShow" @click="searchShow = true"
                         class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
                     <button v-show="searchShow" @click="searchShow = false, $inertia.get(route('simpanan.index'))"
@@ -97,47 +97,47 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-                                                px-6
-                                                py-3
-                                                text-left text-xs
-                                                font-medium
-                                                text-gray-500
-                                                uppercase
-                                                tracking-wider
-                                                ">
+                                                    px-6
+                                                    py-3
+                                                    text-left text-xs
+                                                    font-medium
+                                                    text-gray-500
+                                                    uppercase
+                                                    tracking-wider
+                                                    ">
                                 No
                             </th>
                             <th scope="col" class="
-                                                px-6
-                                                py-3
-                                                text-left text-xs
-                                                font-medium
-                                                text-gray-500
-                                                uppercase
-                                                tracking-wider
-                                                ">
+                                                    px-6
+                                                    py-3
+                                                    text-left text-xs
+                                                    font-medium
+                                                    text-gray-500
+                                                    uppercase
+                                                    tracking-wider
+                                                    ">
                                 Nama
                             </th>
                             <th scope="col" class="
-                                                px-6
-                                                py-3
-                                                text-left text-xs
-                                                font-medium
-                                                text-gray-500
-                                                uppercase
-                                                tracking-wider
-                                                ">
+                                                    px-6
+                                                    py-3
+                                                    text-left text-xs
+                                                    font-medium
+                                                    text-gray-500
+                                                    uppercase
+                                                    tracking-wider
+                                                    ">
                                 Simpanan
                             </th>
                             <th scope="col" class="
-                                                px-6
-                                                py-3
-                                                text-left text-xs
-                                                font-medium
-                                                text-gray-500
-                                                uppercase
-                                                tracking-wider
-                                                ">
+                                                    px-6
+                                                    py-3
+                                                    text-left text-xs
+                                                    font-medium
+                                                    text-gray-500
+                                                    uppercase
+                                                    tracking-wider
+                                                    ">
                                 Jumlah Simpanan
                             </th>
                             <!-- <th scope="col" class="relative px-6 py-3">
@@ -165,7 +165,7 @@ tracking-wider
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="(simpanan, index) in simpanans" :key="simpanan.id" @dblclick="detail(simpanan.id)">
+                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in simpanans" :key="simpanan.id" @dblclick="detail(simpanan.id)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -195,15 +195,15 @@ tracking-wider
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right">
                                 <span class="
-                                                px-2
-                                                inline-flex
-                                                text-xs
-                                                leading-5
-                                                font-semibold
-                                                rounded-full
-                                                bg-green-100
-                                                text-green-800
-                                                ">
+                                                    px-2
+                                                    inline-flex
+                                                    text-xs
+                                                    leading-5
+                                                    font-semibold
+                                                    rounded-full
+                                                    bg-green-100
+                                                    text-green-800
+                                                    ">
                                     {{
                                         "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
                                     }}
@@ -232,7 +232,7 @@ class="text-indigo-600 hover:text-indigo-900">Delete</a>
                         </tr>
                     </tbody>
                 </table>
-                <edit-modal ref="editModal"></edit-modal>
+                <!-- <edit-modal ref="editModal"></edit-modal> -->
             </v-card>
         </div>
     </app-layout>
@@ -247,6 +247,7 @@ import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
 import Add from "@/Pages/BMT/Partials/SimpananAdd.vue";
 import EditModal from "@/Pages/BMT/Partials/SimpananEditModal.vue";
+import JetNavLink from '@/Jetstream/NavLink.vue'
 
 export default defineComponent({
     components: {
@@ -256,7 +257,7 @@ export default defineComponent({
         EditModal,
         VInput,
         VCard,
-        VButton,
+        VButton,JetNavLink
     },
     data() {
         return {
@@ -293,6 +294,8 @@ export default defineComponent({
     },
     props: {
         simpanans: Object,
+        anggotaTanpaSimpanan: Object,
+        jenisSimpanan: Object
     },
     mounted() {
         let urlParams = new URLSearchParams(window.location.search);

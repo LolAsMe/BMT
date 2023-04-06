@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Simpanan;
 use App\Http\Requests\StoreSimpananRequest;
 use App\Http\Requests\UpdateSimpananRequest;
+use App\Models\Anggota;
+use App\Models\JenisSimpanan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,8 +23,12 @@ class SimpananController extends Controller
         //
         $simpanans = Simpanan::take(25)->orderByDesc('id')->get();
         $simpanans->load('anggota', 'jenisSimpanan');
+        $anggotaTanpaSimpanan =Anggota::whereDoesntHave('simpanan')->get();
+        $jenisSimpanan = JenisSimpanan::all('id','nama');
         debugbar()->addMessage($simpanans->toArray());
-        return Inertia::render('BMT/Simpanan', compact('simpanans'));
+        debugbar()->addMessage($anggotaTanpaSimpanan->toArray());
+        debugbar()->addMessage($jenisSimpanan->toArray());
+        return Inertia::render('BMT/Simpanan', compact('simpanans','anggotaTanpaSimpanan','jenisSimpanan'));
     }
 
     /**
