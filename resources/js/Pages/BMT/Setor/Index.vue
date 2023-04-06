@@ -209,7 +209,7 @@ export default defineComponent({
                 'kode': 'Pembiayaan5',
                 'nomor': '2135',
                 'jenis_pembiayaan_id': '1',
-                'simpanan_id': '1',
+                'anggota_id': '1437',
                 'karyawan_id': '8',
                 'jumlah': 20000000,
                 'tanggal_pinjam': '2023/4/24',

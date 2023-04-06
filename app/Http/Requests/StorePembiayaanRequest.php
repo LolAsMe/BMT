@@ -28,7 +28,7 @@ class StorePembiayaanRequest extends FormRequest
             'kode'=>'',
             'nomor'=>'',
             'jenis_pembiayaan_id'=>'',
-            'simpanan_id'=>'',
+            'anggota_id'=>'',
             'karyawan_id'=>'',
             'tanggal_pinjam'=>'',
             'jumlah'=>'',

@@ -98,48 +98,81 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
+                                px-6
+                                py-3
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                                ">
                                 No
                             </th>
                             <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
-                                Nama
+                                px-6
+                                py-3
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                                ">
+                                Anggota
                             </th>
                             <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
-                                Pembiayaan
+                                px-6
+                                py-3
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                                ">
+                                Kode
                             </th>
                             <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
-                                Jumlah Pembiayaan
+                                px-6
+                                py-3
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                                ">
+                                Tanggal
+                            </th>
+                            <th scope="col" class="
+                                px-6
+                                py-3
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                                ">
+                                Jumlah
+                            </th>
+                            <th scope="col" class="
+                                px-6
+                                py-3
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                                ">
+                                Angsuran
+                            </th>
+                            <th scope="col" class="
+                                px-6
+                                py-3
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                                ">
+                                Keterangan
                             </th>
                             <!-- <th scope="col" class="relative px-6 py-3">
 <span class="
@@ -238,22 +271,7 @@ tracking-wider
                                     </div>
                                 </div>
                             </td>
-                            <td class="whitespace-nowrap text-right">
-                                <span class="
 
-    inline-flex
-    text-xs
-    leading-5
-    font-semibold
-    rounded-full
-    bg-green-100
-    text-green-800
-    ">
-                                    {{
-
-                                    }}
-                                </span>
-                            </td>
                             <td class="whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="ml-0">

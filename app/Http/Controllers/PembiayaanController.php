@@ -23,10 +23,10 @@ class PembiayaanController extends Controller
         //
         $pembiayaans = Pembiayaan::take(25)->orderByDesc('id')->get();
         $pembiayaans->load('anggota', 'jenisPembiayaan');
-        $jenisPembiayaan = JenisPembiayaan::all('id','nama');
+        $jenisPembiayaan = JenisPembiayaan::all('id', 'nama');
         debugbar()->addMessage($pembiayaans->toArray());
         debugbar()->addMessage($jenisPembiayaan->toArray());
-        return Inertia::render('BMT/Pembiayaan/Index', compact('pembiayaans','jenisPembiayaan'));
+        return Inertia::render('BMT/Pembiayaan/Index', compact('pembiayaans', 'jenisPembiayaan'));
     }
 
     /**
@@ -73,29 +73,9 @@ class PembiayaanController extends Controller
         //filter tanggal, bulan, tahun,bulan_tahun
         $filter = $request->filter;
         $filterValue = $request->filterValue;
-        if ($filter == 'tanggal') {
-            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
-                return $query->whereDate('tanggal_transaksi', $filterValue);
-            }]);
-        } else if ($filter == 'bulan') {
-            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
-                return $query->whereMonth('tanggal_transaksi', $filterValue);
-            }]);
-        } else if ($filter == 'tahun') {
-            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
-                return $query->whereYear('tanggal_transaksi', $filterValue);
-            }]);
-        } else if ($filter == 'bulan_tahun') {
-            $pembiayaan->load(['detail' => function ($query) use ($filterValue) {
-                $year = substr($filterValue, 0, 4);
-                $month = substr($filterValue, 5);
-                return $query->whereYear('tanggal_transaksi', $year)->whereMonth('tanggal_transaksi', $month);
-            }]);
-        } else {
-            $pembiayaan->load(['detail' => function ($query) {
-                return $query->take(20)->latest()->orderBy('id', 'desc');
-            }]);
-        }
+        $pembiayaan->load(['detail' => function ($query) {
+            return $query->take(20)->orderBy('id', 'asc');
+        }]);
 
         debugbar()->addMessage($pembiayaan);
 
