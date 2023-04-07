@@ -50,8 +50,8 @@
                                     :active="route().current('anggota.index')">
                                     Anggota
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('anggota.index')"
-                                    :active="route().current('anggota.index')">
+                                <jet-nav-link :href="route('laba.index')"
+                                    :active="route().current('laba.index')">
                                     Laba
                                 </jet-nav-link>
                                 <!-- <jet-dropdown align="right" width="48">
