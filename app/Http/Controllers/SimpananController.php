@@ -184,4 +184,10 @@ class SimpananController extends Controller
         $simpanans = $simpanans->with('anggota', 'jenisSimpanan')->take(25)->get();
         return Inertia::render('BMT/Simpanan', compact('simpanans'));
     }
+
+    public function active(Simpanan $simpanan)
+    {
+        $simpanan->restore();
+        return back();
+    }
 }

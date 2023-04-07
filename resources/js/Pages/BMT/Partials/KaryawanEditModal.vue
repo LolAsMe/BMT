@@ -1,6 +1,6 @@
 <template>
   <v-modal ref="editModal">
-    <template #title> Edit Karyawan </template>
+    <template #title> Edit Karyawan wae </template>
     <form @submit.prevent="edit">
       <v-input :name="'kode'" v-model="form.kode"></v-input>
       <v-input :name="'nama'" v-model="form.nama"></v-input>
@@ -72,6 +72,8 @@ export default defineComponent({
       this.$refs.editModal.toggleModal();
     },
     edit() {
+
+        console.log('tset')
       this.form.put(route("karyawan.update", this.karyawan.id), {
         preserveScroll: true,
         onSuccess: () => {

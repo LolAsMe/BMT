@@ -41,8 +41,19 @@ class BMTService
 
     public function createPembiayaan($attribute)
     {
+        $kas = $this->kasBMT;
         Pembiayaan::create($attribute);
-        $this->kasKeluar($attribute['pokok'], 1, "Pembiayaan Baru", 1);
+        $kas->detail()->create([
+            'kode' => 'kode1',
+            'tanggal' => now(),
+            'debit' => 0,
+            'kredit' => $attribute['jumlah'],
+            'saldo_awal' => $kas->jumlah,
+            'saldo_akhir' => $kas->jumlah - $attribute['jumlah'],
+            'keterangan' => $attribute['keterangan'],
+            'karyawan_id' => $this->user->karyawan_id,
+        ]);
+        $kas->decrement('jumlah', $attribute['jumlah']);
     }
 
     public function SetorBrankas(int $jumlah)
@@ -170,8 +181,8 @@ class BMTService
                     'karyawan_id' => $this->user->karyawan_id,
                 ]
             );
-
             $this->transaksiHarian->increment('debit', $kasMasuk);
+
             $attribute=['kode'=>"Kas006", 'keterangan'=>$keterangan];
             $this->labaMasuk($kasMasuk, $attribute);
         }
@@ -253,6 +264,7 @@ class BMTService
 
         ]);
     }
+
 
     public function angsur(int $angsuranKe)
     {

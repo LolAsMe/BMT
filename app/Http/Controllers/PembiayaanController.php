@@ -7,6 +7,7 @@ use App\Http\Requests\StorePembiayaanRequest;
 use App\Http\Requests\UpdatePembiayaanRequest;
 use App\Models\Anggota;
 use App\Models\JenisPembiayaan;
+use App\Services\BMTService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -45,11 +46,11 @@ class PembiayaanController extends Controller
      * @param  \App\Http\Requests\StorePembiayaanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePembiayaanRequest $request)
+    public function store(StorePembiayaanRequest $request, BMTService $bmt)
     {
         //
-        // dd($request->validated());
-        Pembiayaan::create($request->validated());
+        // Pembiayaan::createPembiayaan($request->validated());
+        $bmt->createPembiayaan($request->validated());
 
         return back()->with('flash', [
             'response' => 'berhasil'

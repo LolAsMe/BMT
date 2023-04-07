@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-button
-      class="block mr-4 sm:mr-10 ml-auto mt-4"
       v-on:click="$refs.addModal.toggleModal()"
       >Add</v-button
     >
@@ -11,6 +10,7 @@
         <v-input :name="'kode'" v-model="form.kode"></v-input>
         <v-input :name="'nama'" v-model="form.nama"></v-input>
         <v-input :name="'username'" v-model="form.username"></v-input>
+        <v-input :name="'email'" v-model="form.email"></v-input>
         <v-input :type="'password'" :name="'password'" v-model="form.password"></v-input>
         <v-input :name="'alamat'" v-model="form.alamat"></v-input>
         <v-select :options="$inertia.page.props.jabatan" :name="'jabatan'" v-model="form.jabatan_id"></v-select>
@@ -59,6 +59,7 @@ export default defineComponent({
       form: this.$inertia.form({
         kode: undefined,
         nama: undefined,
+        email: undefined,
         alamat: undefined,
         no_telepon: undefined,
         username:undefined,

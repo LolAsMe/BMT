@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use App\Http\Requests\StoreKaryawanRequest;
 use App\Http\Requests\UpdateKaryawanRequest;
+use Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -42,9 +43,14 @@ class KaryawanController extends Controller
     {
         //
         // dd($request->validated());
-
+        $attribute = $request->all();
         $karyawan = Karyawan::create($request->validated());
-        $karyawan->user()->create();
+        $userAttribute = [];
+        $userAttribute['name'] = $attribute['nama'];
+        $userAttribute['email'] = $attribute['email'];
+        $userAttribute['password'] = Hash::make($attribute['password']);
+
+        $karyawan->user()->create($userAttribute);
 
         return back()->with('flash', [
             'response' => 'berhasil'
@@ -60,7 +66,7 @@ class KaryawanController extends Controller
     public function show(Karyawan $karyawan)
     {
         //
-        $karyawan->load(['jabatan:id,nama','anggota.simpanan', 'user']);
+        $karyawan->load(['jabatan:id,nama', 'anggota.simpanan', 'user']);
 
         // dd($karyawan);
         return Inertia::render('BMT/KaryawanDetail', compact('karyawan'));
@@ -105,6 +111,11 @@ class KaryawanController extends Controller
         //
         $karyawan->delete();
         return redirect(route('karyawan.index'));
+    }
 
+    public function active(Karyawan $karyawan)
+    {
+        $karyawan->restore();
+        return back();
     }
 }
