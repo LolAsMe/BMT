@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-button
-      class="block mr-4 sm:mr-10 ml-auto mt-4"
+      class="mt-4"
       v-on:click="$refs.addModal.toggleModal()"
       >Add</v-button
     >

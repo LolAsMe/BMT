@@ -62,6 +62,11 @@ class AnggotaController extends Controller
     public function show(Anggota $anggota)
     {
         //
+        $anggota->load('simpanan','pembiayaan');
+        debugbar()->addMessage($anggota->toArray());
+
+        return Inertia::render('BMT/Anggota/ShowOneAnggota', compact('anggota'));
+
     }
 
     /**
@@ -104,5 +109,10 @@ class AnggotaController extends Controller
         $anggota->delete();
         return redirect(route('anggota.index'));
 
+    }
+    public function active(Anggota $anggota)
+    {
+        $anggota->restore();
+        return back();
     }
 }

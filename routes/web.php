@@ -96,6 +96,11 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         ->name('karyawan.show')
         ->withTrashed();
 
+        Route::post('anggota/active/{anggota}', [AnggotaController::class, 'active'])
+        ->name('anggota.active')->withTrashed();
+        Route::get('anggota/{anggota}', [AnggotaController::class, 'show'])
+        ->name('anggota.show')
+        ->withTrashed();
 
 
     Route::get('search/simpanan', [SimpananController::class, 'search'])

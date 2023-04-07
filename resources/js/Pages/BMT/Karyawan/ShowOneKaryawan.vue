@@ -43,6 +43,17 @@
         <div class="py-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
+                    <div class="flex flex-row-reverse mt-4">
+                        <button v-if="anggota.deleted_at == null" @click="deleteAnggota"
+                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                            DEACTIVE</button>
+                        <button v-else @click="activeAnggota"
+                            class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                            ACTIVE</button>
+                        <button @click="$refs.editModal.show(karyawan)"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            EDIT</button>
+                    </div>
                     <div class="table w-full">
                         <div class="table-row-group">
                             <div class="table-row">
@@ -176,15 +187,6 @@
                                 <div class="table-cell">Keterangan</div>
                                 <div class="table-cell">:</div>
                                 <div class="table-cell">{{ pembiayaan.keterangan }}</div>
-                            </div>
-                            <div class="table-row">
-                                <div class="table-cell">Status</div>
-                                <div class="table-cell">:</div>
-                                <div class="table-cell " v-if="pembiayaan.status == 'ongoing'">
-                                    <span class="bg-red-400 text-white">{{ pembiayaan.status }}</span>
-                                </div>
-                                <div v-else class="table-cell "><span class="bg-green-400 text-white">{{ pembiayaan.status }}</span>
-                                </div>
                             </div>
                         </div>
                     </div>
