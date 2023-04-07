@@ -140,32 +140,10 @@
                                                     ">
                                 Jumlah Simpanan
                             </th>
-                            <!-- <th scope="col" class="relative px-6 py-3">
-<span class="
-px-6
-py-3
-text-xs text-center
-font-medium
-text-gray-500
-uppercase
-tracking-wider
-">Edit</span>
-</th>
-<th scope="col" class="relative px-6 py-3">
-<span class="
-px-6
-py-3
-text-left text-xs
-font-medium
-text-gray-500
-uppercase
-tracking-wider
-">Delete</span>
-</th> -->
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in simpanans" :key="simpanan.id" @dblclick="detail(simpanan.id)">
+                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in paginate.data" :key="simpanan.id" @dblclick="detail(simpanan.id)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -209,30 +187,39 @@ tracking-wider
                                     }}
                                 </span>
                             </td>
-                            <!-- <td class="
-px-6
-py-4
-whitespace-nowrap
-text-center text-sm
-font-medium
-">
-<a v-on:click="$refs.editModal.show(simpanan)" href="#"
-class="text-indigo-600 hover:text-indigo-900">Edit</a>
-</td>
-<td class="
-px-6
-py-4
-whitespace-nowrap
-text-center text-sm
-font-medium
-">
-<a @click="Simpanan(simpanan)" href="#"
-class="text-indigo-600 hover:text-indigo-900">Delete</a>
-</td> -->
                         </tr>
                     </tbody>
                 </table>
-                <!-- <edit-modal ref="editModal"></edit-modal> -->
+                <nav aria-label="Page navigation example" class="mt-5 grid">
+                    <ul class="inline-flex -space-x-px mb-4 place-self-center">
+                        <li v-show="paginate.current_page!=1">
+                            <a :href="paginate.prev_page_url"
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
+                        </li>
+                        <li v-show="paginate.current_page!=1" >
+                            <a :href="paginate.first_page_url"
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">1</a>
+                        </li>
+                        <li v-show="paginate.current_page!=1">
+                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        </li>
+                        <li>
+                            <a href="#" aria-current="page"
+                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{ paginate.current_page }}</a>
+                        </li>
+                        <li v-show="paginate.current_page!=paginate.last_page">
+                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        </li>
+                        <li v-show="paginate.current_page!=paginate.last_page">
+                            <a :href="paginate.last_page_url"
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{ paginate.last_page }}</a>
+                        </li>
+                        <li v-show="paginate.current_page!=paginate.last_page">
+                            <a :href="paginate.next_page_url"
+                                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </v-card>
         </div>
     </app-layout>
@@ -293,11 +280,12 @@ export default defineComponent({
         }
     },
     props: {
-        simpanans: Object,
+        paginate: Object,
         anggotaTanpaSimpanan: Object,
         jenisSimpanan: Object
     },
     mounted() {
+        console.log(this.paginate)
         let urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('nama') || urlParams.has('alamat') || urlParams.has('kode') || urlParams.has('kodeAnggota')) {
             this.searchShow = true

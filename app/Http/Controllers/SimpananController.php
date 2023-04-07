@@ -21,14 +21,10 @@ class SimpananController extends Controller
     public function index()
     {
         //
-        $simpanans = Simpanan::take(25)->orderByDesc('id')->get();
-        $simpanans->load('anggota', 'jenisSimpanan');
+        $paginate = Simpanan::take(25)->with('anggota','jenisSimpanan')->orderByDesc('id')->paginate();
         $anggotaTanpaSimpanan =Anggota::whereDoesntHave('simpanan')->get();
         $jenisSimpanan = JenisSimpanan::all('id','nama');
-        debugbar()->addMessage($simpanans->toArray());
-        debugbar()->addMessage($anggotaTanpaSimpanan->toArray());
-        debugbar()->addMessage($jenisSimpanan->toArray());
-        return Inertia::render('BMT/Simpanan', compact('simpanans','anggotaTanpaSimpanan','jenisSimpanan'));
+        return Inertia::render('BMT/Simpanan', compact('paginate','anggotaTanpaSimpanan','jenisSimpanan'));
     }
 
     /**
@@ -181,8 +177,16 @@ class SimpananController extends Controller
                 return $query->where('kode', 'like', '%' . $request->kodeAnggota . '%');
             }
         ) : null;
-        $simpanans = $simpanans->with('anggota', 'jenisSimpanan')->take(25)->get();
-        return Inertia::render('BMT/Simpanan', compact('simpanans'));
+        $anggotaTanpaSimpanan =Anggota::whereDoesntHave('simpanan')->get();
+        $jenisSimpanan = JenisSimpanan::all('id','nama');
+        $paginate = $simpanans->with('anggota', 'jenisSimpanan')->take(25)->paginate();
+        $paginate->appends([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'kodeAnggota' => $request->kodeAnggota,
+            'kode' => $request->kode,
+        ]);
+        return Inertia::render('BMT/Simpanan', compact('paginate','anggotaTanpaSimpanan','jenisSimpanan'));
     }
 
     public function active(Simpanan $simpanan)

@@ -199,7 +199,7 @@ tracking-wider
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(pembiayaan, index) in pembiayaans"
+                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(pembiayaan, index) in paginate.data"
                             :key="pembiayaan.id" @dblclick="detail(pembiayaan.id)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="whitespace-nowrap">
@@ -309,6 +309,36 @@ class="text-indigo-600 hover:text-indigo-900">Delete</a>
                     </tbody>
                 </table>
                 <!-- <edit-modal ref="editModal"></edit-modal> -->
+                <nav aria-label="Page navigation example" class="mt-5 grid">
+                    <ul class="inline-flex -space-x-px mb-4 place-self-center">
+                        <li v-show="paginate.current_page!=1">
+                            <a :href="paginate.prev_page_url"
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
+                        </li>
+                        <li v-show="paginate.current_page!=1" >
+                            <a :href="paginate.first_page_url"
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">1</a>
+                        </li>
+                        <li v-show="paginate.current_page!=1">
+                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        </li>
+                        <li>
+                            <a href="#" aria-current="page"
+                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{ paginate.current_page }}</a>
+                        </li>
+                        <li v-show="paginate.current_page!=paginate.last_page">
+                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        </li>
+                        <li v-show="paginate.current_page!=paginate.last_page">
+                            <a :href="paginate.last_page_url"
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{ paginate.last_page }}</a>
+                        </li>
+                        <li v-show="paginate.current_page!=paginate.last_page">
+                            <a :href="paginate.next_page_url"
+                                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </v-card>
         </div>
     </app-layout>
@@ -369,7 +399,7 @@ export default defineComponent({
         }
     },
     props: {
-        pembiayaans: Object,
+        paginate: Object,
         // anggotaTanpaPembiayaan: Object,
         // jenisPembiayaan: Object
     },

@@ -22,12 +22,9 @@ class PembiayaanController extends Controller
     public function index()
     {
         //
-        $pembiayaans = Pembiayaan::take(25)->orderByDesc('id')->get();
-        $pembiayaans->load('anggota', 'jenisPembiayaan');
+        $paginate = Pembiayaan::with('anggota', 'jenisPembiayaan')->orderByDesc('id')->paginate();
         $jenisPembiayaan = JenisPembiayaan::all('id', 'nama');
-        debugbar()->addMessage($pembiayaans->toArray());
-        debugbar()->addMessage($jenisPembiayaan->toArray());
-        return Inertia::render('BMT/Pembiayaan/Index', compact('pembiayaans', 'jenisPembiayaan'));
+        return Inertia::render('BMT/Pembiayaan/Index', compact('paginate', 'jenisPembiayaan'));
     }
 
     /**
@@ -160,7 +157,14 @@ class PembiayaanController extends Controller
                 return $query->where('kode', 'like', '%' . $request->kodeAnggota . '%');
             }
         ) : null;
-        $pembiayaans = $pembiayaans->with('anggota', 'jenisPembiayaan')->take(25)->get();
-        return Inertia::render('BMT/Pembiayaan/Index', compact('pembiayaans'));
+        $paginate = $pembiayaans->with('anggota', 'jenisPembiayaan')->take(25)->paginate();
+        $paginate->appends([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'kodeAnggota' => $request->kodeAnggota,
+            'kode' => $request->kode,
+        ]);
+        $jenisPembiayaan = JenisPembiayaan::all('id', 'nama');
+        return Inertia::render('BMT/Pembiayaan/Index', compact('paginate','jenisPembiayaan'));
     }
 }

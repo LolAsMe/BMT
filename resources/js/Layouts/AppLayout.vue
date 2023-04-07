@@ -23,11 +23,11 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('simpanan.index')" :active="route().current('simpanan.index')">
+                                <jet-nav-link :href="route('simpanan.index')" :active="route().current('simpanan.index') ||route().current('simpanan.search')">
                                     Simpanan
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('pembiayaan.index')"
-                                    :active="route().current('pembiayaan.index')">
+                                    :active="route().current('pembiayaan.index') ||route().current('pembiayaan.search')">
                                     Pembiayaan
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('nisbah.index')"
@@ -39,7 +39,7 @@
                                     Transaksi
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('karyawan.index')"
-                                    :active="route().current('karyawan.index')">
+                                    :active="route().current('karyawan.index') ||route().current('karyawan.search')">
                                     Karyawan
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('group.index')"
@@ -47,7 +47,7 @@
                                     Group
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('anggota.index')"
-                                    :active="route().current('anggota.index')">
+                                    :active="route().current('anggota.index')||route().current('anggota.search')">
                                     Anggota
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('laba.index')"
