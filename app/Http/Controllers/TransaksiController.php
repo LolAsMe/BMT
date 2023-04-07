@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
+use App\Models\Kas;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
 use App\Models\TransaksiHarian;
@@ -23,8 +24,17 @@ class TransaksiController extends Controller
     public function index()
     {
         //
-        $transaksis = Transaksi::all();
-        return Inertia::render('BMT/Transaksi', compact('transaksis'));
+        // dd("transaksis");
+        $kasBMT = Kas::find(2);
+        $kasBrankas = Kas::find(1);
+        $transaksis = Transaksi::whereDate('tanggal_transaksi',now())->get();
+        $attribute = [];
+        $attribute['jumlahDebit']=  $transaksis->sum('debit');
+        $attribute['jumlahKredit']=  $transaksis->sum('kredit');
+        $attribute['saldoAwal']=  $kasBMT->detail()->whereDate('tanggal',now())->first()->saldo_awal;
+        $attribute['selisih']=  $transaksis->sum('debit') - $transaksis->sum('kredit');
+        // dd($transaksis);
+        return Inertia::render('BMT/Transaksi', compact('kasBMT','kasBrankas','transaksis' ,'attribute'));
     }
 
     /**
@@ -135,9 +145,9 @@ class TransaksiController extends Controller
 
     }
 
-    public function makeHarian()
+    public function makeHarian(BMTService $bmt)
     {
-        TransaksiHarian::create(['kode'=>"000", "debit"=>0,"kredit"=>0]);
+        BMTService::startTheDay();
         return redirect()->back();
     }
 

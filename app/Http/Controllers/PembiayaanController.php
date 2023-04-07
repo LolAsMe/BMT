@@ -7,6 +7,7 @@ use App\Http\Requests\StorePembiayaanRequest;
 use App\Http\Requests\UpdatePembiayaanRequest;
 use App\Models\Anggota;
 use App\Models\JenisPembiayaan;
+use App\Models\Kas;
 use App\Services\BMTService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class PembiayaanController extends Controller
     public function index()
     {
         //
+
         $paginate = Pembiayaan::with('anggota', 'jenisPembiayaan')->orderByDesc('id')->paginate();
         $jenisPembiayaan = JenisPembiayaan::all('id', 'nama');
         return Inertia::render('BMT/Pembiayaan/Index', compact('paginate', 'jenisPembiayaan'));

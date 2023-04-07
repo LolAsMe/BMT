@@ -123,7 +123,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
 
 
     Route::resource('laba', LabaController::class)->only([
-        'index', 'destroy', 'update', 'store'
+        'index', 'destroy', 'update', 'store','show'
     ]);
 
     Route::resource('anggunan', AnggunanController::class)->only([

@@ -17,9 +17,11 @@ class LabaController extends Controller
     public function index()
     {
         //
-        $laba = Laba::labaThisMonth();
-        debugbar()->addMessage($laba->toArray());
-        return Inertia::render('BMT/Laba/Index');
+        // $laba = Laba::labaThisMonth();
+        $paginate = Laba::paginate();
+        // dd($laba);
+        debugbar()->addMessage($paginate->toArray());
+        return Inertia::render('BMT/Laba/Index',compact('paginate'));
 
     }
 
@@ -53,6 +55,10 @@ class LabaController extends Controller
     public function show(laba $laba)
     {
         //
+        $laba->load('detail');
+        return Inertia::render('BMT/Laba/ShowOneLaba',compact('laba'));
+
+
     }
 
     /**

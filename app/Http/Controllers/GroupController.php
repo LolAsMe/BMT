@@ -64,7 +64,6 @@ class GroupController extends Controller
 
         $anggotas = $bmt->searchAnggota($request->all());
         $group->load(['anggota.simpanan', 'karyawan']);
-        // dd($anggotas);
         return Inertia::render('BMT/GroupDetail', [
             'parameter' => fn () => $request->all(),
             'group' => fn () =>  $group,

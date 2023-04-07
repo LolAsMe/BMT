@@ -35,14 +35,38 @@ class BMTService
         $this->user = auth('web')->user();
         $this->kasBrankas = Kas::find(1);
         $this->kasBMT = Kas::find(2);
-        $this->transaksiHarian = TransaksiHarian::whereDate('tanggal', now())->first();
+        $this->transaksiHarian = TransaksiHarian::whereDate('tanggal', now())->first() ?? new TransaksiHarian();
         $this->nisbahRate = 0.5;
     }
 
     public function createPembiayaan($attribute)
     {
         $kas = $this->kasBMT;
-        Pembiayaan::create($attribute);
+        $pembiayaan = Pembiayaan::create($attribute);
+        $pembiayaan->detail()->create([
+            'angsuran_ke' => 0,
+            'jumlah' => $pembiayaan->jumlah_angsuran,
+            'akumulasi_angsuran' => 0,
+            'total_tanggungan' => $pembiayaan->total_pembiayaan,
+            'keterangan' => 'Pembiayaan Baru',
+        ]);
+        $pembiayaan->angsuran_diterima = $pembiayaan->jumlah_angsuran;
+        $this->lastDetailPembiayaan = $pembiayaan->detail()->latest()->first();
+        $this->lastDetailPembiayaan->transaksi()->create(
+            [
+                'kode' => 'PEMB 012930',
+                'nama' => 'Pemb Baru',
+                'keterangan' => 'OK',
+                'debit' => 0,
+                'kredit' => $pembiayaan->jumlah,
+                'tanggal_transaksi' => now(),
+                'tanggal_slip' => now(),
+                'karyawan_id' => $this->user->karyawan_id,
+            ]
+        );
+
+        $this->transaksiHarian->increment('kredit', $pembiayaan->jumlah);
+
         $kas->detail()->create([
             'kode' => 'kode1',
             'tanggal' => now(),
@@ -56,15 +80,15 @@ class BMTService
         $kas->decrement('jumlah', $attribute['jumlah']);
     }
 
-    public function SetorBrankas(int $jumlah)
+    public function setorBrankas(int $jumlah)
     {
-        $this->kasKeluar($jumlah);
+        $this->kasKeluar($jumlah,1,'Setor Ke Brankas',1);
         $this->kasMasuk($jumlah, 2);
     }
 
-    public function TarikBrankas(int $jumlah)
+    public function tarikBrankas(int $jumlah)
     {
-        $this->kasMasuk($jumlah);
+        $this->kasMasuk($jumlah,1,'Tarik Dari Brankas',1);
         $this->kasKeluar($jumlah, 2);
     }
 
@@ -72,7 +96,7 @@ class BMTService
     {
         $anggotas = Anggota::searchAnggota($parameter);
         $anggotas->whereDoesntHave('group');
-        return $anggotas->with('simpanan')->take(20)->get();
+        return $anggotas->with('simpanan')->take(5)->paginate(8);
     }
 
     public function setCurrentSimpanan(Simpanan $simpanan)
@@ -183,8 +207,8 @@ class BMTService
             );
             $this->transaksiHarian->increment('debit', $kasMasuk);
 
-            $attribute=['kode'=>"Kas006", 'keterangan'=>$keterangan];
-            $this->labaMasuk($kasMasuk, $attribute);
+            $attribute = ['kode' => "Kas006", 'keterangan' => $keterangan];
+            // $this->labaMasuk($kasMasuk, $attribute);
         }
 
         $kas->increment('jumlah', $kasMasuk);
@@ -226,8 +250,8 @@ class BMTService
                 ]
             );
             $this->transaksiHarian->increment('kredit', $kasKeluar);
-            $attribute=['kode'=>"Kas006", 'keterangan'=>$keterangan];
-            $this->labaKeluar($kasKeluar, $attribute);
+            $attribute = ['kode' => "Kas006", 'keterangan' => $keterangan];
+            // $this->labaKeluar($kasKeluar, $attribute);
         }
 
         $kas->decrement('jumlah', $kasKeluar);
@@ -389,56 +413,6 @@ class BMTService
 
         $this->checkStatusAngsuran();
         $this->currentPembiayaan->save();
-
-        // if ($lastDetail === null) {
-        //     $this->currentPembiayaan->detail()->create([
-        //         'angsuran_ke' => 1,
-        //         'jumlah' => $this->currentPembiayaan->jumlah_angsuran,
-        //         'akumulasi_angsuran' => $this->currentPembiayaan->jumlah_angsuran,
-        //         'total_tanggungan' => $this->currentPembiayaan->total_pembiayaan - $this->currentPembiayaan->jumlah_angsuran,
-        //         'keterangan' => 'Ok',
-        //     ]);
-        //     $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->jumlah_angsuran;
-        // } else {
-        //     if ($lastDetail->angsuran_ke < $this->currentPembiayaan->frekuensi_angsuran + 1 && $lastDetail->angsuran_ke + 1 == $angsuranKe) {
-        //         $this->currentPembiayaan->detail()->create([
-        //             'angsuran_ke' => $lastDetail->angsuran_ke + 1,
-        //             'jumlah' => $this->currentPembiayaan->jumlah_angsuran,
-        //             'akumulasi_angsuran' => $lastDetail->akumulasi_angsuran + $this->currentPembiayaan->jumlah_angsuran,
-        //             'total_tanggungan' => $lastDetail->total_tanggungan - $this->currentPembiayaan->jumlah_angsuran,
-        //             'keterangan' => 'Ok',
-        //         ]);
-        //         $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->angsuran_diterima + $this->currentPembiayaan->jumlah_angsuran;
-        //     }
-
-        //     if ($this->currentPembiayaan->frekuensi_angsuran == $angsuranKe && $lastDetail->angsuran_ke < $this->currentPembiayaan->frekuensi_angsuran + 1) {
-        //         $this->currentPembiayaan->detail()->create([
-        //             'angsuran_ke' => $lastDetail->angsuran_ke + 1,
-        //             'jumlah' => $this->currentPembiayaan->jumlah_angsuran,
-        //             'akumulasi_angsuran' => $lastDetail->akumulasi_angsuran + $this->currentPembiayaan->jumlah_angsuran,
-        //             'total_tanggungan' => $lastDetail->total_tanggungan - $this->currentPembiayaan->jumlah_angsuran,
-        //             'keterangan' => 'Ok',
-        //         ]);
-        //         $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->angsuran_diterima + $this->currentPembiayaan->jumlah_angsuran;
-        //         $this->currentPembiayaan->status = "selesai";
-        //     }
-        // }
-        // $this->currentPembiayaan->save();
-        // $statusDetail = $lastDetail === null;
-        // if ( $statusDetail || $lastDetail->angsuran_ke < $this->currentPembiayaan->frekuensi_angsuran && $angsuranKe > 0 && $angsuranKe == $lastDetail->angsuran_ke + 1) {
-        //     $this->currentPembiayaan->detail()->create([
-        //         'angsuran_ke' =>         $statusDetail ? 1 : $lastDetail->angsuran_ke + 1,
-        //         'jumlah' => $this->currentPembiayaan->jumlah_angsuran,
-        //         'akumulasi_angsuran' => $statusDetail ? $this->currentPembiayaan->jumlah_angsuran : $lastDetail->akumulasi_angsuran + $this->currentPembiayaan->jumlah_angsuran,
-        //         'total_tanggungan' => $statusDetail ? $this->currentPembiayaan->total_pembiayaan - $this->currentPembiayaan->jumlah_angsuran : $lastDetail->total_tanggungan - $this->currentPembiayaan->jumlah_angsuran,
-        //         'keterangan' => 'Ok',
-        //     ]);
-        //     $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->angsuran_diterima + $this->currentPembiayaan->jumlah_angsuran;
-        //     if ($angsuranKe == $lastDetail->angsuran_ke + 1) {
-        //         $this->currentPembiayaan->status = 'selesai';
-        //     }
-        // $this->currentPembiayaan->save();
-        // }
     }
 
     public function kasTambah($jumlah, $keterangan)
@@ -523,10 +497,6 @@ class BMTService
         ]);
         $laba->jumlah += $jumlah;
         $laba->save();
-        // $attribute = [
-        //     'kode'=>'Setor',
-        //     'keterangan'=>'ok'
-        // ];
     }
     public function labaKeluar($jumlah, $attribute = [])
     {
@@ -540,5 +510,20 @@ class BMTService
         ]);
         $laba->jumlah -= $jumlah;
         $laba->save();
+    }
+
+    public static function startTheDay()
+    {
+        $harian = TransaksiHarian::create(['kode'=>"000", "debit"=>0,"kredit"=>0]);
+        $kasBMT = Kas::find(2);
+        $kasBMT->detail()->create([
+            'kode' => '9999',
+            'tanggal' => now(),
+            'debit' => 0,
+            'kredit' => 0,
+            'saldo_awal' => $kasBMT->jumlah,
+            'saldo_akhir' => $kasBMT->jumlah,
+            'keterangan' => 'Saldo Awal',
+        ]);
     }
 }
