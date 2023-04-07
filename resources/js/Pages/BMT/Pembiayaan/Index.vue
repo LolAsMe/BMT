@@ -286,29 +286,9 @@ tracking-wider
                                     </div>
                                 </div>
                             </td>
-                            <!-- <td class="
-py-4
-whitespace-nowrap
-text-center text-sm
-font-normal
-">
-<a v-on:click="$refs.editModal.show(pembiayaan)" href="#"
-class="text-indigo-600 hover:text-indigo-900">Edit</a>
-</td>
-<td class="
-px-6
-py-4
-whitespace-nowrap
-text-center text-sm
-font-medium
-">
-<a @click="Pembiayaan(pembiayaan)" href="#"
-class="text-indigo-600 hover:text-indigo-900">Delete</a>
-</td> -->
                         </tr>
                     </tbody>
                 </table>
-                <!-- <edit-modal ref="editModal"></edit-modal> -->
                 <nav aria-label="Page navigation example" class="mt-5 grid">
                     <ul class="inline-flex -space-x-px mb-4 place-self-center">
                         <li v-show="paginate.current_page!=1">

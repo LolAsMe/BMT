@@ -7,6 +7,7 @@ use App\Http\Requests\StoreNisbahRequest;
 use App\Http\Requests\UpdateNisbahRequest;
 use App\Models\Simpanan;
 use App\Services\BMTService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -20,8 +21,8 @@ class NisbahController extends Controller
     public function index(BMTService $bmt)
     {
         //
-        $nisbahs = Nisbah::all();
-        $simpanans= Simpanan::whereJenisSimpananId(11)->get()->toArray();
+        $paginate = Nisbah::with('simpanan','simpanan.anggota')->orderBy('status','asc')->paginate();
+        // $simpanans= Simpanan::whereJenisSimpananId(11)->get()->toArray();
         //simpanan mudhorobah 664
         // $simpanan->tambahInvestasi();
 
@@ -29,13 +30,13 @@ class NisbahController extends Controller
 
 
         //tambah setor mudhorobah
-        $simpanan = Simpanan::find(664);
+        // $simpanan = Simpanan::find(664);
 
 
-        $bmt->hitungNisbah();
+        // $bmt->hitungNisbah();
 
-        debugbar()->addMessage($simpanans);
-        return Inertia::render('BMT/Nisbah', compact('nisbahs'));
+        // debugbar()->addMessage($simpanans);
+        return Inertia::render('BMT/Nisbah', compact('paginate'));
     }
 
     /**
@@ -74,6 +75,9 @@ class NisbahController extends Controller
     public function show(Nisbah $nisbah)
     {
         //
+        $nisbah->load('detail','simpanan.anggota');
+        return Inertia::render('BMT/Nisbah/ShowOneNisbah', compact('nisbah'));
+
     }
 
     /**
@@ -116,5 +120,42 @@ class NisbahController extends Controller
         $nisbah->delete();
         return redirect(route('nisbah.index'));
 
+    }
+
+    public function active(Nisbah $nisbah)
+    {
+        $nisbah->restore();
+        return back();
+    }
+    public function search(Request $request)
+    {
+        $nisbahs = Nisbah::orderBy('id');
+        $request->nama ? $nisbahs->whereHas(
+            'simpanan.anggota',
+            function ($query) use ($request) {
+                return $query->where('nama', 'like', '%' . $request->nama . '%');
+            }
+        ) : null;
+        $request->kodeSimpanan ? $nisbahs->whereHas(
+            'simpanan',
+            function ($query) use ($request) {
+                return $query->where('kode', 'like', '%' . $request->kodeSimpanan . '%');
+            }
+        ) : null;
+        $request->kode ? $nisbahs->where('kode', 'like', '%' . $request->kode . '%')  : null;
+        $request->kodeAnggota ? $nisbahs->whereHas(
+            'simpanan.anggota',
+            function ($query) use ($request) {
+                return $query->where('kode', 'like', '%' . $request->kodeAnggota . '%');
+            }
+        ) : null;
+        $paginate = $nisbahs->with('simpanan.anggota')->take(25)->paginate();
+        $paginate->appends([
+            'nama' => $request->nama,
+            'alamat' => $request->kodeSimpanan,
+            'kodeAnggota' => $request->kodeAnggota,
+            'kode' => $request->kode,
+        ]);
+        return Inertia::render('BMT/Nisbah', compact('paginate'));
     }
 }

@@ -142,8 +142,10 @@
                                 <div class="table-cell">Status</div>
                                 <div class="table-cell">:</div>
                                 <div class="table-cell " v-if="simpanan.deleted_at != null">
-                                    <span class="bg-red-400 text-white">{{ "Tidak Aktif" }}</span></div>
-                                <div v-else class="table-cell "><span class="bg-green-400 text-white">{{ "Aktif" }}</span></div>
+                                    <span class="bg-red-400 text-white">{{ "Tidak Aktif" }}</span>
+                                </div>
+                                <div v-else class="table-cell "><span class="bg-green-400 text-white">{{ "Aktif" }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -190,58 +192,58 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                    ">
                                     No
                                 </th>
                                 <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                    ">
                                     Nama
                                 </th>
                                 <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                    ">
                                     Simpanan
                                 </th>
                                 <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                    ">
                                     Jumlah Simpanan
                                 </th>
                                 <th scope="col" class="
-    px-6
-    py-3
-    text-left text-xs
-    font-medium
-    text-gray-500
-    uppercase
-    tracking-wider
-    ">
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                    ">
                                     Keterangan
                                 </th>
                             </tr>

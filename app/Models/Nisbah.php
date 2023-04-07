@@ -57,4 +57,13 @@ class Nisbah extends Model
     {
         return $this->belongsTo(Simpanan::class);
     }
+
+    public function getAwalAttribute($value)
+    {
+        return (int)$value;
+    }
+    public function getJumlahAttribute($value)
+    {
+        return (int)$value;
+    }
 }

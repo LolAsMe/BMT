@@ -102,6 +102,12 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         ->name('anggota.show')
         ->withTrashed();
 
+        Route::post('nisbah/active/{nisbah}', [NisbahController::class, 'active'])
+        ->name('nisbah.active')->withTrashed();
+    Route::get('nisbah/{nisbah}', [NisbahController::class, 'show'])
+        ->name('nisbah.show')
+        ->withTrashed();
+
 
     Route::get('search/simpanan', [SimpananController::class, 'search'])
         ->name('simpanan.search');
@@ -109,6 +115,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         ->name('pembiayaan.search');
     Route::get('search/anggota', [AnggotaController::class, 'search'])
         ->name('anggota.search');
+        Route::get('search/nisbah', [NisbahController::class, 'search'])
+        ->name('nisbah.search');
     Route::resource('simpanan', SimpananController::class)->only([
         'index', 'destroy', 'update', 'store', 'search'
     ]);
