@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
+use App\Models\DetailPembiayaan;
+use App\Models\DetailSimpanan;
 use App\Models\Kas;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
 use App\Models\TransaksiHarian;
 use Illuminate\Http\Request;
 use App\Services\BMTService;
+use DebugBar\DebugBar;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -21,20 +25,53 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         // dd("transaksis");
         $kasBMT = Kas::find(2);
         $kasBrankas = Kas::find(1);
-        $transaksis = Transaksi::whereDate('tanggal_transaksi',now())->get();
+        $tanggal = $request->tanggal ?? now();
+
+        $transaksis = Transaksi::whereDate('tanggal_transaksi', $tanggal)->with(['log'])->get()->loadMorph('log', [
+            DetailSimpanan::class => ['simpanan.anggota'],
+            DetailPembiayaan::class => ['pembiayaan.anggota'],
+        ]);
+
+
         $attribute = [];
-        $attribute['jumlahDebit']=  $transaksis->sum('debit');
-        $attribute['jumlahKredit']=  $transaksis->sum('kredit');
-        $attribute['saldoAwal']=  $kasBMT->detail()->whereDate('tanggal',now())->first()->saldo_awal;
-        $attribute['selisih']=  $transaksis->sum('debit') - $transaksis->sum('kredit');
-        // dd($transaksis);
-        return Inertia::render('BMT/Transaksi', compact('kasBMT','kasBrankas','transaksis' ,'attribute'));
+        $attribute['jumlahDebit'] =  $transaksis->sum('debit');
+        $attribute['jumlahKredit'] =  $transaksis->sum('kredit');
+        $attribute['saldoAwal'] =  $kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
+        $attribute['selisih'] =  $transaksis->sum('debit') - $transaksis->sum('kredit');
+        return Inertia::render('BMT/Transaksi', [
+            'kasBMT'=>$kasBMT,
+            'kasBrankas'=>$kasBrankas,
+            'transaksis'=>$transaksis,
+            'attribute'=>$attribute,
+            'simpanans'=>function()use($request){
+                $simpanans = Simpanan::orderBy('id');
+                $request->nama ? $simpanans->whereHas(
+                    'anggota',
+                    function (Builder $query) use ($request) {
+                        return $query->where('nama', 'like', '%' . $request->nama . '%');
+                    }
+                ) : null;
+                $request->alamat ? $simpanans->whereHas(
+                    'anggota',
+                    function (Builder $query) use ($request) {
+                        return $query->where('alamat', 'like', '%' . $request->alamat . '%');
+                    }
+                ) : null;
+                $request->kode ? $simpanans->where('kode', 'like', '%' . $request->kode . '%')  : null;
+                $simpanans->with(['anggota','jenisSimpanan','detail'=>function($query){
+                    $query->latest('id')->take(5);
+                }])->take(5)->get();
+                DebugBar()->addMessage($simpanans->take(4)->get());
+                DebugBar()->addMessage($request->all());
+                return $simpanans->take(4)->get();
+            }
+        ]);
     }
 
     /**
@@ -114,35 +151,30 @@ class TransaksiController extends Controller
         //
         $transaksi->delete();
         return redirect(route('transaksi.index'));
-
     }
 
     public function tarik(Request $request, Simpanan $simpanan, BMTService $bmt)
     {
         $bmt->setCurrentSimpanan($simpanan)->tarik($request->jumlah);
         return redirect()->back();
-
     }
 
     public function angsur(Request $request, Pembiayaan $pembiayaan, BMTService $bmt)
     {
         $bmt->setCurrentPembiayaan($pembiayaan)->attempToAngsur();
         return redirect()->back();
-
     }
 
-    public function setorBrankas(Request $request , BMTService $bmt)
+    public function setorBrankas(Request $request, BMTService $bmt)
     {
         $bmt->setorBrankas($request->jumlah);
         return redirect()->back();
-
     }
 
-    public function tarikBrankas(Request $request , BMTService $bmt)
+    public function tarikBrankas(Request $request, BMTService $bmt)
     {
         $bmt->tarikBrankas($request->jumlah);
         return redirect()->back();
-
     }
 
     public function makeHarian(BMTService $bmt)

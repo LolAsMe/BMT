@@ -50,8 +50,9 @@ class DetailPembiayaan extends Model
 
     public function pembiayaan()
     {
-        $this->belongsTo(Pembiayaan::class);
+        return $this->belongsTo(Pembiayaan::class);
     }
+
 
     public function transaksi()
     {

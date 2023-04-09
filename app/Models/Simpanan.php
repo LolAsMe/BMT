@@ -61,6 +61,8 @@ class Simpanan extends \Eloquent
         return $this->belongsTo(Anggota::class);
     }
 
+
+
     public function tambahInvestasi($attribute = [])
     {
         if ($this->jenis_simpanan_id == 11) {

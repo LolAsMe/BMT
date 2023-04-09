@@ -67,12 +67,12 @@ class DetailSimpanan extends Model
 
     public function simpanan()
     {
-        $this->belongsTo(Simpanan::class);
+        return $this->belongsTo(Simpanan::class);
     }
 
     public function transaksi()
     {
-        return $this->morphOne(Transaksi::class,'log');
+        return $this->morphOne(Transaksi::class, 'log');
     }
     public function getDebitAttribute($value)
     {
@@ -91,5 +91,4 @@ class DetailSimpanan extends Model
     {
         return (int)$value;
     }
-
 }

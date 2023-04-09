@@ -42,6 +42,7 @@ class SetorController extends Controller
     public function setor(Request $request, Simpanan $simpanan, BMTService $bmt)
     {
         $bmt->setCurrentSimpanan($simpanan)->setor($request->jumlah);
-        return redirect()->back();
+        dd('test');
+        // return redirect()->back();
     }
 }
