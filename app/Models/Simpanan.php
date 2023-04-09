@@ -56,6 +56,11 @@ class Simpanan extends \Eloquent
         return $this->hasMany(DetailSimpanan::class);
     }
 
+    public function detailsRecent()
+    {
+        return $this->hasMany(DetailSimpanan::class)->orderBy('id','desc')->take(5);
+    }
+
     public function anggota()
     {
         return $this->belongsTo(Anggota::class);

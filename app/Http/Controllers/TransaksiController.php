@@ -50,7 +50,7 @@ class TransaksiController extends Controller
             'transaksis'=>$transaksis,
             'attribute'=>$attribute,
             'simpanans'=>function()use($request){
-                $simpanans = Simpanan::orderBy('id');
+                $simpanans = Simpanan::orderBy('id','desc');
                 $request->nama ? $simpanans->whereHas(
                     'anggota',
                     function (Builder $query) use ($request) {
@@ -64,12 +64,17 @@ class TransaksiController extends Controller
                     }
                 ) : null;
                 $request->kode ? $simpanans->where('kode', 'like', '%' . $request->kode . '%')  : null;
-                $simpanans->with(['anggota','jenisSimpanan','detail'=>function($query){
-                    $query->latest('id')->take(5);
-                }])->take(5)->get();
-                DebugBar()->addMessage($simpanans->take(4)->get());
+                $simpanans->with(['anggota','jenisSimpanan']);
+                $simpanans = $simpanans->take(4)->get();
+                $simpanans->map(function($simpanan){
+                    $simpanan->load(['detail'=>function($query){
+                        $query->orderBy('id','desc')->take(5);
+                    }]);
+                    return $simpanan;
+                });
                 DebugBar()->addMessage($request->all());
-                return $simpanans->take(4)->get();
+                DebugBar()->addMessage($simpanans);
+                return $simpanans;
             }
         ]);
     }
