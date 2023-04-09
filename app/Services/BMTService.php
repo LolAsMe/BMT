@@ -104,8 +104,9 @@ class BMTService
         $this->currentSimpanan = $simpanan;
         return $this;
     }
-    public function setor(int $jumlahSetoran)
+    public function setor(int $jumlahSetoran,$keterangan)
     {
+        $keterangan = $keterangan ?? "OK";
         $this->currentSimpanan->detail()->create([
             'kode' => 'kode1',
             'tanggal_transaksi' => now(),
@@ -114,7 +115,7 @@ class BMTService
             'kredit' => $jumlahSetoran,
             'saldo_awal' => $this->currentSimpanan->jumlah,
             'saldo_akhir' => $this->currentSimpanan->jumlah + $jumlahSetoran,
-            'keterangan' => 'OK',
+            'keterangan' => $keterangan,
             'karyawan_id' => $this->user->karyawan_id,
 
         ]);
@@ -123,7 +124,7 @@ class BMTService
             [
                 'kode' => 'kode1',
                 'nama' => 'SET Mudhorobah',
-                'keterangan' => 'OK',
+                'keterangan' => $keterangan,
                 'debit' => $jumlahSetoran,
                 'kredit' => 0,
                 'tanggal_transaksi' => now(),
@@ -136,8 +137,9 @@ class BMTService
         $this->kasMasuk($jumlahSetoran);
     }
 
-    public function tarik(int $jumlahTarikan)
+    public function tarik(int $jumlahTarikan,$keterangan)
     {
+        $keterangan = $keterangan ?? "OK";
         $this->currentSimpanan->detail()->create([
             'kode' => 'kode1',
             'tanggal_transaksi' => now(),
@@ -146,7 +148,7 @@ class BMTService
             'kredit' => 0,
             'saldo_awal' => $this->currentSimpanan->jumlah,
             'saldo_akhir' => $this->currentSimpanan->jumlah - $jumlahTarikan,
-            'keterangan' => 'OK',
+            'keterangan' => $keterangan,
             'karyawan_id' => $this->user->karyawan_id,
 
         ]);
@@ -155,7 +157,7 @@ class BMTService
             [
                 'kode' => 'kode1',
                 'nama' => 'PEN Mudhorobah',
-                'keterangan' => 'OK',
+                'keterangan' => $keterangan,
                 'debit' => 0,
                 'kredit' => $jumlahTarikan,
                 'tanggal_transaksi' => now(),

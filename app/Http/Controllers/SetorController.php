@@ -39,10 +39,5 @@ class SetorController extends Controller
         return Inertia::render('BMT/Setor/SetorBatch', compact('groups'));
     }
 
-    public function setor(Request $request, Simpanan $simpanan, BMTService $bmt)
-    {
-        $bmt->setCurrentSimpanan($simpanan)->setor($request->jumlah);
-        // dd('test');
-        return redirect()->back();
-    }
+
 }
