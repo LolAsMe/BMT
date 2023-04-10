@@ -45,12 +45,12 @@ class TransaksiController extends Controller
         $attribute['saldoAwal'] =  $kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
         $attribute['selisih'] =  $transaksis->sum('debit') - $transaksis->sum('kredit');
         return Inertia::render('BMT/Transaksi', [
-            'kasBMT' => $kasBMT,
-            'kasBrankas' => $kasBrankas,
-            'transaksis' => $transaksis,
-            'attribute' => $attribute,
-            'simpanans' => function () use ($request) {
-                $simpanans = Simpanan::orderBy('id', 'desc');
+            'kasBMT'=>$kasBMT,
+            'kasBrankas'=>$kasBrankas,
+            'transaksis'=>$transaksis,
+            'attribute'=>$attribute,
+            'simpanans'=>function()use($request){
+                $simpanans = Simpanan::orderBy('id','desc');
                 $request->nama ? $simpanans->whereHas(
                     'anggota',
                     function (Builder $query) use ($request) {
@@ -64,11 +64,11 @@ class TransaksiController extends Controller
                     }
                 ) : null;
                 $request->kode ? $simpanans->where('kode', 'like', '%' . $request->kode . '%')  : null;
-                $simpanans->with(['anggota', 'jenisSimpanan']);
+                $simpanans->with(['anggota','jenisSimpanan']);
                 $simpanans = $simpanans->take(4)->get();
-                $simpanans->map(function ($simpanan) {
-                    $simpanan->load(['detail' => function ($query) {
-                        $query->orderBy('id', 'desc')->take(8);
+                $simpanans->map(function($simpanan){
+                    $simpanan->load(['detail'=>function($query){
+                        $query->orderBy('id','desc')->take(5);
                     }]);
                     return $simpanan;
                 });
@@ -186,9 +186,10 @@ class TransaksiController extends Controller
 
     public function tarik(Request $request, Simpanan $simpanan, BMTService $bmt)
     {
-        $bmt->setCurrentSimpanan($simpanan)->tarik($request->jumlah, $request->keterangan);
+        $bmt->setCurrentSimpanan($simpanan)->tarik($request->jumlah);
         return redirect()->back();
     }
+
     public function angsur(Request $request, Pembiayaan $pembiayaan, BMTService $bmt)
     {
 debugbar()->addMessage($pembiayaan);
@@ -219,6 +220,7 @@ debugbar()->addMessage($pembiayaan);
         $bmt->kasTambah($request->jumlah, $request->keterangan);
         return redirect()->back();
     }
+<<<<<<< HEAD
 
 
     public function pemasukan(Request $request, BMTService $bmt)
@@ -237,4 +239,6 @@ debugbar()->addMessage($pembiayaan);
         $bmt->setCurrentSimpanan($simpanan)->setor($request->jumlah, $request->keterangan);
         return redirect()->back();
     }
+=======
+>>>>>>> parent of b12393e (Penarikan)
 }

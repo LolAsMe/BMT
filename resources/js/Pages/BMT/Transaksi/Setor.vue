@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row gap-4 p-4">
-        <div class="w-1/4">
+        <div class="w-1/3">
             <h3 class="font-bold border-b-2 mb-2 uppercase">{{ oneSimpanan ? 'Setor Simpanan' : 'Cari Simpanan' }}</h3>
             <form @submit.prevent="setor">
                 <div class="relative z-0 w-full mb-6 group">
@@ -48,14 +48,6 @@
 
                     <input
                         class="disabled:border-green-300 disabled:text-green-600 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        type="text" v-model="keterangan">
-                    <label for="floating_keterangan"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Keterangan</label>
-                </div>
-                <div class="relative z-0 w-full group mb-6" v-if="oneSimpanan">
-
-                    <input
-                        class="disabled:border-green-300 disabled:text-green-600 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         type="number" v-model="jumlah_setor">
                     <label for="floating_jumlah_setor"
                         class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jumlah
@@ -78,63 +70,63 @@
             <button v-if="!oneSimpanan" @click="reset"
                 class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">RESET</button>
         </div>
-        <div class="w-3/4" v-if="oneSimpanan">
+        <div class="w-2/3" v-if="oneSimpanan">
             <table class="min-w-full divide-y divide-gray-200 mt-5">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             No
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             Nama
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             Simpanan
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             Jumlah Simpanan
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             Keterangan
                         </th>
                     </tr>
@@ -207,36 +199,36 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             Nama
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             Simpanan
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                uppercase
+                tracking-wider
+                ">
                             Jumlah Simpanan
                         </th>
                     </tr>
@@ -272,15 +264,15 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
                             <span class="
-                    px-2
-                    inline-flex
-                    text-xs
-                    leading-5
-                    font-semibold
-                    rounded-full
-                    bg-green-100
-                    text-green-800
-                    ">
+                px-2
+                inline-flex
+                text-xs
+                leading-5
+                font-semibold
+                rounded-full
+                bg-green-100
+                text-green-800
+                ">
                                 {{
                                     "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
                                 }}
@@ -310,8 +302,7 @@ export default defineComponent({
             render: 0,
             jumlah_setor: null,
             jumlah_simpanan: null,
-            jenis_simpanan: null,
-            keterangan:null
+            jenis_simpanan: null
 
         };
     },
@@ -352,9 +343,8 @@ export default defineComponent({
             let form = this.$inertia.form({
                 id: this.oneSimpanan.id,
                 jumlah: this.jumlah_setor,
-                keterangan: this.keterangan,
             })
-            await form.post(route("setor", this.oneSimpanan.id), {
+            await form.post(route("setor.store", this.oneSimpanan.id), {
                 preserveScroll: true,
                 onSuccess: () => {
                     this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
