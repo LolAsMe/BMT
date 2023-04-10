@@ -17,7 +17,7 @@
                 <label for="floating_pemasukan"
                     class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Pemasukan</label>
             </div>
-            <span class="block">
+            <span class="block" v-if="form.pemasukan">
                 IDR {{  form.pemasukan.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
             </span>
             <button @click="pemasukan" type="submit"
@@ -36,7 +36,7 @@ export default defineComponent({
     },
     data() {
         return {
-            form: this.$inertia.form({ keterangan: null, pemasukan: 0 })
+            form: this.$inertia.form({ keterangan: null, pemasukan: null })
         }
     },
     methods: {

@@ -36,7 +36,7 @@
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         @click="showOrder = 'tarik'">Penarikan</button>
                     <button type="button"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         @click="showOrder = 'pembiayaan'">Pembiayaan</button>
                     <button type="button"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
@@ -53,11 +53,11 @@
         </template>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg  m-5 p-2 block">
-                <pemasukan v-if="showOrder == 'pemasukan'"></pemasukan>
-                <pembiayaan v-if="showOrder == 'pembiayaan'"></pembiayaan>
-                <pengeluaran v-if="showOrder == 'pengeluaran'"></pengeluaran>
-                <setor v-if="showOrder == 'setor'"></setor>
-                <tarik v-if="showOrder == 'tarik'"></tarik>
+                <pemasukan v-show="showOrder == 'pemasukan'"></pemasukan>
+                <pembiayaan v-show="showOrder == 'pembiayaan'"></pembiayaan>
+                <pengeluaran v-show="showOrder == 'pengeluaran'"></pengeluaran>
+                <setor v-show="showOrder == 'setor'"></setor>
+                <tarik v-show="showOrder == 'tarik'"></tarik>
             </div>
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
