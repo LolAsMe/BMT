@@ -17,7 +17,7 @@ class AddTransaksiHarianTable extends Migration
         Schema::create('transaksi_harian', function (Blueprint $table) {
             $table->id();
             $table->string('kode');
-            $table->decimal('debit',15);
+            $table->decimal('debet',15);
             $table->decimal('kredit',15);
             $table->dateTime('tanggal')->useCurrent();
             $table->softDeletes();

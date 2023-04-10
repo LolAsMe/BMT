@@ -24,7 +24,6 @@ class SimpananController extends Controller
         $paginate = Simpanan::take(25)->with('anggota','jenisSimpanan')->orderByDesc('id')->paginate();
         $anggotaTanpaSimpanan =Anggota::whereDoesntHave('simpanan')->get();
         $jenisSimpanan = JenisSimpanan::all('id','nama');
-        // dd($paginate);
         return Inertia::render('BMT/Simpanan', compact('paginate','anggotaTanpaSimpanan','jenisSimpanan'));
     }
 

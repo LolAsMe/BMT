@@ -14,7 +14,7 @@
                 </div>
                 <div class="mb-5">
                     <label for="anggota">Pilih Anggota: </label>
-                    <select name="anggota" id="anggota" v-model="form.anggota_id" v-if="anggotas">
+                    <select name="anggota" id="anggota" v-model="form.anggota_id">
                         <option v-for="anggota in anggotas" :key="anggota.id" :value="anggota.id">{{ anggota.nama }}
                         </option>
                     </select>
@@ -63,7 +63,7 @@ export default defineComponent({
         return {
             form: this.$inertia.form({
                 kode: "",
-                anggota_id: this.anggotas[0] ? this.anggotas[0].id : null,
+                anggota_id: this.anggotas[0].id,
                 jenis_simpanan_id: 1,
                 tanggal_pembuatan: new Date().toJSON().substring(0, 10),
                 keterangan: "",
