@@ -17,7 +17,6 @@ export default defineComponent({
         };
     },
     methods: {
-<<<<<<< HEAD
         filterAnggota() {
             this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
         },
@@ -76,8 +75,6 @@ export default defineComponent({
         totalIDR() {
             return this.toRupiah(this.total)
         }
-=======
->>>>>>> parent of b12393e (Penarikan)
     },
     mounted() {
 

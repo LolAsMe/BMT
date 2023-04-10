@@ -54,15 +54,9 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding'])->group(functi
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
 
     Route::get('setor', [SetorController::class, 'index'])->name('setor');
-<<<<<<< HEAD
-    Route::get('setor/batch', [TransaksiController::class, 'batch'])->name('setor/batch');
-    Route::post('setor/{simpanan}', [TransaksiController::class, 'setor'])->name('setor');
-    Route::post('tarik/{simpanan}', [TransaksiController::class, 'tarik'])->name('tarik');
-=======
     Route::get('setor/batch', [SetorController::class, 'batch'])->name('setor/batch');
     Route::post('setor/{simpanan}', [SetorController::class, 'setor'])->name('setor.store');
     Route::post('transaksi/tarik/{simpanan}', [TransaksiController::class, 'tarik'])->name('tarik');
->>>>>>> parent of b12393e (Penarikan)
     Route::post('transaksi/angsur/{pembiayaan}', [TransaksiController::class, 'angsur'])->name('angsur');
     Route::post('brakas/tarik', [TransaksiController::class, 'tarikBrankas'])->name('brankas.tarik');
     Route::post('brakas/setor', [TransaksiController::class, 'setorBrankas'])->name('brankas.setor');

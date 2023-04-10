@@ -220,8 +220,6 @@ debugbar()->addMessage($pembiayaan);
         $bmt->kasTambah($request->jumlah, $request->keterangan);
         return redirect()->back();
     }
-<<<<<<< HEAD
-
 
     public function pemasukan(Request $request, BMTService $bmt)
     {
@@ -239,6 +237,4 @@ debugbar()->addMessage($pembiayaan);
         $bmt->setCurrentSimpanan($simpanan)->setor($request->jumlah, $request->keterangan);
         return redirect()->back();
     }
-=======
->>>>>>> parent of b12393e (Penarikan)
 }
