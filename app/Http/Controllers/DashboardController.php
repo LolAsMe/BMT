@@ -6,6 +6,7 @@ use App\Models\Kas;
 use App\Models\Simpanan;
 use App\Models\Transaksi;
 use App\Models\TransaksiHarian;
+use App\Services\BMTService;
 use Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,7 +14,7 @@ use Inertia\Inertia;
 class DashboardController extends Controller
 {
     //
-    public function index()
+    public function index( BMTService $bmt)
     {
         if (Auth::user()->hasJabatan('funding')) {
             $group = Auth::user()->karyawan->group;
@@ -29,9 +30,17 @@ class DashboardController extends Controller
                 DetailPembiayaan::class => ['pembiayaan.anggota'],
             ]);
             $attribute = [];
+            $kas = $kasBMT->detail()->whereDate('tanggal', now())->first();
+            $saldoAwal= null;
+            if($kas){
+                $saldoAwal = $kas->saldo_awal;
+            }else{
+                BMTService::startTheDay();
+                $saldoAwal = $kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
+            }
             $attribute['jumlahDebit'] =  $transaksis->sum('debit');
             $attribute['jumlahKredit'] =  $transaksis->sum('kredit');
-            $attribute['saldoAwal'] =  $kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
+            $attribute['saldoAwal'] =  $saldoAwal;
             $attribute['selisih'] =  $transaksis->sum('debit') - $transaksis->sum('kredit');
             return Inertia::render('Dashboard', [
                 'kasBMT' => $kasBMT,

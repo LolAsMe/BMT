@@ -28,6 +28,8 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
-        "vform": "^2.1.2"
+        "chart.js": "^4.2.1",
+        "vform": "^2.1.2",
+        "vue-chartjs": "^5.2.0"
     }
 }
