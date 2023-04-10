@@ -134,7 +134,7 @@
                                 <div class="table-cell">Jumlah Pembiayaan</div>
                                 <div class="table-cell">:</div>
                                 <div class="table-cell">
-                                    <!-- {{"IDR " + pembiayaan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")}} -->
+                                    {{"IDR " + pembiayaan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")}}
                                 </div>
                             </div>
                             <div class="table-row">

@@ -2,7 +2,7 @@
     <div class="flex flex-row gap-4 p-4">
         <div class="w-1/4">
             <h3 class="font-bold border-b-2 mb-2 uppercase">{{ oneSimpanan ? 'Setor Simpanan' : 'Cari Simpanan' }}</h3>
-            <form @submit.prevent="setor" :key="render">
+            <form @submit.prevent="setor">
                 <div class="relative z-0 w-full mb-6 group">
                     <input type="text" name="floating_nama" id="floating_nama"
                         class="disabled:border-green-300 disabled:text-green-600 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -317,7 +317,7 @@ export default defineComponent({
     },
     methods: {
         filterAnggota() {
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
         },
         applySimpanan(simpanan) {
             this.nama = simpanan.anggota.nama
@@ -326,14 +326,14 @@ export default defineComponent({
             this.jumlah_simpanan = this.toRupiah(simpanan.jumlah)
             this.jenis_simpanan = simpanan.jenis_simpanan.nama
             this.jumlah_setor = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
             this.oneSimpanan = simpanan
         },
         reset() {
             this.nama = null,
                 this.kode = null,
                 this.alamat = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
 
         },
         resetSimpanan() {
@@ -343,7 +343,7 @@ export default defineComponent({
             this.oneSimpanan = null,
                 this.jumlah_simpanan = null,
                 this.jenis_simpanan = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
         },
         toRupiah(jumlah) {
             return "IDR " + jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
@@ -357,7 +357,7 @@ export default defineComponent({
             await form.post(route("setor", this.oneSimpanan.id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+                    this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
                     this.applySimpanan(this.$inertia.page.props.simpanans[0])
                     this.jumlah_setor = null
                     console.log(this.$inertia.page.props.simpanans[0])

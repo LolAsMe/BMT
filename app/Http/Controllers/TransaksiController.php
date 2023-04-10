@@ -75,6 +75,32 @@ class TransaksiController extends Controller
                 DebugBar()->addMessage($request->all());
                 DebugBar()->addMessage($simpanans);
                 return $simpanans;
+            }, 'pembiayaans' => function () use ($request) {
+                $pembiayaans = Pembiayaan::orderBy('id', 'desc');
+                $request->nama ? $pembiayaans->whereHas(
+                    'anggota',
+                    function (Builder $query) use ($request) {
+                        return $query->where('nama', 'like', '%' . $request->nama . '%');
+                    }
+                ) : null;
+                $request->alamat ? $pembiayaans->whereHas(
+                    'anggota',
+                    function (Builder $query) use ($request) {
+                        return $query->where('alamat', 'like', '%' . $request->alamat . '%');
+                    }
+                ) : null;
+                $request->kode ? $pembiayaans->where('kode', 'like', '%' . $request->kode . '%')  : null;
+                $pembiayaans->with(['anggota', 'jenisPembiayaan']);
+                $pembiayaans = $pembiayaans->take(4)->get();
+                $pembiayaans->map(function ($pembiayaan) {
+                    $pembiayaan->load(['detail' => function ($query) {
+                        $query->orderBy('id', 'desc')->take(8);
+                    }]);
+                    return $pembiayaan;
+                });
+                DebugBar()->addMessage($request->all());
+                DebugBar()->addMessage($pembiayaans);
+                return $pembiayaans;
             }
         ]);
     }
@@ -165,6 +191,7 @@ class TransaksiController extends Controller
     }
     public function angsur(Request $request, Pembiayaan $pembiayaan, BMTService $bmt)
     {
+debugbar()->addMessage($pembiayaan);
         $bmt->setCurrentPembiayaan($pembiayaan)->attempToAngsur();
         return redirect()->back();
     }
@@ -190,6 +217,18 @@ class TransaksiController extends Controller
     public function tambahKas(Request $request, BMTService $bmt)
     {
         $bmt->kasTambah($request->jumlah, $request->keterangan);
+        return redirect()->back();
+    }
+
+
+    public function pemasukan(Request $request, BMTService $bmt)
+    {
+        $bmt->kasTambah($request->pemasukan, $request->keterangan);
+        return redirect()->back();
+    }
+    public function pengeluaran(Request $request, BMTService $bmt)
+    {
+        $bmt->kasTambah(-$request->pengeluaran, $request->keterangan);
         return redirect()->back();
     }
 

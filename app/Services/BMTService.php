@@ -199,7 +199,7 @@ class BMTService
                 [
                     'kode' => 'KAS00001',
                     'nama' => 'Kas Masuk',
-                    'keterangan' => 'OK',
+                    'keterangan' => $keterangan,
                     'debit' => $kasMasuk,
                     'kredit' => 0,
                     'tanggal_transaksi' => now(),
@@ -243,7 +243,7 @@ class BMTService
                 [
                     'kode' => 'KAS00001',
                     'nama' => 'Kas Keluar',
-                    'keterangan' => 'OK',
+                    'keterangan' => $keterangan,
                     'debit' => 0,
                     'kredit' => $kasKeluar,
                     'tanggal_transaksi' => now(),

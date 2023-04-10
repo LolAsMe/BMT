@@ -53,14 +53,15 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding'])->group(functi
 
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
 
-    Route::get('setor', [TransaksiController::class, 'index'])->name('setor');
+    Route::get('setor', [SetorController::class, 'index'])->name('setor');
     Route::get('setor/batch', [TransaksiController::class, 'batch'])->name('setor/batch');
     Route::post('setor/{simpanan}', [TransaksiController::class, 'setor'])->name('setor');
     Route::post('tarik/{simpanan}', [TransaksiController::class, 'tarik'])->name('tarik');
-    Route::post('transaksi/tarik/{simpanan}', [TransaksiController::class, 'tarik'])->name('tarik');
     Route::post('transaksi/angsur/{pembiayaan}', [TransaksiController::class, 'angsur'])->name('angsur');
     Route::post('brakas/tarik', [TransaksiController::class, 'tarikBrankas'])->name('brankas.tarik');
     Route::post('brakas/setor', [TransaksiController::class, 'setorBrankas'])->name('brankas.setor');
+    Route::post('transaksi/pemasukan', [TransaksiController::class, 'pemasukan'])->name('pemasukan');
+    Route::post('transaksi/pengeluaran', [TransaksiController::class, 'pengeluaran'])->name('pengeluaran');
 
     Route::post('harian/', [TransaksiController::class, 'makeHarian'])->name('harian.store');
     Route::post('kas/', [TransaksiController::class, 'tambahKas'])->name('kas.tambah');

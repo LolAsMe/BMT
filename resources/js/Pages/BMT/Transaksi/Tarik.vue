@@ -317,7 +317,7 @@ export default defineComponent({
     },
     methods: {
         filterAnggota() {
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
         },
         applySimpanan(simpanan) {
             this.nama = simpanan.anggota.nama
@@ -326,14 +326,14 @@ export default defineComponent({
             this.jumlah_simpanan = this.toRupiah(simpanan.jumlah)
             this.jenis_simpanan = simpanan.jenis_simpanan.nama
             this.jumlah_tarik = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
             this.oneSimpanan = simpanan
         },
         reset() {
             this.nama = null,
                 this.kode = null,
                 this.alamat = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
 
         },
         resetSimpanan() {
@@ -343,7 +343,7 @@ export default defineComponent({
             this.oneSimpanan = null,
                 this.jumlah_simpanan = null,
                 this.jenis_simpanan = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
         },
         toRupiah(jumlah) {
             return "IDR " + jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
@@ -357,7 +357,7 @@ export default defineComponent({
             await form.post(route("tarik", this.oneSimpanan.id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
+                    this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
                     this.applySimpanan(this.$inertia.page.props.simpanans[0])
                     this.jumlah_tarik = null
                     console.log(this.$inertia.page.props.simpanans[0])
