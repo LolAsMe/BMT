@@ -318,6 +318,7 @@ export default defineComponent({
     methods: {
         filterAnggota() {
             this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+            console.log(this.$inertia.page.props.simpanans)
         },
         applySimpanan(simpanan) {
             this.nama = simpanan.anggota.nama
@@ -328,6 +329,7 @@ export default defineComponent({
             this.jumlah_tarik = null
             this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
             this.oneSimpanan = simpanan
+            console.log(this.$inertia.page.props.simpanans)
         },
         reset() {
             this.nama = null,
@@ -335,6 +337,7 @@ export default defineComponent({
                 this.alamat = null
             this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
 
+            console.log(this.$inertia.page.props.simpanans)
         },
         resetSimpanan() {
             this.nama = null,
@@ -344,6 +347,7 @@ export default defineComponent({
                 this.jumlah_simpanan = null,
                 this.jenis_simpanan = null
             this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+            console.log(this.$inertia.page.props.simpanans)
         },
         toRupiah(jumlah) {
             return "IDR " + jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")

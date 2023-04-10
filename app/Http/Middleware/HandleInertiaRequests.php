@@ -40,7 +40,10 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             //
             'jabatan' => fn (Request $request) => $request->user()
-                ? Jabatan::get(['id', 'nama']) : null
+                ? Jabatan::get(['id', 'nama']) : null,
+            'flash' => [
+                'message' => fn () => $request->session()->get('message')
+            ],
         ]);
     }
 }

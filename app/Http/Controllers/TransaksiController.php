@@ -72,6 +72,7 @@ class TransaksiController extends Controller
                     }]);
                     return $simpanan;
                 });
+                DebugBar()->addMessage('relaod simpanan');
                 DebugBar()->addMessage($request->all());
                 DebugBar()->addMessage($simpanans);
                 return $simpanans;
@@ -236,5 +237,11 @@ debugbar()->addMessage($pembiayaan);
     {
         $bmt->setCurrentSimpanan($simpanan)->setor($request->jumlah, $request->keterangan);
         return redirect()->back();
+    }
+
+    public function search()
+    {
+        return redirect(route("transaksi.index"))->with("success", "Ban doorgevoerd!");
+
     }
 }

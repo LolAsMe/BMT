@@ -302,6 +302,8 @@ export default defineComponent({
         };
     },
     props: {
+        simpanans: Object,
+        pembiayaans: Object,
         transaksis: Object,
         kasBMT: Object,
         attribute: Object,

@@ -83,58 +83,58 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             No
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             Nama
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             Simpanan
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             Jumlah Simpanan
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             Keterangan
                         </th>
                     </tr>
@@ -202,41 +202,41 @@
                 </tbody>
             </table>
         </div>
-        <div class="w-2/3" v-if="!oneSimpanan">
+        <div class="w-2/3" v-if="!oneSimpanan" :key="render">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             Nama
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             Simpanan
                         </th>
                         <th scope="col" class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                    ">
+                            px-6
+                            py-3
+                            text-left text-xs
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                            ">
                             Jumlah Simpanan
                         </th>
                     </tr>
@@ -272,15 +272,15 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
                             <span class="
-                    px-2
-                    inline-flex
-                    text-xs
-                    leading-5
-                    font-semibold
-                    rounded-full
-                    bg-green-100
-                    text-green-800
-                    ">
+                            px-2
+                            inline-flex
+                            text-xs
+                            leading-5
+                            font-semibold
+                            rounded-full
+                            bg-green-100
+                            text-green-800
+                            ">
                                 {{
                                     "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
                                 }}
@@ -311,13 +311,16 @@ export default defineComponent({
             jumlah_setor: null,
             jumlah_simpanan: null,
             jenis_simpanan: null,
-            keterangan:null
+            keterangan: null,
+            render: 0
 
         };
     },
     methods: {
         filterAnggota() {
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode },only:['simpanans'] })
+            this.render++
+            console.log(this.$inertia.page.props)
         },
         applySimpanan(simpanan) {
             this.nama = simpanan.anggota.nama
@@ -326,24 +329,20 @@ export default defineComponent({
             this.jumlah_simpanan = this.toRupiah(simpanan.jumlah)
             this.jenis_simpanan = simpanan.jenis_simpanan.nama
             this.jumlah_setor = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
             this.oneSimpanan = simpanan
         },
         reset() {
+            this.filterAnggota()
             this.nama = null,
                 this.kode = null,
                 this.alamat = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
-
         },
         resetSimpanan() {
-            this.nama = null,
-                this.kode = null,
-                this.alamat = null
-            this.oneSimpanan = null,
+            this.filterAnggota()
+            this.reset(),
+                this.oneSimpanan = null,
                 this.jumlah_simpanan = null,
                 this.jenis_simpanan = null
-            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
         },
         toRupiah(jumlah) {
             return "IDR " + jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
@@ -357,7 +356,7 @@ export default defineComponent({
             await form.post(route("setor", this.oneSimpanan.id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+                    this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans'] })
                     this.applySimpanan(this.$inertia.page.props.simpanans[0])
                     this.jumlah_setor = null
                     console.log(this.$inertia.page.props.simpanans[0])
@@ -376,7 +375,7 @@ export default defineComponent({
         }
     },
     mounted() {
-
+        this.filterAnggota
     }
 });
 </script>
