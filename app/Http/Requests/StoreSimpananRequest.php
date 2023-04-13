@@ -29,7 +29,6 @@ class StoreSimpananRequest extends FormRequest
             'anggota_id'=>'',
             'jenis_simpanan_id'=>'',
             'jumlah'=>'',
-            'tanggal_pembuatan'=>'',
             'keterangan'=>'',
         ];
     }

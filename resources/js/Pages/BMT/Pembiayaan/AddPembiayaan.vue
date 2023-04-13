@@ -1,86 +1,82 @@
 <template>
-    <div class="flex">
-        <v-button v-on:click="$refs.addModal.toggleModal()">Add</v-button>
-        <v-modal ref="addModal">
-            <template #title> Pembiayaan Baru </template>
-            <form @submit.prevent="Pembiayaan">
-                <v-input :name="'kode'" v-model="form.kode"></v-input>
-                <div class="mb-5">
-                    <label for="jenis_simpanan">Jenis Pembiayaan: </label>
-                    <select name="jenis_simpanan" id="jenis_simpanan" v-model="form.jenis_simpanan_id">
-                        <option v-for="jenis in jenisPembiayaan" :key="jenis.id" :value="jenis.id">{{ jenis.nama }}
-                        </option>
-                    </select>
-                </div>
-                <div class="mb-5">
-                    <label for="anggota">Pilih Anggota: </label>
-                    <select name="anggota" id="anggota" v-model="form.anggota_id">
-                        <option v-for="anggota in anggotas" :key="anggota.id" :value="anggota.id">{{ anggota.nama }}
-                        </option>
-                    </select>
-                </div>
-                <v-input :type="'date'" :name="'tanggal_pembuatan'" v-model="form.tanggal_pembuatan"></v-input>
-                <v-input :name="'keterangan'" v-model="form.keterangan"></v-input>
-                <button type="submit" class="
-                    text-white
-                    bg-blue-700
-                    hover:bg-blue-800
-                    focus:ring-4 focus:ring-blue-300
-                    font-medium
-                    rounded-lg
-                    text-sm
-                    w-full
-                    sm:w-auto
-                    px-5
-                    py-2.5
-                    text-center
-                    dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-                  ">
-                    Submit
-                </button>
-            </form>
-        </v-modal>
+    <div class="flex flex-col gap-4 p-4">
+
     </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import VButton from "@/Components/Button.vue";
-import VInput from "@/Components/Input.vue";
-import VModal from "@/Components/Modal.vue";
 
 export default defineComponent({
     components: {
-        VModal,
-        VInput,
-        VButton,
     },
     props: {
-        anggotas:Object,
-        jenisPembiayaan:Object,
     },
     data() {
         return {
-            form: this.$inertia.form({
-                kode: "",
-                anggota_id: this.anggotas[0].id,
-                jenis_simpanan_id: 1,
-                tanggal_pembuatan: new Date().toJSON().substring(0, 10),
-                keterangan: "",
-            }),
-            anggotaTanpaPembiayaan: []
+            onePembiayaan: null,
+            nama: null,
+            alamat: null,
+            kode: null,
+            keterangan: null
+
         };
     },
     methods: {
-        async Pembiayaan() {
-            await this.form.post(route("simpanan.store"), {
+        filterAnggota() {
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+        },
+        applyPembiayaan(pembiayaan) {
+            console.log('appy')
+            this.nama = pembiayaan.anggota.nama
+            this.alamat = pembiayaan.anggota.alamat
+            this.kode = pembiayaan.kode
+            this.keterangan = null
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+            this.onePembiayaan = pembiayaan
+        },
+        reset() {
+            this.nama = null,
+                this.kode = null,
+                this.alamat = null
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+
+        },
+        resetPembiayaan() {
+            this.nama = null,
+                this.kode = null,
+                this.alamat = null
+            this.onePembiayaan = null,
+                this.jumlah_angsuran = null,
+                this.jenis_pembiayaan = null
+            this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+        },
+        toRupiah(jumlah) {
+            return "IDR " + jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+        },
+        async angsur() {
+            let form = this.$inertia.form({
+            })
+            await form.post(route("angsur", this.onePembiayaan.id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    this.form.reset();
-                    this.$refs.addModal.toggleModal();
+                    this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
+                    this.applyPembiayaan(this.$inertia.page.props.pembiayaans[0])
+                    this.jumlah_angsur = null
+                    console.log(this.$inertia.page.props.pembiayaans[0])
+
                 },
             });
+
         },
+    },
+    computed: {
+        total() {
+            return this.onePembiayaan.jumlah - this.jumlah_angsur;
+        },
+        totalIDR() {
+            return this.toRupiah(this.total)
+        }
     },
     mounted() {
 

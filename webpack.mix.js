@@ -12,8 +12,8 @@ const mix = require('laravel-mix');
  */
 
  mix.browserSync({
-    // proxy: 'something.test',
-    // host: 'something.test',
+    // proxy: 'http://192.168.1.17:8000',
+    // host: 'http://192.168.1.17:8000',
     // open: 'external'
 });
 
@@ -21,8 +21,14 @@ mix.js('resources/js/app.js', 'public/js').vue()
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
-    ])
+    ]) .options({
+        hmrOptions: {
+            host: '192.168.1.17',
+            port: 8080
+        }
+    })
     .webpackConfig(require('./webpack.config'));
+
 
 if (mix.inProduction()) {
     mix.version();

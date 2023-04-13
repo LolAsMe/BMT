@@ -27,7 +27,7 @@
                 </ol>
             </nav>
             <div class="flex flex-row-reverse border-t-2 pt-4">
-                <input type="date" name="tanggal" id="tanggal" v-model="tanggal" @change="changeTanggal">
+                <input type="date" name="tanggal" id="tanggal" v-model="tanggal" @change="changeTanggal" class="mr-4">
                 <div class="grow">
                     <button type="button"
                         class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"

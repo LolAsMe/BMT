@@ -9,10 +9,10 @@ nisbah
 laba
 pembiayaan laba
 labaa baru
-
 add simpanan
 next prev bttn
 
+pembiayaan add
 alert
 jabatan
 execption

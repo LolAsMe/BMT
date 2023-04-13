@@ -122,14 +122,14 @@
                                 <div class="table-cell">{{ anggota.nama_ibu_kandung }}</div>
                             </div>
                             <div v-if="anggota.pembiayaan" class="table-row">
-                                <div class="table-cell">Pembiayaan</div>
+                                <div class="table-cell">Kode Pembiayaan</div>
                                 <div class="table-cell">:</div>
                                 <div class="table-cell underline cursor-pointer hover:text-blue-200"
                                     @click="$inertia.get('/pembiayaan/' + anggota.pembiayaan.id)">{{ anggota.pembiayaan.kode
                                     }}</div>
                             </div>
                             <div v-if="anggota.simpanan" class="table-row">
-                                <div class="table-cell">Simpanan</div>
+                                <div class="table-cell">No Rekening Simpanan</div>
                                 <div class="table-cell">:</div>
                                 <div class="table-cell underline cursor-pointer hover:text-blue-200"
                                     @click="$inertia.get('/simpanan/' + anggota.simpanan.id)">{{ anggota.simpanan.kode }}

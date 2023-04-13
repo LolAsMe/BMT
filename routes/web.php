@@ -66,6 +66,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::post('harian/', [TransaksiController::class, 'makeHarian'])->name('harian.store');
     Route::post('kas/', [TransaksiController::class, 'tambahKas'])->name('kas.tambah');
 
+    Route::get('tambah/', [DashboardController::class, 'tambahView'])->name('tambah.index');
+
     // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([
         'index', 'destroy', 'update', 'store'
@@ -135,7 +137,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('pembiayaan', PembiayaanController::class)->only([
-        'index', 'destroy', 'update', 'store', 'show'
+        'index', 'destroy', 'update', 'store', 'show','create'
     ]);
     Route::resource('jabatan', JabatanController::class)->only([
         'index', 'destroy', 'update', 'store'

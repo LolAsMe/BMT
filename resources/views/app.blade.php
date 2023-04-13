@@ -11,16 +11,21 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        {{-- <link rel="stylesheet" href="css/app.css"> --}}
+        {{-- <link rel="stylesheet" href="http://192.168.1.17:8000/css/app.css"> --}}
 
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
+        {{-- <script src="http://192.168.1.17:8000/js/app.js" defer></script> --}}
+        {{-- <script src="js/app.js" defer></script> --}}
     </head>
     <body class="font-sans antialiased">
         @inertia
 
         @env ('local')
-            <script src="http://127.0.0.1:3000/browser-sync/browser-sync-client.js"></script>
+            <script src="http://192.168.1.17:3000/browser-sync/browser-sync-client.js"></script>
+            {{-- <script src="http://127.0.0.1:3000/browser-sync/browser-sync-client.js"></script> --}}
         @endenv
     </body>
 </html>

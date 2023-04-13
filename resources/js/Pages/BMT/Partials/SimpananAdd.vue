@@ -19,7 +19,6 @@
                         </option>
                     </select>
                 </div>
-                <v-input :type="'date'" :name="'tanggal_pembuatan'" v-model="form.tanggal_pembuatan"></v-input>
                 <v-input :name="'keterangan'" v-model="form.keterangan"></v-input>
                 <button type="submit" class="
                     text-white

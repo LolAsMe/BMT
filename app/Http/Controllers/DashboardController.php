@@ -17,6 +17,16 @@ class DashboardController extends Controller
     public function index( BMTService $bmt)
     {
         if (Auth::user()->hasJabatan('funding')) {
+            $kasBMT = Kas::find(2);
+            $kasBrankas = Kas::find(1);
+            $tanggal = now();
+            $kas = $kasBMT->detail()->whereDate('tanggal', now())->first();
+            if($kas){
+                $saldoAwal = $kas->saldo_awal;
+            }else{
+                BMTService::startTheDay();
+                $saldoAwal = $kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
+            }
             $group = Auth::user()->karyawan->group;
             $group->load('anggota:id,nama');
             return Inertia::render('DashboardKaryawan', compact('group'));
@@ -24,24 +34,23 @@ class DashboardController extends Controller
             $kasBMT = Kas::find(2);
             $kasBrankas = Kas::find(1);
             $tanggal = now();
-
-            $transaksis = Transaksi::whereDate('tanggal_transaksi', $tanggal)->with(['log'])->get()->loadMorph('log', [
-                DetailSimpanan::class => ['simpanan.anggota'],
-                DetailPembiayaan::class => ['pembiayaan.anggota'],
-            ]);
-            $attribute = [];
             $kas = $kasBMT->detail()->whereDate('tanggal', now())->first();
-            $saldoAwal= null;
             if($kas){
                 $saldoAwal = $kas->saldo_awal;
             }else{
                 BMTService::startTheDay();
                 $saldoAwal = $kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
             }
-            $attribute['jumlahDebit'] =  $transaksis->sum('debit');
-            $attribute['jumlahKredit'] =  $transaksis->sum('kredit');
+
+            $transaksis = Transaksi::whereDate('tanggal_transaksi', $tanggal)->with(['log'])->get()->loadMorph('log', [
+                DetailSimpanan::class => ['simpanan.anggota'],
+                DetailPembiayaan::class => ['pembiayaan.anggota'],
+            ]);
+            $attribute = [];
+            $attribute['jumlahDebit'] =  $transaksis->sum('debit') ??0;
+            $attribute['jumlahKredit'] =  $transaksis->sum('kredit')??0;
             $attribute['saldoAwal'] =  $saldoAwal;
-            $attribute['selisih'] =  $transaksis->sum('debit') - $transaksis->sum('kredit');
+            $attribute['selisih'] =  $attribute['jumlahDebit'] - $attribute['jumlahKredit'];
             return Inertia::render('Dashboard', [
                 'kasBMT' => $kasBMT,
                 'kasBrankas' => $kasBrankas,
@@ -49,5 +58,11 @@ class DashboardController extends Controller
                 'attribute' => $attribute,
             ]);
         };
+    }
+
+    public function tambahView()
+    {
+        return Inertia::render('BMT/tambah', [
+        ]);
     }
 }

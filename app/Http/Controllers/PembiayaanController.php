@@ -37,6 +37,7 @@ class PembiayaanController extends Controller
     public function create()
     {
         //
+        return Inertia::render('BMT/Pembiayaan/Create');
     }
 
     /**
