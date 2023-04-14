@@ -37,7 +37,9 @@ class PembiayaanController extends Controller
     public function create()
     {
         //
-        return Inertia::render('BMT/Pembiayaan/Create');
+
+        $jenisPembiayaan = JenisPembiayaan::all('id', 'nama');
+        return Inertia::render('BMT/Pembiayaan/Create',['jenisPembiayaan'=>$jenisPembiayaan]);
     }
 
     /**
@@ -46,11 +48,28 @@ class PembiayaanController extends Controller
      * @param  \App\Http\Requests\StorePembiayaanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePembiayaanRequest $request, BMTService $bmt)
+    public function store(Request $request, BMTService $bmt)
     {
-        //
-        // Pembiayaan::createPembiayaan($request->validated());
-        $bmt->createPembiayaan($request->validated());
+        //kode: null,
+        $pembiayaanAttribute = [
+            'kode'=>$request->kode,
+            'nomor'=>$request->nomor,
+            'anggota_id'=>$request->anggota_id,
+            'jenis_pembiayaan_id'=>$request->jenis_pembiayaan_id,
+            'tanggal_pinjam'=>$request->tanggal_pinjam,
+            'jumlah'=>$request->jumlah,
+            'tanggal_jatuh_tempo'=>$request->tanggal_jatuh_tempo,
+            'pokok'=>$request->pokok,
+            'jasa'=>$request->jasa,
+            'potongan_pembiayaan'=>$request->potongan_pembiayaan,
+            'total_pembiayaan'=>$request->total_pembiayaan,
+            'frekuensi_angsuran'=>$request->frekuensi_angsuran,
+            'jumlah_angsuran'=>$request->jumlah_angsuran,
+            'keterangan'=>$request->keterangan,
+        ];
+        // dd($pembiayaanAttribute);
+        // Pembiayaan::createPembiayaan($pembiayaanAttribute);
+        $bmt->createPembiayaan($pembiayaanAttribute);
 
         return back()->with('flash', [
             'response' => 'berhasil'

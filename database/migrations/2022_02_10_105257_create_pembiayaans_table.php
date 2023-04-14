@@ -30,7 +30,7 @@ class CreatePembiayaansTable extends Migration
             $table->decimal('total_pembiayaan',12,2,true);
             $table->unsignedInteger('frekuensi_angsuran');
             $table->decimal('jumlah_angsuran',12,2,true);
-            $table->decimal('angsuran_diterima',12,2,true);
+            $table->decimal('angsuran_diterima',12,2,true)->default(0);
             $table->string('keterangan')->nullable();
             $table->enum('status',['pending','ongoing','ongoing-telat','selesai'])->default('pending');
             $table->softDeletes();

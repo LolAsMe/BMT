@@ -42,6 +42,9 @@ class BMTService
     public function createPembiayaan($attribute)
     {
         $kas = $this->kasBMT;
+        $attribute['karyawan_id'] = $this->user->karyawan_id;
+        $attribute['angsuran_diterima'] = $this->user->karyawan_id;
+        $attribute['status'] = 'ongoing';
         $pembiayaan = Pembiayaan::create($attribute);
         $pembiayaan->detail()->create([
             'angsuran_ke' => 0,
@@ -82,13 +85,13 @@ class BMTService
 
     public function setorBrankas(int $jumlah)
     {
-        $this->kasKeluar($jumlah,1,'Setor Ke Brankas',1);
+        $this->kasKeluar($jumlah, 1, 'Setor Ke Brankas', 1);
         $this->kasMasuk($jumlah, 2);
     }
 
     public function tarikBrankas(int $jumlah)
     {
-        $this->kasMasuk($jumlah,1,'Tarik Dari Brankas',1);
+        $this->kasMasuk($jumlah, 1, 'Tarik Dari Brankas', 1);
         $this->kasKeluar($jumlah, 2);
     }
 
@@ -345,28 +348,33 @@ class BMTService
     public function handleAngsuran()
     {
         debugbar()->addMessage('handle Angsuran');
+        if ($this->angsuranKe == $this->currentPembiayaan->frekuensi_angsuran) {
+            $jumlahAngsuran = $this->currentPembiayaan->jumlah_angsuran = $this->lastDetailPembiayaan->total_tanggungan;
+        } else {
+            $jumlahAngsuran = $this->currentPembiayaan->jumlah_angsuran;
+        }
         $detail = $this->currentPembiayaan->detail()->create([
             'angsuran_ke' => $this->angsuranKe,
             'jumlah' => $this->currentPembiayaan->jumlah_angsuran,
-            'akumulasi_angsuran' => $this->lastDetailPembiayaan->akumulasi_angsuran + $this->currentPembiayaan->jumlah_angsuran,
-            'total_tanggungan' => $this->lastDetailPembiayaan->total_tanggungan - $this->currentPembiayaan->jumlah_angsuran,
+            'akumulasi_angsuran' => $this->lastDetailPembiayaan->akumulasi_angsuran + $jumlahAngsuran,
+            'total_tanggungan' => $this->lastDetailPembiayaan->total_tanggungan - $jumlahAngsuran,
             'keterangan' => 'Ok',
         ]);
         $this->lastDetailPembiayaan = $this->currentPembiayaan->detail()->latest()->first();
-        $this->currentPembiayaan->angsuran_diterima += $this->currentPembiayaan->jumlah_angsuran;
+        $this->currentPembiayaan->angsuran_diterima += $jumlahAngsuran;
         $this->lastDetailPembiayaan->transaksi()->create(
             [
                 'kode' => 'PEMB 012930',
                 'nama' => 'PEM Mudhorobah',
                 'keterangan' => 'OK',
-                'debit' => $this->currentPembiayaan->jumlah_angsuran,
+                'debit' => $jumlahAngsuran,
                 'kredit' => 0,
                 'tanggal_transaksi' => now(),
                 'tanggal_slip' => now(),
                 'karyawan_id' => $this->user->karyawan_id,
             ]
         );
-        $this->transaksiHarian->increment('debit', $this->currentPembiayaan->jumlah_angsuran);
+        $this->transaksiHarian->increment('debit', $jumlahAngsuran);
         $attribute = [
             'kode' => 'Setor',
             'keterangan' => 'ok'
@@ -376,7 +384,7 @@ class BMTService
         $frekuensi = $this->currentPembiayaan->frekuensi_angsuran;
         $laba = ($total - $jumlah) / $frekuensi;
         $this->labaMasuk($laba, $attribute);
-        $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
+        $this->kasMasuk($jumlahAngsuran);
         $this->currentPembiayaan->save();
     }
 
@@ -392,7 +400,9 @@ class BMTService
     }
     public function checkStatusAngsuran()
     {
-
+        dd(
+            $this->lastDetailPembiayaan->total_tanggungan == 0 && $this->lastDetailPembiayaan->angsuran_ke == $this->currentPembiayaan->frekuensi_angsuran
+        );
         if ($this->currentPembiayaan->angsuran_diterima == $this->currentPembiayaan->total_pembiayaan && $this->lastDetailPembiayaan->total_tanggungan == 0 && $this->lastDetailPembiayaan->angsuran_ke == $this->currentPembiayaan->frekuensi_angsuran) {
             $this->currentPembiayaan->status = 'selesai';
         }
@@ -514,7 +524,7 @@ class BMTService
 
     public static function startTheDay()
     {
-        $harian = TransaksiHarian::create(['kode'=>"000", "debit"=>0,"kredit"=>0]);
+        $harian = TransaksiHarian::create(['kode' => "000", "debit" => 0, "kredit" => 0]);
         $kasBMT = Kas::find(2);
         $kasBMT->detail()->create([
             'kode' => '9999',

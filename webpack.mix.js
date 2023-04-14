@@ -23,7 +23,7 @@ mix.js('resources/js/app.js', 'public/js').vue()
         require('tailwindcss'),
     ]) .options({
         hmrOptions: {
-            host: '192.168.1.17',
+            host: '192.168.1.10',
             port: 8080
         }
     })
