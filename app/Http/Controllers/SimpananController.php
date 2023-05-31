@@ -21,10 +21,10 @@ class SimpananController extends Controller
     public function index()
     {
         //
-        $paginate = Simpanan::take(25)->with('anggota','jenisSimpanan')->orderByDesc('id')->paginate();
-        $anggotaTanpaSimpanan =Anggota::whereDoesntHave('simpanan')->get();
-        $jenisSimpanan = JenisSimpanan::all('id','nama');
-        return Inertia::render('BMT/Simpanan', compact('paginate','anggotaTanpaSimpanan','jenisSimpanan'));
+        $paginate = Simpanan::take(25)->with('anggota', 'jenisSimpanan')->orderByDesc('id')->paginate();
+        $anggotaTanpaSimpanan = Anggota::whereDoesntHave('simpanan')->get();
+        $jenisSimpanan = JenisSimpanan::all('id', 'nama');
+        return Inertia::render('BMT/Simpanan', compact('paginate', 'anggotaTanpaSimpanan', 'jenisSimpanan'));
     }
 
     /**
@@ -177,8 +177,8 @@ class SimpananController extends Controller
                 return $query->where('kode', 'like', '%' . $request->kodeAnggota . '%');
             }
         ) : null;
-        $anggotaTanpaSimpanan =Anggota::whereDoesntHave('simpanan')->get();
-        $jenisSimpanan = JenisSimpanan::all('id','nama');
+        $anggotaTanpaSimpanan = Anggota::whereDoesntHave('simpanan')->get();
+        $jenisSimpanan = JenisSimpanan::all('id', 'nama');
         $paginate = $simpanans->with('anggota', 'jenisSimpanan')->take(25)->paginate();
         $paginate->appends([
             'nama' => $request->nama,
@@ -186,7 +186,7 @@ class SimpananController extends Controller
             'kodeAnggota' => $request->kodeAnggota,
             'kode' => $request->kode,
         ]);
-        return Inertia::render('BMT/Simpanan', compact('paginate','anggotaTanpaSimpanan','jenisSimpanan'));
+        return Inertia::render('BMT/Simpanan', compact('paginate', 'anggotaTanpaSimpanan', 'jenisSimpanan'));
     }
 
     public function active(Simpanan $simpanan)

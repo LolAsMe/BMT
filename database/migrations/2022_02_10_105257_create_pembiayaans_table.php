@@ -19,7 +19,7 @@ class CreatePembiayaansTable extends Migration
             $table->string('kode');
             $table->string('nomor');
             $table->foreignId('jenis_pembiayaan_id');
-            $table->foreignId('simpanan_id');
+            $table->foreignId('anggota_id');
             $table->foreignId('karyawan_id');
             $table->dateTime('tanggal_pinjam')->useCurrent();
             $table->decimal('jumlah',12,2,true);
