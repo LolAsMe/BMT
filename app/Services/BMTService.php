@@ -400,9 +400,10 @@ class BMTService
     }
     public function checkStatusAngsuran()
     {
-        dd(
-            $this->lastDetailPembiayaan->total_tanggungan == 0 && $this->lastDetailPembiayaan->angsuran_ke == $this->currentPembiayaan->frekuensi_angsuran
-        );
+        // dd(
+        //     $this->lastDetailPembiayaan->total_tanggungan == 0 && $this->lastDetailPembiayaan->angsuran_ke == $this->currentPembiayaan->frekuensi_angsuran
+        // );
+        $this->checkStatusPembiayaan();
         if ($this->currentPembiayaan->angsuran_diterima == $this->currentPembiayaan->total_pembiayaan && $this->lastDetailPembiayaan->total_tanggungan == 0 && $this->lastDetailPembiayaan->angsuran_ke == $this->currentPembiayaan->frekuensi_angsuran) {
             $this->currentPembiayaan->status = 'selesai';
         }
@@ -440,7 +441,7 @@ class BMTService
         $bulan = now()->format('m-Y');
         $lastDetail = DetailNisbah::whereStatus("selesai")->latest()->first();
         if ($lastDetail && $lastDetail->bulan == $bulan) {
-            dd("bulan ini Sudah");
+            // dd("bulan ini Sudah");
         }
         $nisbahs = Nisbah::whereStatus('ongoing')->get();
         foreach ($nisbahs as $key => $nisbah) {
@@ -492,7 +493,7 @@ class BMTService
             $nisbah->save();
         }
 
-        dd('selesai');
+        // dd('selesai');
     }
 
     public function labaMasuk($jumlah, $attribute = [])
@@ -535,5 +536,14 @@ class BMTService
             'saldo_akhir' => $kasBMT->jumlah,
             'keterangan' => 'Saldo Awal',
         ]);
+    }
+
+    public function checkStatusPembiayaan()
+    {
+        $pembiayaan = $this->currentPembiayaan;
+        if($pembiayaan->total_pembiayaan < $pembiayaan->angsuran_diterima){
+            $pembiayaan->status = 'selesai';
+            $pembiayaan->save();
+        }
     }
 }

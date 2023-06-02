@@ -69,7 +69,7 @@ class PembiayaanController extends Controller
         // dd($pembiayaanAttribute);
         // Pembiayaan::createPembiayaan($pembiayaanAttribute);
         $bmt->createPembiayaan($pembiayaanAttribute);
-
+        $request->session()->flash('status', 'Task was successful!');
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);

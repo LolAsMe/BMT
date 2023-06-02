@@ -148,7 +148,7 @@
                                 Total Pembiayaan</label>
                         </div>
                         <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.frekuensi_angsuran" type="text" name="floating_frekuensi_angsuran"
+                            <input @change="gantiJumlahAngsuran()" v-model="formCreate.frekuensi_angsuran" type="text" name="floating_frekuensi_angsuran"
                                 id="floating_frekuensi_angsuran"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" " required />
@@ -157,9 +157,10 @@
                                 Frekuensi Angsuran</label>
                         </div>
                     </div>
+                    {{ rupiah }}
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="jumlah_angsuran" type="number" name="floating_jumlah_angsuran"
+                            <input v-model="formCreate.jumlah_angsuran" type="number" name="floating_jumlah_angsuran"
                                 id="floating_jumlah_angsuran"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" " required />
@@ -177,88 +178,6 @@
                                 Keterangan</label>
                         </div>
                     </div>
-
-                    Anggunan
-                    <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.kode" type="text" name="floating_kode" id="floating_kode"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_kode"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Kode</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.jenis_objek" type="text" name="floating_jenis_objek"
-                                id="floating_jenis_objek"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_jenis_objek"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Jenis Objek</label>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.nomor_polisi" type="text" name="floating_nomor_polisi"
-                                id="floating_nomor_polisi"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_nomor_polisi"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Nomer Polisi</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.tahun_pembuatan" type="text" name="floating_tahun_pembuatan"
-                                id="floating_tahun_pembuatan"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_tahun_pembuatan"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Tahun Pembuatan</label>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.luas_objek" type="textnumber" name="floating_luas_objek"
-                                id="floating_luas_objek"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_luas_objek"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Luas Objek</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.letak_objek" type="text" name="floating_letak_objek"
-                                id="floating_letak_objek"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_letak_objek"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Letak Objek</label>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.nama_pemilik" type="text" name="floating_namaa_pemilik"
-                                id="floating_namaa_pemilik"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_namaa_pemilik"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Nama Pemilik</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.alamat_pemilik" type="text" name="floating_alamat_pemilik"
-                                id="floating_alamat_pemilik"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_alamat_pemilik"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Alamat Pemilik</label>
-                        </div>
-                    </div>
-
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
                 </form>
@@ -301,29 +220,22 @@ export default defineComponent({
                 tanggal_jatuh_tempo: null,
                 pokok: null,
                 jasa: null,
-                potongan_pembiayaan: null,
+                potongan_pembiayaan: 0,
                 total_pembiayaan: null,
                 frekuensi_angsuran: null,
                 jumlah_angsuran: null,
                 keterangan: null,
-                kode: null,
-                jenis_objek: null,
-                nomor_polisi: null,
-                tahun_pembuatan: null,
-                luas_objek: null,
-                letak_objek: null,
-                nama_pemilik: null,
-                alamat_pemilik: null,
             }),
         };
     },
     methods: {
         create() {
             this.formCreate.total_pembiayaan = this.total_pembiayaan
-            this.formCreate.jumlah_angsuran = this.jumlah_angsuran
+            // this.formCreate.jumlah_angsuran = this.jumlah_angsuran
             this.formCreate.post(route('pembiayaan.store', {
                 preserveScroll: true,
                 onSuccess: () => {
+                    console.log('sdf')
                     this.$toast.success('Pembiayaan berhasil Ditambahkan')
                     this.form.reset();
                     this.$refs.editModal.toggleModal();
@@ -331,6 +243,11 @@ export default defineComponent({
             }))
         },
         search() {
+        },
+        gantiJumlahAngsuran(){
+            let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
+            this.formCreate.jumlah_angsuran = Math.ceil(this.total_pembiayaan /(frekuensi*10000))*10000
+            console.log('tes')
         }
     },
     props: {
@@ -344,10 +261,13 @@ export default defineComponent({
             let potongan_pembiayaan = this.formCreate.potongan_pembiayaan ? parseInt(this.formCreate.potongan_pembiayaan) : 0
             return jumlah + pokok + jasa - potongan_pembiayaan
         },
-        jumlah_angsuran() {
-            let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
-            return Math.ceil(this.total_pembiayaan / frekuensi)
+        rupiah(){
+            return "IDR " + this.total_pembiayaan.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
         }
+        // jumlah_angsuran() {
+        //     let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
+        //     return Math.ceil(this.total_pembiayaan / frekuensi)
+        // }
     },
     mounted() {
     }

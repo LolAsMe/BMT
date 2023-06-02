@@ -26795,8 +26795,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Pages_BMT_Pembiayaan_AddPembiayaan_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Pages/BMT/Pembiayaan/AddPembiayaan.vue */ "./resources/js/Pages/BMT/Pembiayaan/AddPembiayaan.vue");
 /* harmony import */ var _Pages_BMT_Pembiayaan_EditModal_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Pages/BMT/Pembiayaan/EditModal.vue */ "./resources/js/Pages/BMT/Pembiayaan/EditModal.vue");
 /* harmony import */ var _Jetstream_NavLink_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/NavLink.vue */ "./resources/js/Jetstream/NavLink.vue");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -26818,10 +26816,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     JetNavLink: _Jetstream_NavLink_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   data: function data() {
-    var _this$$inertia$form;
-
     return {
-      formCreate: this.$inertia.form((_this$$inertia$form = {
+      formCreate: this.$inertia.form({
         kode: null,
         nomor: null,
         jenis_pembiayaan_id: 1,
@@ -26831,23 +26827,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         tanggal_jatuh_tempo: null,
         pokok: null,
         jasa: null,
-        potongan_pembiayaan: null,
+        potongan_pembiayaan: 0,
         total_pembiayaan: null,
         frekuensi_angsuran: null,
         jumlah_angsuran: null,
         keterangan: null
-      }, _defineProperty(_this$$inertia$form, "kode", null), _defineProperty(_this$$inertia$form, "jenis_objek", null), _defineProperty(_this$$inertia$form, "nomor_polisi", null), _defineProperty(_this$$inertia$form, "tahun_pembuatan", null), _defineProperty(_this$$inertia$form, "luas_objek", null), _defineProperty(_this$$inertia$form, "letak_objek", null), _defineProperty(_this$$inertia$form, "nama_pemilik", null), _defineProperty(_this$$inertia$form, "alamat_pemilik", null), _this$$inertia$form))
+      })
     };
   },
   methods: {
     create: function create() {
       var _this = this;
 
-      this.formCreate.total_pembiayaan = this.total_pembiayaan;
-      this.formCreate.jumlah_angsuran = this.jumlah_angsuran;
+      this.formCreate.total_pembiayaan = this.total_pembiayaan; // this.formCreate.jumlah_angsuran = this.jumlah_angsuran
+
       this.formCreate.post(route('pembiayaan.store', {
         preserveScroll: true,
         onSuccess: function onSuccess() {
+          console.log('sdf');
+
           _this.$toast.success('Pembiayaan berhasil Ditambahkan');
 
           _this.form.reset();
@@ -26856,7 +26854,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }));
     },
-    search: function search() {}
+    search: function search() {},
+    gantiJumlahAngsuran: function gantiJumlahAngsuran() {
+      var frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1;
+      this.formCreate.jumlah_angsuran = Math.ceil(this.total_pembiayaan / (frekuensi * 10000)) * 10000;
+      console.log('tes');
+    }
   },
   props: {
     jenisPembiayaan: Object
@@ -26869,10 +26872,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var potongan_pembiayaan = this.formCreate.potongan_pembiayaan ? parseInt(this.formCreate.potongan_pembiayaan) : 0;
       return jumlah + pokok + jasa - potongan_pembiayaan;
     },
-    jumlah_angsuran: function jumlah_angsuran() {
-      var frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1;
-      return Math.ceil(this.total_pembiayaan / frekuensi);
-    }
+    rupiah: function rupiah() {
+      return "IDR " + this.total_pembiayaan.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.");
+    } // jumlah_angsuran() {
+    //     let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
+    //     return Math.ceil(this.total_pembiayaan / frekuensi)
+    // }
+
   },
   mounted: function mounted() {}
 }));
@@ -44652,109 +44658,7 @@ var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Anggunan ");
-
-var _hoisted_50 = {
-  "class": "grid md:grid-cols-2 md:gap-6"
-};
-var _hoisted_51 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_kode",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Kode", -1
-/* HOISTED */
-);
-
-var _hoisted_53 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_jenis_objek",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Jenis Objek", -1
-/* HOISTED */
-);
-
-var _hoisted_55 = {
-  "class": "grid md:grid-cols-2 md:gap-6"
-};
-var _hoisted_56 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_nomor_polisi",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Nomer Polisi", -1
-/* HOISTED */
-);
-
-var _hoisted_58 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_tahun_pembuatan",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Tahun Pembuatan", -1
-/* HOISTED */
-);
-
-var _hoisted_60 = {
-  "class": "grid md:grid-cols-2 md:gap-6"
-};
-var _hoisted_61 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_luas_objek",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Luas Objek", -1
-/* HOISTED */
-);
-
-var _hoisted_63 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_letak_objek",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Letak Objek", -1
-/* HOISTED */
-);
-
-var _hoisted_65 = {
-  "class": "grid md:grid-cols-2 md:gap-6"
-};
-var _hoisted_66 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_namaa_pemilik",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Nama Pemilik", -1
-/* HOISTED */
-);
-
-var _hoisted_68 = {
-  "class": "relative z-0 w-full mb-6 group"
-};
-
-var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "floating_alamat_pemilik",
-  "class": "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-}, " Alamat Pemilik", -1
-/* HOISTED */
-);
-
-var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
 }, "Submit", -1
@@ -44798,7 +44702,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-        onSubmit: _cache[22] || (_cache[22] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+        onSubmit: _cache[15] || (_cache[15] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return _ctx.create && _ctx.create.apply(_ctx, arguments);
         }, ["prevent"]))
       }, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -44940,7 +44844,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 512
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.total_pembiayaan]]), _hoisted_41]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+        onChange: _cache[11] || (_cache[11] = function ($event) {
+          return _ctx.gantiJumlahAngsuran();
+        }),
+        "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
           return _ctx.formCreate.frekuensi_angsuran = $event;
         }),
         type: "text",
@@ -44949,11 +44856,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
         placeholder: " ",
         required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.frekuensi_angsuran]]), _hoisted_43])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
-          return _ctx.jumlah_angsuran = $event;
+      }, null, 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.frekuensi_angsuran]]), _hoisted_43])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.rupiah) + " ", 1
+      /* TEXT */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+          return _ctx.formCreate.jumlah_angsuran = $event;
         }),
         type: "number",
         name: "floating_jumlah_angsuran",
@@ -44963,8 +44872,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         required: ""
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.jumlah_angsuran]]), _hoisted_46]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.jumlah_angsuran]]), _hoisted_46]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
           return _ctx.formCreate.keterangan = $event;
         }),
         type: "text",
@@ -44975,103 +44884,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         required: ""
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.keterangan]]), _hoisted_48])]), _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
-          return _ctx.formCreate.kode = $event;
-        }),
-        type: "text",
-        name: "floating_kode",
-        id: "floating_kode",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.kode]]), _hoisted_52]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
-          return _ctx.formCreate.jenis_objek = $event;
-        }),
-        type: "text",
-        name: "floating_jenis_objek",
-        id: "floating_jenis_objek",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.jenis_objek]]), _hoisted_54])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
-          return _ctx.formCreate.nomor_polisi = $event;
-        }),
-        type: "text",
-        name: "floating_nomor_polisi",
-        id: "floating_nomor_polisi",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.nomor_polisi]]), _hoisted_57]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
-          return _ctx.formCreate.tahun_pembuatan = $event;
-        }),
-        type: "text",
-        name: "floating_tahun_pembuatan",
-        id: "floating_tahun_pembuatan",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.tahun_pembuatan]]), _hoisted_59])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[18] || (_cache[18] = function ($event) {
-          return _ctx.formCreate.luas_objek = $event;
-        }),
-        type: "textnumber",
-        name: "floating_luas_objek",
-        id: "floating_luas_objek",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.luas_objek]]), _hoisted_62]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
-          return _ctx.formCreate.letak_objek = $event;
-        }),
-        type: "text",
-        name: "floating_letak_objek",
-        id: "floating_letak_objek",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.letak_objek]]), _hoisted_64])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
-          return _ctx.formCreate.nama_pemilik = $event;
-        }),
-        type: "text",
-        name: "floating_namaa_pemilik",
-        id: "floating_namaa_pemilik",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.nama_pemilik]]), _hoisted_67]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
-          return _ctx.formCreate.alamat_pemilik = $event;
-        }),
-        type: "text",
-        name: "floating_alamat_pemilik",
-        id: "floating_alamat_pemilik",
-        "class": "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
-        placeholder: " ",
-        required: ""
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.alamat_pemilik]]), _hoisted_69])]), _hoisted_70], 32
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formCreate.keterangan]]), _hoisted_48])]), _hoisted_49], 32
       /* HYDRATE_EVENTS */
       )])])];
     }),
