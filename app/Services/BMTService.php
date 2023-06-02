@@ -24,13 +24,15 @@ class BMTService
     private $kasBrankas;
     private $kasBMT;
     private $user;
+    private KodeGeneratorService $kodeGeneratorService;
 
     private $angsuranKe = null;
 
 
-    public function __construct($default_password = '123456')
+    public function __construct($default_password = '123456',$kodeGeneratorService)
     {
         $this->default_password = $default_password;
+        $this->kodeGeneratorService = $kodeGeneratorService;
         // $this->currentSimpanan = Simpanan::find(1);
         $this->user = auth('web')->user();
         $this->kasBrankas = Kas::find(1);
@@ -109,8 +111,9 @@ class BMTService
     }
     public function setor(int $jumlahSetoran)
     {
+        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('setoran');
         $this->currentSimpanan->detail()->create([
-            'kode' => 'kode1',
+            'kode' => $kode,
             'tanggal_transaksi' => now(),
             'tanggal_slip' => now(),
             'debit' => 0,
@@ -124,8 +127,8 @@ class BMTService
         $detail = $this->currentSimpanan->detail()->latest()->first();
         $detail->transaksi()->create(
             [
-                'kode' => 'kode1',
-                'nama' => 'SET Mudhorobah',
+                'kode' => $kode,
+                'nama' => $kode,
                 'keterangan' => 'OK',
                 'debit' => $jumlahSetoran,
                 'kredit' => 0,
@@ -141,8 +144,9 @@ class BMTService
 
     public function tarik(int $jumlahTarikan)
     {
+        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('penarikan');
         $this->currentSimpanan->detail()->create([
-            'kode' => 'kode1',
+            'kode' => $kode,
             'tanggal_transaksi' => now(),
             'tanggal_slip' => now(),
             'debit' => $jumlahTarikan,
@@ -156,8 +160,8 @@ class BMTService
         $detail = $this->currentSimpanan->detail()->latest()->first();
         $detail->transaksi()->create(
             [
-                'kode' => 'kode1',
-                'nama' => 'PEN Mudhorobah',
+                'kode' => $kode,
+                'nama' => $kode,
                 'keterangan' => 'OK',
                 'debit' => 0,
                 'kredit' => $jumlahTarikan,

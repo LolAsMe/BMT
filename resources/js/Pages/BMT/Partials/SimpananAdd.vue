@@ -4,7 +4,6 @@
         <v-modal ref="addModal">
             <template #title> Simpanan Baru </template>
             <form @submit.prevent="Simpanan">
-                <v-input :name="'kode'" v-model="form.kode"></v-input>
                 <div class="mb-5">
                     <label for="jenis_simpanan">Jenis Simpanan: </label>
                     <select name="jenis_simpanan" id="jenis_simpanan" v-model="form.jenis_simpanan_id">
@@ -61,7 +60,6 @@ export default defineComponent({
     data() {
         return {
             form: this.$inertia.form({
-                kode: "",
                 anggota_id: this.anggotas[0].id,
                 jenis_simpanan_id: 1,
                 tanggal_pembuatan: new Date().toJSON().substring(0, 10),

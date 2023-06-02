@@ -12,6 +12,7 @@ use App\Services\BMTService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class PembiayaanController extends Controller
 {
@@ -51,7 +52,7 @@ class PembiayaanController extends Controller
     {
         //kode: null,
         $pembiayaanAttribute = [
-            'kode' => $request->kode,
+            'kode' => UniqueIdGenerator::generate(['table' => 'pembiayaan', 'length' => 7,'field'=>'kode', 'prefix' =>'AG.', 'reset_on_change'=>'prefix']),
             'nomor' => $request->nomor,
             'anggota_id' => $request->anggota_id,
             'jenis_pembiayaan_id' => $request->jenis_pembiayaan_id,

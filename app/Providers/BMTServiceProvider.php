@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\BMTService;
+use App\Services\KodeGeneratorService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,7 +18,11 @@ class BMTServiceProvider extends ServiceProvider
     {
         //
         $this->app->bind(BMTService::class, function($app){
-            return new BMTService(config('bmt.default_karyawan_password','123456'));
+            return new BMTService(config('bmt.default_karyawan_password','123456'),$this->app->make(KodeGeneratorService::class));
+        });
+
+        $this->app->bind(KodeGeneratorService::class, function($app){
+            return new KodeGeneratorService();
         });
     }
 

@@ -7,9 +7,11 @@ use App\Http\Requests\StoreSimpananRequest;
 use App\Http\Requests\UpdateSimpananRequest;
 use App\Models\Anggota;
 use App\Models\JenisSimpanan;
+use App\Services\KodeGeneratorService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class SimpananController extends Controller
 {
@@ -43,11 +45,13 @@ class SimpananController extends Controller
      * @param  \App\Http\Requests\StoreSimpananRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSimpananRequest $request)
+    public function store(StoreSimpananRequest $request,KodeGeneratorService $kodeGeneratorService)
     {
         //
-        // dd($request->validated());
-        Simpanan::create($request->validated());
+        $kodeGeneratorService->generateKodeDetailSimpanan('setoran');
+        $attribute = $request->validated();
+        $attribute['kode']=$kodeGeneratorService->generateKodeSimpanan($attribute['jenis_simpanan_id']);
+        Simpanan::create($attribute);
 
         return back()->with('flash', [
             'response' => 'berhasil'

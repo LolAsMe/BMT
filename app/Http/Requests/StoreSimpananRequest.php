@@ -25,7 +25,6 @@ class StoreSimpananRequest extends FormRequest
     {
         return [
             //
-            'kode'=>'',
             'anggota_id'=>'',
             'jenis_simpanan_id'=>'',
             'jumlah'=>'',

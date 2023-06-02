@@ -244,16 +244,12 @@ import JetNavLink from '@/Jetstream/NavLink.vue'
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
 import Add from "@/Pages/BMT/Partials/AnggotaAdd.vue";
-import EditModal from "@/Pages/BMT/Partials/AnggotaEditModal.vue";
-import DetailModal from "@/Pages/BMT/Partials/AnggotaDetailModal.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
         VModal,
         Add,
-        EditModal,
-        DetailModal,
         VInput,
         VCard,
         VButton, JetNavLink

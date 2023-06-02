@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use App\Http\Requests\StoreAnggotaRequest;
 use App\Http\Requests\UpdateAnggotaRequest;
+use App\Services\KodeGeneratorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class AnggotaController extends Controller
 {
@@ -45,11 +47,13 @@ class AnggotaController extends Controller
      * @param  \App\Http\Requests\StoreAnggotaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,KodeGeneratorService $kodeGeneratorService)
     {
         //
         // dd($request->validated());
-        Anggota::create($request->all());
+        $attribute = $request->all();
+        $attribute['kode'] = $kodeGeneratorService->generateKodeAnggota();
+        Anggota::create($attribute);
 
         return back()->with('flash', [
             'response' => 'berhasil'
@@ -79,8 +83,8 @@ class AnggotaController extends Controller
      */
     public function edit(Anggota $anggota)
     {
-        //
     }
+        //
 
     /**
      * Update the specified resource in storage.
@@ -89,11 +93,13 @@ class AnggotaController extends Controller
      * @param  \App\Models\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAnggotaRequest $request, Anggota $anggota)
+    public function update(UpdateAnggotaRequest $request, Anggota $anggotum)
     {
         //
-        $anggota->update($request->validated());
-        $anggota->save();
+        // dd($request->validated());
+        // dd($anggotum);
+        $anggotum->update($request->validated());
+        $anggotum->save();
         return back()->with('flash', [
             'response' => 'berhasil'
         ]);
@@ -105,10 +111,10 @@ class AnggotaController extends Controller
      * @param  \App\Models\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,Anggota $anggota)
+    public function destroy(Request $request,Anggota $anggotum)
     {
         //
-        $anggota->delete();
+        $anggotum->delete();
         return redirect(route('anggota.index'));
     }
     public function active(Anggota $anggota)

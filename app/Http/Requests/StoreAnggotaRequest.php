@@ -25,7 +25,6 @@ class StoreAnggotaRequest extends FormRequest
     {
         return [
             //
-            'kode'=>'',
             'nama'=>'required',
             'no_ktp'=>'required',
             'alamat'=>'required',
