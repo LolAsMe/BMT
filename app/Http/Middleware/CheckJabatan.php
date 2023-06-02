@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Jabatan;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -21,14 +22,12 @@ class CheckJabatan
         // if (env('APP_ENV') === 'testing') {
         //     return $next($request);
         // }
-
         foreach ($jabatans as $jabatan) {
             if ($request->user()->hasJabatan($jabatan)) {
-                break;
+                return $next($request);
             }
-            return redirect(RouteServiceProvider::HOME);
         }
 
-        return $next($request);
+        return redirect(RouteServiceProvider::HOME);
     }
 }

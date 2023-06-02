@@ -23,26 +23,26 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('simpanan.index')" :active="route().current('simpanan.index') ||route().current('simpanan.search')">
+                                <jet-nav-link  :href="route('simpanan.index')" :active="route().current('simpanan.index') ||route().current('simpanan.search')">
                                     Simpanan
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('pembiayaan.index')"
                                     :active="route().current('pembiayaan.index') ||route().current('pembiayaan.search')">
                                     Pembiayaan
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('nisbah.index')"
+                                <jet-nav-link v-show="isNotJabatan('Funding')" :href="route('nisbah.index')"
                                     :active="route().current('nisbah.index')">
                                     Nisbah
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('transaksi.index')"
+                                <jet-nav-link v-show="isNotJabatan('Funding')" :href="route('transaksi.index')"
                                     :active="route().current('transaksi.index')">
                                     Transaksi
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('karyawan.index')"
+                                <jet-nav-link v-show="isNotJabatan('Funding')" :href="route('karyawan.index')"
                                     :active="route().current('karyawan.index') ||route().current('karyawan.search')">
                                     Karyawan
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('group.index')"
+                                <jet-nav-link v-show="isNotJabatan('Funding')" :href="route('group.index')"
                                     :active="route().current('group.index')">
                                     Group
                                 </jet-nav-link>
@@ -50,7 +50,7 @@
                                     :active="route().current('anggota.index')||route().current('anggota.search')">
                                     Anggota
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('laba.index')"
+                                <jet-nav-link v-show="isNotJabatan('Funding')" :href="route('laba.index')"
                                     :active="route().current('laba.index')">
                                     Laba
                                 </jet-nav-link>
@@ -238,19 +238,19 @@
                             :active="route().current('pembiayaan.index')">
                             Pembiayaan
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('pembiayaan.index')"
+                        <jet-responsive-nav-link v-show="isNotJabatan('Funding')" :href="route('pembiayaan.index')"
                             :active="route().current('pembiayaan.index')">
                             Nisbah
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('pembiayaan.index')"
+                        <jet-responsive-nav-link v-show="isNotJabatan('Funding')" :href="route('pembiayaan.index')"
                             :active="route().current('pembiayaan.index')">
                             Transaksi
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('pembiayaan.index')"
+                        <jet-responsive-nav-link v-show="isNotJabatan('Funding')" :href="route('pembiayaan.index')"
                             :active="route().current('pembiayaan.index')">
                             Karyawan
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('pembiayaan.index')"
+                        <jet-responsive-nav-link v-show="isNotJabatan('Funding')" :href="route('pembiayaan.index')"
                             :active="route().current('pembiayaan.index')">
                             Group
                         </jet-responsive-nav-link>
@@ -340,14 +340,12 @@
                     </div>
                 </div>
             </nav>
-
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header"></slot>
                 </div>
             </header>
-
             <!-- Page Content -->
             <main>
                 <slot></slot>
@@ -397,7 +395,12 @@ export default defineComponent({
                 preserveState: false
             })
         },
-
+        isJabatan(jabatan){
+            return this.$page.props.user.karyawan.jabatan.nama == jabatan
+        },
+        isNotJabatan(jabatan){
+            return !(this.$page.props.user.karyawan.jabatan.nama == jabatan)
+        },
         logout() {
             this.$inertia.post(route('logout'));
         },

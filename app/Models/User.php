@@ -110,6 +110,7 @@ class User extends Authenticatable
     {
         $jabatan = Str::lower($jabatan);
         $jabatan =  ucfirst($jabatan);
-        return $jabatan == $this->karyawan->jabatan->nama ? true : false;
+        $thisjabatan = $this->karyawan ? $this->karyawan->jabatan->nama : 0;
+        return $jabatan == $thisjabatan ? true : false;
     }
 }
