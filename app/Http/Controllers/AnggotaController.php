@@ -105,7 +105,7 @@ class AnggotaController extends Controller
      * @param  \App\Models\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Anggota $anggota)
+    public function destroy(Request $request,Anggota $anggota)
     {
         //
         $anggota->delete();

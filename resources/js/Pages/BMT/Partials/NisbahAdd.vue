@@ -68,6 +68,7 @@ export default defineComponent({
       await this.form.post(route("nisbah.store"), {
         preserveScroll: true,
         onSuccess: () => {
+            this.$toast.success('Nisbah berhasil Ditambahkan')
           this.form.reset();
           this.$refs.addModal.toggleModal();
         },

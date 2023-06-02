@@ -536,6 +536,7 @@ export default defineComponent({
                 onSuccess: () => {
                     this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
                     this.applyPembiayaan(this.$inertia.page.props.pembiayaans[0])
+                    this.$toast.success('Pembiayaan berhasil ditambahkan')
                     this.jumlah_angsur = null
                     console.log(this.$inertia.page.props.pembiayaans[0])
 

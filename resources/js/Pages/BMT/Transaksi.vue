@@ -405,7 +405,6 @@ import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-import Angsur from "@/Pages/BMT/Transaksi/Angsur.vue";
 import Pemasukan from "@/Pages/BMT/Transaksi/Pemasukan.vue";
 import Pembiayaan from "@/Pages/BMT/Transaksi/Pembiayaan.vue";
 import Pengeluaran from "@/Pages/BMT/Transaksi/Pengeluaran.vue";
@@ -418,7 +417,6 @@ export default defineComponent({
     components: {
         AppLayout, JetNavLink,
         VModal,
-        Angsur,
         Pemasukan,
         Pembiayaan,
         Pengeluaran,

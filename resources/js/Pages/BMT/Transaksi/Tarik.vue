@@ -361,6 +361,7 @@ export default defineComponent({
             await form.post(route("tarik", this.oneSimpanan.id), {
                 preserveScroll: true,
                 onSuccess: () => {
+                    this.$toast.success('Penarikan berhasil dilakukan')
                     this.$inertia.reload({ data: { nama: this.nama, alamat: this.alamat, kode: this.kode }, only: ['simpanans','pembiayaans'] })
                     this.applySimpanan(this.$inertia.page.props.simpanans[0])
                     this.jumlah_tarik = null

@@ -58,7 +58,7 @@ class FortifyServiceProvider extends ServiceProvider
                 };
                 return $request->wantsJson()
                     ? response()->json(['two_factor' => false])
-                    : redirect()->intended(Fortify::redirects('login'));
+                    : redirect()->intended(Fortify::redirects('login'))->with(['success'=>'Berhasil Login']);
             }
         });
     }

@@ -1,8 +1,6 @@
 <template>
     <v-modal ref="editModal">
         <template #title> Edit Simpanan {{ simpanan.anggota.nama }}</template>
-        {{ simpanan }}
-        {{ this.form.alamat == simpanan.anggota.alamat }}
         <form @submit.prevent="edit">
             <v-input :name="'form.jenis_simpanan_id'" v-model="form.jenis_simpanan_id"></v-input>
             <v-input :name="'form.nama_anggota'" v-model="form.nama_anggota"></v-input>
@@ -111,6 +109,7 @@ export default defineComponent({
             this.form.put(route("simpanan.update", this.simpanan.id), {
                 preserveScroll: true,
                 onSuccess: () => {
+                    this.$toast.success('Simpanan Berhasil DiEdit');
                     this.form.reset();
                 },
             });

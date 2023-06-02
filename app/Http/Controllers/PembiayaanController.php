@@ -37,9 +37,8 @@ class PembiayaanController extends Controller
     public function create()
     {
         //
-
         $jenisPembiayaan = JenisPembiayaan::all('id', 'nama');
-        return Inertia::render('BMT/Pembiayaan/Create',['jenisPembiayaan'=>$jenisPembiayaan]);
+        return Inertia::render('BMT/Pembiayaan/Create', ['jenisPembiayaan' => $jenisPembiayaan]);
     }
 
     /**
@@ -52,20 +51,20 @@ class PembiayaanController extends Controller
     {
         //kode: null,
         $pembiayaanAttribute = [
-            'kode'=>$request->kode,
-            'nomor'=>$request->nomor,
-            'anggota_id'=>$request->anggota_id,
-            'jenis_pembiayaan_id'=>$request->jenis_pembiayaan_id,
-            'tanggal_pinjam'=>$request->tanggal_pinjam,
-            'jumlah'=>$request->jumlah,
-            'tanggal_jatuh_tempo'=>$request->tanggal_jatuh_tempo,
-            'pokok'=>$request->pokok,
-            'jasa'=>$request->jasa,
-            'potongan_pembiayaan'=>$request->potongan_pembiayaan,
-            'total_pembiayaan'=>$request->total_pembiayaan,
-            'frekuensi_angsuran'=>$request->frekuensi_angsuran,
-            'jumlah_angsuran'=>$request->jumlah_angsuran,
-            'keterangan'=>$request->keterangan,
+            'kode' => $request->kode,
+            'nomor' => $request->nomor,
+            'anggota_id' => $request->anggota_id,
+            'jenis_pembiayaan_id' => $request->jenis_pembiayaan_id,
+            'tanggal_pinjam' => $request->tanggal_pinjam,
+            'jumlah' => $request->jumlah,
+            'tanggal_jatuh_tempo' => $request->tanggal_jatuh_tempo,
+            'pokok' => $request->pokok,
+            'jasa' => $request->jasa,
+            'potongan_pembiayaan' => $request->potongan_pembiayaan,
+            'total_pembiayaan' => $request->total_pembiayaan,
+            'frekuensi_angsuran' => $request->frekuensi_angsuran,
+            'jumlah_angsuran' => $request->jumlah_angsuran,
+            'keterangan' => $request->keterangan,
         ];
         // dd($pembiayaanAttribute);
         // Pembiayaan::createPembiayaan($pembiayaanAttribute);
@@ -187,6 +186,6 @@ class PembiayaanController extends Controller
             'kode' => $request->kode,
         ]);
         $jenisPembiayaan = JenisPembiayaan::all('id', 'nama');
-        return Inertia::render('BMT/Pembiayaan/Index', compact('paginate','jenisPembiayaan'));
+        return Inertia::render('BMT/Pembiayaan/Index', compact('paginate', 'jenisPembiayaan'));
     }
 }

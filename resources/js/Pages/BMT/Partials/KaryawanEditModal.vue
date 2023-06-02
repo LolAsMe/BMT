@@ -77,6 +77,7 @@ export default defineComponent({
       this.form.put(route("karyawan.update", this.karyawan.id), {
         preserveScroll: true,
         onSuccess: () => {
+            this.$toast.success('Karyawan berhasil diedit')
           this.form.reset();
           this.$refs.editModal.toggleModal();
         },

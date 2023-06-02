@@ -77,6 +77,7 @@ export default defineComponent({
             await this.form.post(route("anggota.store"), {
                 preserveScroll: true,
                 onSuccess: () => {
+            this.$toast.success('Anggota berhasil Ditambahkan')
                     this.form.reset();
                     this.$refs.addModal.toggleModal();
                 },

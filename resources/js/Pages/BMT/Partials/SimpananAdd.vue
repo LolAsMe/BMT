@@ -76,7 +76,10 @@ export default defineComponent({
                 preserveScroll: true,
                 onSuccess: () => {
                     this.form.reset();
+                    this.$toast.success('Simpanan Berhasil Ditambahkan');
                     this.$refs.addModal.toggleModal();
+
+
                 },
             });
         },

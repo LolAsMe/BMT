@@ -44,13 +44,13 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <div class="flex flex-row-reverse">
-                        <button v-if="simpanan.deleted_at == null" @click="deleteSimpanan"
+                        <button v-show="isNotJabatan('Funding')" v-if="simpanan.deleted_at == null" @click="deleteSimpanan"
                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             DEACTIVE</button>
-                        <button v-else @click="activeSimpanan"
+                        <button v-show="isNotJabatan('Funding')" v-else @click="activeSimpanan"
                             class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             ACTIVE</button>
-                        <button @click="$refs.editModal.show(simpanan)"
+                        <button v-show="isNotJabatan('Funding')" @click="$refs.editModal.show(simpanan)"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             EDIT</button>
                     </div>
@@ -74,7 +74,9 @@
                             <div class="table-row">
                                 <div class="table-cell">Nama Anggota</div>
                                 <div class="table-cell">:</div>
-                                <div class="table-cell underline cursor-pointer hover:text-blue-200" @click="$inertia.get(route('anggota.show',simpanan.anggota.id))">{{ simpanan.anggota.nama }}</div>
+                                <div class="table-cell underline cursor-pointer hover:text-blue-200"
+                                    @click="$inertia.get(route('anggota.show', simpanan.anggota.id))">{{
+                                        simpanan.anggota.nama }}</div>
                             </div>
                             <div class="table-row">
                                 <div class="table-cell">Nomer Anggota</div>
@@ -192,58 +194,58 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                     No
                                 </th>
                                 <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                     Nama
                                 </th>
                                 <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                     Simpanan
                                 </th>
                                 <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                     Jumlah Simpanan
                                 </th>
                                 <th scope="col" class="
-                                    px-6
-                                    py-3
-                                    text-left text-xs
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                    ">
+                                                px-6
+                                                py-3
+                                                text-left text-xs
+                                                font-medium
+                                                text-gray-500
+                                                uppercase
+                                                tracking-wider
+                                                ">
                                     Keterangan
                                 </th>
                             </tr>
@@ -353,15 +355,22 @@ export default defineComponent({
     methods: {
         deleteSimpanan() {
             console.log('test')
-            this.$inertia.delete(
-                route("simpanan.destroy", this.simpanan.id)
-            );
+            if (confirm("Hapus Simpanan?") == true) {
+                this.$inertia.delete(
+                    route("simpanan.destroy", this.simpanan.id)
+                );
+                this.$toast.success('Simpanan berhasil Dinonaktifkan')
+            } else {
+                this.$toast.error('Simpanan tidak jadi Dihapus')
+            }
         },
+
         activeSimpanan() {
             console.log('test')
             this.$inertia.post(
                 route("simpanan.active", this.simpanan.id)
             );
+            this.$toast.success('Simpanan berhasil Diaktifkan')
         },
         test() {
             console.log('asdfio')
@@ -390,6 +399,9 @@ export default defineComponent({
             this.formSearch.get(
                 route("simpanan.show", this.simpanan.id),
             );
+        },
+        isNotJabatan(jabatan) {
+            return !(this.$page.props.user.karyawan.jabatan.nama == jabatan)
         },
     },
     mounted() {

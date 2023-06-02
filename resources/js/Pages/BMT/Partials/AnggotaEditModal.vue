@@ -74,6 +74,7 @@ export default defineComponent({
         preserveScroll: true,
         onSuccess: () => {
           this.form.reset();
+            this.$toast.success('Karyawan berhasil Diedit')
           this.$refs.editModal.toggleModal();
         },
       });

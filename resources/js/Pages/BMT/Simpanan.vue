@@ -30,7 +30,7 @@
         <div class="py-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row-reverse flex-nowrap">
-                    <add v-if="anggotaTanpaSimpanan.length != 0" :anggotas="anggotaTanpaSimpanan" :jenisSimpanan="jenisSimpanan"></add>
+                    <add v-show="isNotJabatan('Funding')" v-if="anggotaTanpaSimpanan.length != 0" :anggotas="anggotaTanpaSimpanan" :jenisSimpanan="jenisSimpanan"></add>
                     <button v-show="!searchShow" @click="searchShow = true"
                         class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
                     <button v-show="searchShow" @click="searchShow = false, $inertia.get(route('simpanan.index'))"
@@ -277,7 +277,10 @@ export default defineComponent({
                 this.formSearch.kode == null ? delete this.formSearch.kode : null,
                 this.formSearch.kodeAnggota == null ? delete this.formSearch.kodeAnggota : null,
                 this.formSearch.get(this.route('simpanan.search'));
-        }
+        },
+        isNotJabatan(jabatan){
+            return !(this.$page.props.user.karyawan.jabatan.nama == jabatan)
+        },
     },
     props: {
         paginate: Object,

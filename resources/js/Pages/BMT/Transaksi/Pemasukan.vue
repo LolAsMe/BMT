@@ -42,11 +42,15 @@ export default defineComponent({
     methods: {
         pemasukan() {
             console.log(this.form)
-            this.form.post(this.route('pemasukan'))
+            this.form.post(this.route('pemasukan'), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.$toast.success('Pemasukan berhasil ditambahkan')
+                },
+            })
         }
     },
     mounted() {
-
     }
 });
 </script>

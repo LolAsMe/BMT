@@ -295,7 +295,6 @@
     </div> -->
     </app-layout>
     <edit-modal ref="editModal"></edit-modal>
-
 </template>
 
 <script>
@@ -311,7 +310,7 @@ export default defineComponent({
     components: {
         AppLayout,
         Welcome,
-        VCard,EditModal,
+        VCard, EditModal,
         AnggotaDetailModal, JetNavLink
     },
     props: {
@@ -321,14 +320,25 @@ export default defineComponent({
         deleteKaryawan() {
             console.log('test')
             this.$inertia.delete(
-                route("karyawan.destroy", this.karyawan.id)
+                route("karyawan.destroy", this.karyawan.id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.$toast.success('Karyawan berhasil dinonaktifkan')
+
+                },
+            }
             );
         },
         activeKaryawan() {
-            console.log('test')
             this.$inertia.post(
-                route("karyawan.active", this.karyawan.id)
+                route("karyawan.active", this.karyawan.id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.$toast.success('Karyawan berhasil diaktifkan')
+                },
+            }
             );
+            this.$toast.success('Karyawan berhasil diaktifkan')
         },
     }
 });

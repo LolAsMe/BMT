@@ -121,7 +121,6 @@ class SimpananController extends Controller
     public function update(UpdateSimpananRequest $request, Simpanan $simpanan)
     {
         //
-        dd($request->all());
         $simpanan->load('anggota');
         $request->jenis_simpanan_id ? $simpanan->jenis_simpanan_id = $request->jenis_simpanan_id : null;
         $request->nama_anggota ? $simpanan->anggota->nama = $request->nama_anggota : null;

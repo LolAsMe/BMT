@@ -43,7 +43,7 @@
         <div class="py-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <div class="flex flex-row-reverse">
+                    <!-- <div class="flex flex-row-reverse">
                         <button v-if="laba.deleted_at == null" @click="deleteLaba"
                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             DEACTIVE</button>
@@ -53,7 +53,7 @@
                         <button @click="$refs.editModal.show(laba)"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             EDIT</button>
-                    </div>
+                    </div> -->
                     <div class="table w-full">
                         <div class="table-row-group">
                             <div class="table-row">

@@ -377,6 +377,7 @@
 
             </div>
         </div>
+        {{ $session }}
         <!-- <div class="w-1/3">
             <pie id="my-chart-id" :options="chartOptions" :data="chartData" />
         </div> -->

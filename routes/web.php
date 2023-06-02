@@ -53,7 +53,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding,manajer,teller']
         'index'
     ]);
     Route::resource('pembiayaan', PembiayaanController::class)->only([
-        'index'
+        'index', 'show'
     ]);
     Route::resource('anggota', AnggotaController::class)->only([
         'index'
@@ -67,12 +67,20 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding,manajer,teller']
     Route::get('simpanan/{simpanan}', [SimpananController::class, 'show'])
         ->name('simpanan.show')
         ->withTrashed();
+
+    Route::get('search/simpanan', [SimpananController::class, 'search'])
+        ->name('simpanan.search');
+    Route::get('search/pembiayaan', [PembiayaanController::class, 'search'])
+        ->name('pembiayaan.search');
+    Route::get('search/anggota', [AnggotaController::class, 'search'])
+        ->name('anggota.search');
 });
 
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
 
 
     Route::get('setor', [SetorController::class, 'index'])->name('setor');
+    Route::get('createpembiayaan', [PembiayaanController::class, 'create'])->name('pembiayaan.create');
     Route::get('setor/batch', [SetorController::class, 'batch'])->name('setor/batch');
     Route::post('setor/{simpanan}', [SetorController::class, 'setor'])->name('setor.store');
     Route::post('transaksi/tarik/{simpanan}', [TransaksiController::class, 'tarik'])->name('tarik');
@@ -92,7 +100,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('anggota', AnggotaController::class)->only([
-        'destroy', 'update', 'store'
+        'destroy', 'update', 'store','destroy'
     ]);
     Route::resource('karyawan', KaryawanController::class)->only([
         'index', 'destroy', 'update', 'store'
@@ -125,12 +133,6 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         ->withTrashed();
 
 
-    Route::get('search/simpanan', [SimpananController::class, 'search'])
-        ->name('simpanan.search');
-    Route::get('search/pembiayaan', [PembiayaanController::class, 'search'])
-        ->name('pembiayaan.search');
-    Route::get('search/anggota', [AnggotaController::class, 'search'])
-        ->name('anggota.search');
     Route::get('search/nisbah', [NisbahController::class, 'search'])
         ->name('nisbah.search');
     Route::resource('simpanan', SimpananController::class)->only([
@@ -149,7 +151,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('pembiayaan', PembiayaanController::class)->only([
-        'destroy', 'update', 'store', 'show', 'create'
+        'destroy', 'update', 'store'
     ]);
     Route::resource('jabatan', JabatanController::class)->only([
         'index', 'destroy', 'update', 'store'

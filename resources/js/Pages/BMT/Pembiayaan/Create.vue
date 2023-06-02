@@ -321,7 +321,14 @@ export default defineComponent({
         create() {
             this.formCreate.total_pembiayaan = this.total_pembiayaan
             this.formCreate.jumlah_angsuran = this.jumlah_angsuran
-            this.formCreate.post(route('pembiayaan.store'))
+            this.formCreate.post(route('pembiayaan.store', {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.$toast.success('Pembiayaan berhasil Ditambahkan')
+                    this.form.reset();
+                    this.$refs.editModal.toggleModal();
+                },
+            }))
         },
         search() {
         }
@@ -329,17 +336,17 @@ export default defineComponent({
     props: {
         jenisPembiayaan: Object
     },
-    computed:{
-        total_pembiayaan(){
-            let jumlah = this.formCreate.jumlah?parseInt(this.formCreate.jumlah):0
-            let pokok = this.formCreate.pokok?parseInt(this.formCreate.pokok):0
-            let jasa = this.formCreate.jasa?parseInt(this.formCreate.jasa):0
-            let potongan_pembiayaan = this.formCreate.potongan_pembiayaan?parseInt(this.formCreate.potongan_pembiayaan):0
-            return jumlah+pokok+jasa-potongan_pembiayaan
+    computed: {
+        total_pembiayaan() {
+            let jumlah = this.formCreate.jumlah ? parseInt(this.formCreate.jumlah) : 0
+            let pokok = this.formCreate.pokok ? parseInt(this.formCreate.pokok) : 0
+            let jasa = this.formCreate.jasa ? parseInt(this.formCreate.jasa) : 0
+            let potongan_pembiayaan = this.formCreate.potongan_pembiayaan ? parseInt(this.formCreate.potongan_pembiayaan) : 0
+            return jumlah + pokok + jasa - potongan_pembiayaan
         },
-        jumlah_angsuran(){
-            let frekuensi = this.formCreate.frekuensi_angsuran?parseInt(this.formCreate.frekuensi_angsuran):1
-            return Math.ceil(this.total_pembiayaan/frekuensi)
+        jumlah_angsuran() {
+            let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
+            return Math.ceil(this.total_pembiayaan / frekuensi)
         }
     },
     mounted() {
