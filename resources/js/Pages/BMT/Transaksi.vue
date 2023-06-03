@@ -44,6 +44,9 @@
                     <button type="button"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         @click="showOrder = 'pengeluaran'">Pengeluaran</button>
+                        <button type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        @click="showOrder = 'brankas'">Brankas</button>
                     <button v-show="showOrder" type="button"
                         class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
                         @click="showOrder = false">Close</button>
@@ -58,6 +61,7 @@
                 <pengeluaran v-show="showOrder == 'pengeluaran'"></pengeluaran>
                 <setor v-show="showOrder == 'setor'"></setor>
                 <tarik v-show="showOrder == 'tarik'"></tarik>
+                <brankas :kasBMT="kasBMT.jumlah" :kasBrankas="kasBrankas.jumlah" v-show="showOrder == 'brankas'"></brankas>
             </div>
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -409,6 +413,7 @@ import Pemasukan from "@/Pages/BMT/Transaksi/Pemasukan.vue";
 import Pembiayaan from "@/Pages/BMT/Transaksi/Pembiayaan.vue";
 import Pengeluaran from "@/Pages/BMT/Transaksi/Pengeluaran.vue";
 import Setor from "@/Pages/BMT/Transaksi/Setor.vue";
+import Brankas from "@/Pages/BMT/Transaksi/Brankas.vue";
 import Tarik from "@/Pages/BMT/Transaksi/Tarik.vue";
 import JetNavLink from '@/Jetstream/NavLink.vue'
 import EditModal from "@/Pages/BMT/Partials/TransaksiEditModal.vue";
@@ -421,6 +426,7 @@ export default defineComponent({
         Pembiayaan,
         Pengeluaran,
         Setor,
+        Brankas,
         Tarik,
         EditModal,
         VInput,

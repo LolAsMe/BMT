@@ -46,24 +46,6 @@
                     Pembiayaan
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.kode" type="text" name="floating_kode" id="floating_kode"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_kode"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Kode</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.nomor" type="text" name="floating_nomor" id="floating_nomor"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_nomor"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Nomor</label>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
                             <label for="jenis_pembiayaan" class="">
                                 Jenis Pembiayaan</label>
                             <select v-model="formCreate.jenis_pembiayaan_id" name="jenis_pembiayaan" id="jenis_pembiayaan">
@@ -211,8 +193,6 @@ export default defineComponent({
     data() {
         return {
             formCreate: this.$inertia.form({
-                kode: null,
-                nomor: null,
                 jenis_pembiayaan_id: 1,
                 anggota_id: 1,
                 tanggal_pinjam: null,

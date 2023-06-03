@@ -54,7 +54,6 @@ class PembiayaanController extends Controller
         //kode: null,
         $pembiayaanAttribute = [
             'kode' => $kodeGeneratorService->generateKodePembiayaan($request->jenis_pembiayaan_id),
-            'nomor' => $request->nomor,
             'anggota_id' => $request->anggota_id,
             'jenis_pembiayaan_id' => $request->jenis_pembiayaan_id,
             'tanggal_pinjam' => $request->tanggal_pinjam,

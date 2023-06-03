@@ -59,8 +59,8 @@ class BMTService
         $this->lastDetailPembiayaan = $pembiayaan->detail()->latest()->first();
         $this->lastDetailPembiayaan->transaksi()->create(
             [
-                'kode' => 'PEMB 012930',
-                'nama' => 'Pemb Baru',
+                'kode' => $this->kodeGeneratorService->generateKodeTransaksi('pembiayaan'),
+                'nama' => $this->kodeGeneratorService->generateKodePembiayaan($attribute['jenis_pembiayaan_id']),
                 'keterangan' => 'OK',
                 'debit' => 0,
                 'kredit' => $pembiayaan->jumlah,

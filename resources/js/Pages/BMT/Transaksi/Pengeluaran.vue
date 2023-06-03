@@ -1,5 +1,5 @@
 <template>
-    <div class="flex ">
+    <div class="flex flex-row gap-4 p-4">
         <div class="w-full">
             <h3 class="font-bold border-b-2 mb-2 uppercase">{{ 'PENGELUARAN' }}
             </h3>

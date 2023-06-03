@@ -68,8 +68,10 @@ class KodeGeneratorService
             $transaksi = "PEN";
         } else if ($tipe == 'angsuran') {
             $transaksi = "ANG";
+        }else if ($tipe == 'pembiayaan') {
+            $transaksi = "PEM";
         }else {
-            abort(404);
+            abort(404, $transaksi);
         }
         $prefix = $transaksi . $this->d  . $this->m . $this->y;
         $kode = UniqueIdGenerator::generate(['table' => 'transaksi', 'length' => 12, 'field' => 'kode', 'prefix' => $prefix, 'reset_on_change' => 'prefix']);
@@ -107,6 +109,10 @@ class KodeGeneratorService
         # code...
     }
     public function generateKodeDetailLaba()
+    {
+        # code...
+    }
+    public function generateDetailKas()
     {
         # code...
     }
