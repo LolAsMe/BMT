@@ -424,6 +424,7 @@ class BMTService
     public function isValidAngsuran()
     {
         debugbar()->addMessage('Check Angsuran Yg Valid');
+        $this->checkStatusPembiayaan();
         $this->angsuranKe = $this->lastDetailPembiayaan === null ? 1 : $this->lastDetailPembiayaan->angsuran_ke + 1;
         return $this->angsuranKe <= $this->currentPembiayaan->frekuensi_angsuran;
     }
@@ -432,7 +433,6 @@ class BMTService
         // dd(
         //     $this->lastDetailPembiayaan->total_tanggungan == 0 && $this->lastDetailPembiayaan->angsuran_ke == $this->currentPembiayaan->frekuensi_angsuran
         // );
-        $this->checkStatusPembiayaan();
         if ($this->currentPembiayaan->angsuran_diterima == $this->currentPembiayaan->total_pembiayaan && $this->lastDetailPembiayaan->total_tanggungan == 0 && $this->lastDetailPembiayaan->angsuran_ke == $this->currentPembiayaan->frekuensi_angsuran) {
             $this->currentPembiayaan->status = 'selesai';
         }
@@ -529,7 +529,7 @@ class BMTService
     {
         $laba = Laba::labaThisMonth();
         $laba->detail()->create([
-            'kode' => $attribute['kode'] ?? "Laba",
+            'kode' => $this->kodeGeneratorService->generateKodeDetailLaba(),
             'debit' => $jumlah,
             'saldo_awal' => $laba->jumlah,
             'saldo_akhir' => $laba->jumlah + $jumlah,
@@ -542,7 +542,7 @@ class BMTService
     {
         $laba = Laba::labaThisMonth();
         $laba->detail()->create([
-            'kode' => $attribute['kode'] ?? "Laba",
+            'kode' => $this->kodeGeneratorService->generateKodeDetailLaba(),
             'kredit' => $jumlah,
             'saldo_awal' => $laba->jumlah,
             'saldo_akhir' => $laba->jumlah - $jumlah,

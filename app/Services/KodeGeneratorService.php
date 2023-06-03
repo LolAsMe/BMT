@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\DetailKas;
+use App\Models\DetailLaba;
 use App\Models\Pembiayaan;
 use DB;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
@@ -107,13 +108,19 @@ class KodeGeneratorService
     {
         # code...
     }
-    public function generateKodeLaba()
-    {
-        # code...
-    }
     public function generateKodeDetailLaba()
     {
         # code...
+        $kode = '';
+        $lastKode = DetailLaba::orderBy('id', 'desc')->take(1)->first()->kode ?? 0;
+        if($lastKode!=0){
+            $lastKode = substr($lastKode, (strrpos($lastKode, '.', 2) + 1));
+        }else{
+            $lastKode=1;
+        }
+        // KAS ID Tanggal Bulan Tahun kode ID
+        $kode = "LAB." .(string)$this->d . (string)$this->m . (string)$this->y . "." . ($lastKode + 1);
+        return $kode;
     }
     public function generateDetailKas($kasID = '01', $jenisTransaksi = '01')
     {

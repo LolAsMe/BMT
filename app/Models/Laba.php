@@ -20,7 +20,7 @@ class Laba extends Model
     public static function labaThisMonth(): Laba
     {
         $laba = Laba::firstOrCreate([
-            'kode' => now()->format("m-Y")
+            'kode' => "LABA".now()->format("m-Y")
         ], [
             'bulan' => now()->format("m-Y"),
             "jumlah" => 0
