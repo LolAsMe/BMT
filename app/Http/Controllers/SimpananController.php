@@ -48,7 +48,6 @@ class SimpananController extends Controller
     public function store(StoreSimpananRequest $request,KodeGeneratorService $kodeGeneratorService)
     {
         //
-        $kodeGeneratorService->generateKodeDetailSimpanan('setoran');
         $attribute = $request->validated();
         $attribute['kode']=$kodeGeneratorService->generateKodeSimpanan($attribute['jenis_simpanan_id']);
         Simpanan::create($attribute);

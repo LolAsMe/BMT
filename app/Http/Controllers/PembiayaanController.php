@@ -9,6 +9,7 @@ use App\Models\Anggota;
 use App\Models\JenisPembiayaan;
 use App\Models\Kas;
 use App\Services\BMTService;
+use App\Services\KodeGeneratorService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -48,11 +49,11 @@ class PembiayaanController extends Controller
      * @param  \App\Http\Requests\StorePembiayaanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, BMTService $bmt)
+    public function store(Request $request, BMTService $bmt,KodeGeneratorService $kodeGeneratorService)
     {
         //kode: null,
         $pembiayaanAttribute = [
-            'kode' => UniqueIdGenerator::generate(['table' => 'pembiayaan', 'length' => 7,'field'=>'kode', 'prefix' =>'AG.', 'reset_on_change'=>'prefix']),
+            'kode' => $kodeGeneratorService->generateKodePembiayaan($request->jenis_pembiayaan_id),
             'nomor' => $request->nomor,
             'anggota_id' => $request->anggota_id,
             'jenis_pembiayaan_id' => $request->jenis_pembiayaan_id,

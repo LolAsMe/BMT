@@ -111,7 +111,10 @@ class BMTService
     }
     public function setor(int $jumlahSetoran)
     {
-        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('setoran');
+        $kode = $this->currentSimpanan->kode;
+        $kode = substr($kode,(strrpos($kode, '.',2)+1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('setoran',$kode);
+
         $this->currentSimpanan->detail()->create([
             'kode' => $kode,
             'tanggal_transaksi' => now(),
@@ -127,7 +130,7 @@ class BMTService
         $detail = $this->currentSimpanan->detail()->latest()->first();
         $detail->transaksi()->create(
             [
-                'kode' => $kode,
+                'kode' => $this->kodeGeneratorService->generateKodeTransaksi('setoran'),
                 'nama' => $kode,
                 'keterangan' => 'OK',
                 'debit' => $jumlahSetoran,
@@ -144,9 +147,11 @@ class BMTService
 
     public function tarik(int $jumlahTarikan)
     {
-        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('penarikan');
+        $kode = $this->currentSimpanan->kode;
+        $kode = substr($kode,(strrpos($kode, '.',2)+1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('penarikan',$kode);
         $this->currentSimpanan->detail()->create([
-            'kode' => $kode,
+            'kode' => $this->kodeGeneratorService->generateKodeTransaksi('penarikan'),
             'tanggal_transaksi' => now(),
             'tanggal_slip' => now(),
             'debit' => $jumlahTarikan,
@@ -158,9 +163,10 @@ class BMTService
 
         ]);
         $detail = $this->currentSimpanan->detail()->latest()->first();
+
         $detail->transaksi()->create(
             [
-                'kode' => $kode,
+                'kode' => $this->kodeGeneratorService->generateKodeTransaksi('penarikan'),
                 'nama' => $kode,
                 'keterangan' => 'OK',
                 'debit' => 0,
@@ -174,6 +180,7 @@ class BMTService
         $this->transaksiHarian->increment('kredit', $jumlahTarikan);
 
         $this->kasKeluar($jumlahTarikan);
+
     }
 
 
