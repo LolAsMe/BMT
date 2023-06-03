@@ -21,8 +21,8 @@ class BMTService
     private TransaksiHarian $transaksiHarian;
     private ?DetailPembiayaan $lastDetailPembiayaan;
     private $nisbahRate;
-    private $kasBrankas;
-    private $kasBMT;
+    public $kasBrankas;
+    public $kasBMT;
     private $user;
     private KodeGeneratorService $kodeGeneratorService;
 
@@ -45,7 +45,7 @@ class BMTService
     {
         $kas = $this->kasBMT;
         $attribute['karyawan_id'] = $this->user->karyawan_id;
-        $attribute['angsuran_diterima'] = $this->user->karyawan_id;
+        $attribute['angsuran_diterima'] = 0;
         $attribute['status'] = 'ongoing';
         $pembiayaan = Pembiayaan::create($attribute);
         $pembiayaan->detail()->create([
