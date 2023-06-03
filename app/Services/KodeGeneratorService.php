@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\DetailKas;
 use App\Models\Pembiayaan;
 use DB;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
@@ -68,9 +69,11 @@ class KodeGeneratorService
             $transaksi = "PEN";
         } else if ($tipe == 'angsuran') {
             $transaksi = "ANG";
-        }else if ($tipe == 'pembiayaan') {
+        } else if ($tipe == 'pembiayaan') {
             $transaksi = "PEM";
-        }else {
+        }else if ($tipe == 'kas') {
+            $transaksi = "KAS";
+        } else {
             abort(404, $transaksi);
         }
         $prefix = $transaksi . $this->d  . $this->m . $this->y;
@@ -80,16 +83,16 @@ class KodeGeneratorService
     public function generateKodePembiayaan($jenis_pembiayaan_id)
     {
         $kode = '';
-        $lastKode = Pembiayaan::orderBy('id','desc')->take(1)->value('kode');
-        $lastKode = substr($lastKode,(strrpos($lastKode, '.',2)+1));
-        $kode = "PEM.".$this->m.".".$this->y.".".$jenis_pembiayaan_id.".".($lastKode+1);
+        $lastKode = Pembiayaan::orderBy('id', 'desc')->take(1)->value('kode');
+        $lastKode = substr($lastKode, (strrpos($lastKode, '.', 2) + 1));
+        $kode = "PEM." . $this->m . "." . $this->y . "." . $jenis_pembiayaan_id . "." . ($lastKode + 1);
         return $kode;
     }
-    public function generateKodeDetailPembiayaan($kode,$angsuranKe=0)
+    public function generateKodeDetailPembiayaan($kode, $angsuranKe = 0)
     {
         $transaksi = '';
         $transaksi = "ANG.";
-        $kode = $transaksi . $kode.".".$angsuranKe;
+        $kode = $transaksi . $kode . "." . $angsuranKe;
         return $kode;
     }
     public function generateKodeNisbah()
@@ -112,8 +115,17 @@ class KodeGeneratorService
     {
         # code...
     }
-    public function generateDetailKas()
+    public function generateDetailKas($kasID = '01', $jenisTransaksi = '01')
     {
-        # code...
+        $kode = '';
+        $lastKode = DetailKas::orderBy('id', 'desc')->take(1)->first()->kode ?? 0;
+        if($lastKode!=0){
+            $lastKode = substr($lastKode, (strrpos($lastKode, '.', 2) + 1));
+        }else{
+            $lastKode=1;
+        }
+        // KAS ID Tanggal Bulan Tahun kode ID
+        $kode = "KAS." . $kasID . (string)$this->d . (string)$this->m . (string)$this->y . $jenisTransaksi . "." . ($lastKode + 1);
+        return $kode;
     }
 }

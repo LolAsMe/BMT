@@ -73,7 +73,7 @@ class BMTService
         $this->transaksiHarian->increment('kredit', $pembiayaan->jumlah);
 
         $kas->detail()->create([
-            'kode' => 'kode1',
+            'kode' => $this->kodeGeneratorService->generateDetailKas('02','02'),
             'tanggal' => now(),
             'debit' => 0,
             'kredit' => $attribute['jumlah'],
@@ -191,11 +191,16 @@ class BMTService
     {
         if ($option == 1) {
             $kas = $this->kasBMT;
+            $kasID = '02';
         } else if ($option == 2) {
             $kas = $this->kasBrankas;
+            $kasID = '01';
+        }else{
+            abort(404);
         }
+        $kode = $this->kodeGeneratorService->generateDetailKas($kasID,'01');
         $kas->detail()->create([
-            'kode' => 'kode1',
+            'kode' => $kode,
             'tanggal' => now(),
             'debit' => $kasMasuk,
             'kredit' => 0,
@@ -209,8 +214,8 @@ class BMTService
             $detailKasBMT = $kas->detail()->latest()->first();
             $detailKasBMT->transaksi()->create(
                 [
-                    'kode' => 'KAS00001',
-                    'nama' => 'Kas Masuk',
+                    'kode' => $this->kodeGeneratorService->generateKodeTransaksi('kas'),
+                    'nama' => $kode,
                     'keterangan' => $keterangan,
                     'debit' => $kasMasuk,
                     'kredit' => 0,
@@ -235,11 +240,14 @@ class BMTService
     {
         if ($option == 1) {
             $kas = $this->kasBMT;
+            $kasID = '02';
         } else if ($option == 2) {
+            $kasID = '01';
             $kas = $this->kasBrankas;
         }
+        $kode = $this->kodeGeneratorService->generateDetailKas($kasID,'02');
         $kas->detail()->create([
-            'kode' => 'kode1',
+            'kode' => $kode,
             'tanggal' => now(),
             'debit' => 0,
             'kredit' => $kasKeluar,
@@ -253,8 +261,8 @@ class BMTService
 
             $detailKasBMT->transaksi()->create(
                 [
-                    'kode' => 'KAS00001',
-                    'nama' => 'Kas Keluar',
+                    'kode' => $this->kodeGeneratorService->generateKodeTransaksi('kas'),
+                    'nama' => $kode,
                     'keterangan' => $keterangan,
                     'debit' => 0,
                     'kredit' => $kasKeluar,
@@ -282,7 +290,7 @@ class BMTService
     public function tambahPembiayaan()
     {
         Pembiayaan::create([
-            'kode' => 'Pembiayaan',
+            'kode' => $this->kodeGeneratorService->generateKodePembiayaan(1),
             'nomor' => 'NoPemb02',
             'jenis_pembiayaan_id' => '1',
             'simpanan_id' => '1',
@@ -549,7 +557,7 @@ class BMTService
         $harian = TransaksiHarian::create(['kode' => "000", "debit" => 0, "kredit" => 0]);
         $kasBMT = Kas::find(2);
         $kasBMT->detail()->create([
-            'kode' => '9999',
+            'kode' => (new KodeGeneratorService)->generateDetailKas('02','00'),
             'tanggal' => now(),
             'debit' => 0,
             'kredit' => 0,
