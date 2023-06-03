@@ -23,6 +23,7 @@ class StoreSimpananRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             //
             'anggota_id'=>'',

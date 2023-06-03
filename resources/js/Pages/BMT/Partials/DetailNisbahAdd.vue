@@ -12,6 +12,7 @@
         <v-input :name="'detail_simpanan_id'" v-model="form.detail_simpanan_id"></v-input>
         <v-input :name="'pengendapan'" v-model="form.pengendapan"></v-input>
         <v-input :name="'hasil'" v-model="form.hasil"></v-input>
+
         <button
           type="submit"
           class="
@@ -51,30 +52,31 @@ export default defineComponent({
   },
   data() {
     return {
-      form: this.$inertia.form({
-        pengendapan_id: "",
-        detail_simpanan_id: "",
-        pengendapan: "",
-        hasil: "",
-      }),
+
+        form: this.$inertia.form({
+            pengendapan_id: "",
+            detail_simpanan_id: "",
+            pengendapan: "",
+            hasil: "",
+        }),
     };
-  },
-  props: {
+},
+props: {
     nisbah_id: {
-      type: Number,
-      default: "0",
+        type: Number,
+        default: "0",
     }
-  },
-  methods: {
+},
+methods: {
     async createDetailNisbah() {
-      await this.form.post(route("nisbah.detail.store",this.nisbah_id), {
-        preserveScroll: true,
-        onSuccess: () => {
-          this.form.reset();
-          this.$refs.addModal.toggleModal();
+        await this.form.post(route("nisbah.detail.store",this.nisbah_id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                this.form.reset();
+                this.$refs.addModal.toggleModal();
         },
       });
     },
-  },
+},
 });
 </script>

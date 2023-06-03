@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Pembiayaan;
 use DB;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
@@ -43,10 +44,24 @@ class KodeGeneratorService
         $kode =  $this->m . "." . $this->y . ".01." . $jenis_simpanan_id . ".03." . $id;
         return $kode;
     }
-    public function generateKodeDetailSimpanan($tipe = 'setoran')
+    public function generateKodeDetailSimpanan($tipe = 'setoran', $kode)
     {
         $transaksi = '';
-        $kode= "";
+        if ($tipe == 'setoran') {
+            $transaksi = 'SET';
+        } else if ($tipe == 'penarikan') {
+            $transaksi = "PEN";
+        } else {
+            abort(404);
+        }
+        $prefix = $transaksi . $kode;
+        $kode = UniqueIdGenerator::generate(['table' => 'detail_simpanan', 'length' => 12, 'field' => 'kode', 'prefix' => $prefix, 'reset_on_change' => 'prefix']);
+        return $kode;
+    }
+    public function generateKodeTransaksi($tipe = 'setoran')
+    {
+        $transaksi = '';
+        $kode = "";
         if ($tipe == 'setoran') {
             $transaksi = 'SET';
         } else if ($tipe == 'penarikan') {
@@ -58,13 +73,13 @@ class KodeGeneratorService
         $kode = UniqueIdGenerator::generate(['table' => 'detail_simpanan', 'length' => 12, 'field' => 'kode', 'prefix' => $prefix, 'reset_on_change' => 'prefix']);
         return $kode;
     }
-    public function generateKodeTransaksi()
+    public function generateKodePembiayaan($jenis_pembiayaan_id)
     {
-        # code...
-    }
-    public function generateKodePembiayaan()
-    {
-        # code...
+        $kode = '';
+        $lastKode = Pembiayaan::orderBy('id','desc')->take(1)->value('kode');
+        $lastKode = substr($lastKode,(strrpos($lastKode, '.',2)+1));
+        $kode = "PEM.".$this->m.".".$this->y.".".$jenis_pembiayaan_id.".".($lastKode+1);
+        return $kode;
     }
     public function generateKodeDetailPembiayaan()
     {
