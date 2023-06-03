@@ -55,12 +55,20 @@
                         <button @click="$refs.editModal.show(karyawan)"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             EDIT</button>
+                        <button @click="$refs.userEditModal.show(karyawan)"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            EDIT USER</button>
                     </div>
                     <table class="m-5 min-w-full divide-y divide-gray-200">
                         <tr>
                             <th class="text-left">ID</th>
                             <th>:</th>
                             <td>{{ karyawan.id }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Kode</th>
+                            <th>:</th>
+                            <td>{{ karyawan.kode }}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Nama</th>
@@ -81,6 +89,16 @@
                             <th class="text-left">Jabatan</th>
                             <th>:</th>
                             <td>{{ karyawan.jabatan.nama }}</td>
+                        </tr>
+                        <tr v-if="karyawan.user">
+                            <th class="text-left">Username</th>
+                            <th>:</th>
+                            <td>{{ karyawan.user ? karyawan.user.name : '-' }}</td>
+                        </tr>
+                        <tr v-if="karyawan.user">
+                            <th class="text-left" >Email</th>
+                            <th>:</th>
+                            <td>{{ karyawan.user ? karyawan.user.email : '-' }}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Created At</th>
@@ -295,6 +313,7 @@
     </div> -->
     </app-layout>
     <edit-modal ref="editModal"></edit-modal>
+    <user-edit-modal ref="userEditModal"></user-edit-modal>
 </template>
 
 <script>
@@ -304,13 +323,14 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Jetstream/Welcome.vue";
 import JetNavLink from '@/Jetstream/NavLink.vue'
 import EditModal from "@/Pages/BMT/Partials/KaryawanEditModal.vue";
+import UserEditModal from "@/Pages/BMT/Partials/UserEditModal.vue";
 import AnggotaDetailModal from "@/Pages/BMT/Partials/AnggotaDetailModal.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
         Welcome,
-        VCard, EditModal,
+        VCard, EditModal,UserEditModal,
         AnggotaDetailModal, JetNavLink
     },
     props: {

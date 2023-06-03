@@ -38,7 +38,7 @@
                                     :active="route().current('transaksi.index')">
                                     Transaksi
                                 </jet-nav-link>
-                                <jet-nav-link v-show="isNotJabatan('Funding')" :href="route('karyawan.index')"
+                                <jet-nav-link v-show="isJabatan('Manajer')" :href="route('karyawan.index')"
                                     :active="route().current('karyawan.index') ||route().current('karyawan.search')">
                                     Karyawan
                                 </jet-nav-link>
@@ -246,7 +246,7 @@
                             :active="route().current('pembiayaan.index')">
                             Transaksi
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link v-show="isNotJabatan('Funding')" :href="route('pembiayaan.index')"
+                        <jet-responsive-nav-link v-show="isJabatan('Manajer')" :href="route('pembiayaan.index')"
                             :active="route().current('pembiayaan.index')">
                             Karyawan
                         </jet-responsive-nav-link>

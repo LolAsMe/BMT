@@ -143,7 +143,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in paginate.data" :key="simpanan.id" @dblclick="detail(simpanan.id)">
+                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in paginate.data" :key="simpanan.id" @dblclick="detail(simpanan.id,simpanan.anggota.nama)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -264,10 +264,16 @@ export default defineComponent({
                 route("simpanan.destroy", simpanan.id)
             );
         },
-        detail(simpananId) {
-            console.log("ini Detail" + simpananId)
-            console.log(this.route('simpanan.index'))
-            window.location.href = this.route('simpanan.show', simpananId);
+        detail(simpananId, nama) {
+
+            if(this.$window.searchTipe == 'nisbah-create'){
+                this.$window.simpanan_id = simpananId
+                this.$window.anggota_nama = nama
+                this.$window.showAddModal = 1
+                this.$inertia.get(this.route('nisbah.index'))
+            }else{
+                this.$inertia.get(this.route('simpanan.show', anggotaId))
+            }
 
         },
         search() {
@@ -297,6 +303,7 @@ export default defineComponent({
         this.formSearch.alamat = urlParams.get('alamat')
         this.formSearch.kode = urlParams.get('kode')
         this.formSearch.kodeAnggota = urlParams.get('kodeAnggota')
+        console.log(this.$window.searchTipe);
     }
 
 });

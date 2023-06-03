@@ -24,13 +24,6 @@ class StoreNisbahRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'kode'=>'',
-            'bulan'=>'',
-            'simpanan_id'=>'',
-            'pengendapan'=>'',
-            'tabungan'=>'',
-            'nisbah'=>'',
         ];
     }
 }

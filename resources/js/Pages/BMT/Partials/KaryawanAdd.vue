@@ -7,7 +7,6 @@
     <v-modal ref="addModal">
       <template #title> Add Karyawan </template>
       <form @submit.prevent="createKaryawan">
-        <v-input :name="'kode'" v-model="form.kode"></v-input>
         <v-input :name="'nama'" v-model="form.nama"></v-input>
         <v-input :name="'username'" v-model="form.username"></v-input>
         <v-input :name="'email'" v-model="form.email"></v-input>
@@ -57,7 +56,6 @@ export default defineComponent({
   data() {
     return {
       form: this.$inertia.form({
-        kode: undefined,
         nama: undefined,
         email: undefined,
         alamat: undefined,

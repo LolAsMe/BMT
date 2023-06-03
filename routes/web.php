@@ -61,21 +61,31 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding,manajer,teller']
     Route::get('anggota/{anggota}', [AnggotaController::class, 'show'])
         ->name('anggota.show')
         ->withTrashed();
-    Route::get('karyawan/{karyawan}', [KaryawanController::class, 'show'])
-        ->name('karyawan.show')
-        ->withTrashed();
     Route::get('simpanan/{simpanan}', [SimpananController::class, 'show'])
         ->name('simpanan.show')
         ->withTrashed();
 
     Route::get('search/simpanan', [SimpananController::class, 'search'])
         ->name('simpanan.search');
+    Route::get('search/simpanan/mudhorobah', [SimpananController::class, 'search2'])
+        ->name('simpanan.search2');
     Route::get('search/pembiayaan', [PembiayaanController::class, 'search'])
         ->name('pembiayaan.search');
     Route::get('search/anggota', [AnggotaController::class, 'search'])
         ->name('anggota.search');
 });
+Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(function () {
 
+    Route::get('karyawan/{karyawan}', [KaryawanController::class, 'show'])
+        ->name('karyawan.show')
+        ->withTrashed();
+    Route::resource('karyawan', KaryawanController::class)->only([
+        'index', 'destroy', 'update', 'store'
+    ]);
+    Route::post('karyawan/active/{karyawan}', [KaryawanController::class, 'active'])
+        ->name('karyawan.active')->withTrashed();
+        Route::put('userupdate/{user}', [KaryawanController::class, 'userEdit'])->name('userupdate');
+    });
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
 
 
@@ -95,15 +105,11 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
 
     Route::get('tambah/', [DashboardController::class, 'tambahView'])->name('tambah.index');
 
-    // Route::get('karyawan',function(){ return Inertia::render('BMT/karyawan');});
     Route::resource('test', TestController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);
     Route::resource('anggota', AnggotaController::class)->only([
-        'destroy', 'update', 'store','destroy'
-    ]);
-    Route::resource('karyawan', KaryawanController::class)->only([
-        'index', 'destroy', 'update', 'store'
+        'destroy', 'update', 'store', 'destroy'
     ]);
 
 
@@ -119,8 +125,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::post('simpanan/active/{simpanan}', [SimpananController::class, 'active'])
         ->name('simpanan.active')->withTrashed();
 
-    Route::post('karyawan/active/{karyawan}', [KaryawanController::class, 'active'])
-        ->name('karyawan.active')->withTrashed();
+
 
     Route::post('anggota/active/{anggota}', [AnggotaController::class, 'active'])
         ->name('anggota.active')->withTrashed();

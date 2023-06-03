@@ -371,6 +371,7 @@ export default defineComponent({
         if (urlParams.has('nama') || urlParams.has('alamat') || urlParams.has('kode') || urlParams.has('kodeAnggota')) {
             this.searchShow = true
         }
+            console.log(this.$window.anggota_id)
         this.formSearch.nama = urlParams.get('nama')
         this.formSearch.alamat = urlParams.get('alamat')
         this.formSearch.kode = urlParams.get('kode')

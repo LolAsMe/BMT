@@ -25,7 +25,6 @@ class StoreKaryawanRequest extends FormRequest
     {
         return [
 
-            'kode'=>'',
             'nama'=>'required',
             'alamat'=>'required',
             'no_telepon'=>'required',

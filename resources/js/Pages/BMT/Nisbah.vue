@@ -27,7 +27,7 @@
         <div class="py-2">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row-reverse flex-nowrap">
-                    <add></add>
+                    <add :showModal="showAddModal"></add>
                     <div class="pt-4">
                         <button v-show="!searchShow" @click="searchShow = true"
                             class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
@@ -96,64 +96,65 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-gray-500
-                      uppercase
-                      tracking-wider
-                    ">
+                          px-6
+                          py-3
+                          text-left text-xs
+                          font-medium
+                          text-gray-500
+                          uppercase
+                          tracking-wider
+                        ">
                                 No
                             </th>
                             <th scope="col" class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-gray-500
-                      uppercase
-                      tracking-wider
-                    ">
+                          px-6
+                          py-3
+                          text-left text-xs
+                          font-medium
+                          text-gray-500
+                          uppercase
+                          tracking-wider
+                        ">
                                 Kode
                             </th>
                             <th scope="col" class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-gray-500
-                      uppercase
-                      tracking-wider
-                    ">
+                          px-6
+                          py-3
+                          text-left text-xs
+                          font-medium
+                          text-gray-500
+                          uppercase
+                          tracking-wider
+                        ">
                                 Tanggal
                             </th>
                             <th scope="col" class="
-                      px-6
-                      py-3
-                      text-left text-xs
-                      font-medium
-                      text-gray-500
-                      uppercase
-                      tracking-wider
-                    ">
+                          px-6
+                          py-3
+                          text-left text-xs
+                          font-medium
+                          text-gray-500
+                          uppercase
+                          tracking-wider
+                        ">
                                 Nisbah
                             </th>
                             <th scope="col" class="relative px-6 py-3">
                                 <span class="
-                        px-6
-                        py-3
-                        text-xs text-center
-                        font-medium
-                        text-gray-500
-                        uppercase
-                        tracking-wider
-                      ">Status</span>
+                            px-6
+                            py-3
+                            text-xs text-center
+                            font-medium
+                            text-gray-500
+                            uppercase
+                            tracking-wider
+                          ">Status</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="(nisbah, index) in paginate.data" :key="nisbah.id" class="odd:bg-slate-50 cursor-pointer" @dblclick="detail(nisbah.id)">
+                        <tr v-for="(nisbah, index) in paginate.data" :key="nisbah.id" class="odd:bg-slate-50 cursor-pointer"
+                            @dblclick="detail(nisbah.id)">
                             <td class="text-center">{{ index + 1 }}</td>
 
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -186,10 +187,12 @@
                                 <div class="flex items-center">
                                     <div class="ml-0">
                                         <div class="text-sm font-medium text-gray-900">
-                                            Investasi : {{ "IDR " + nisbah.awal.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
+                                            Investasi : {{ "IDR " +
+                                                nisbah.awal.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
                                         </div>
                                         <div class="text-sm font-medium text-gray-900">
-                                            Hasil : {{ "IDR " + nisbah.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
+                                            Hasil : {{ "IDR " +
+                                                nisbah.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.") }}
                                         </div>
                                     </div>
                                 </div>
@@ -197,10 +200,12 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="ml-0">
-                                        <div v-show="nisbah.status=='ongoing'" class="text-sm font-medium bg-yellow-100 rounded-full border-2 border-yellow-1000">
+                                        <div v-show="nisbah.status == 'ongoing'"
+                                            class="text-sm font-medium bg-yellow-100 rounded-full border-2 border-yellow-1000">
                                             {{ nisbah.status }}
                                         </div>
-                                        <div v-show="nisbah.status=='selesai'" class="text-sm font-medium bg-green-100 rounded-full border-2 border-green-1000">
+                                        <div v-show="nisbah.status == 'selesai'"
+                                            class="text-sm font-medium bg-green-100 rounded-full border-2 border-green-1000">
                                             {{ nisbah.status }}
                                         </div>
                                     </div>
@@ -210,31 +215,35 @@
                     </tbody>
                 </table>
                 <edit-modal ref="editModal"></edit-modal>
-                <nav v-show="paginate.current_page!=1" aria-label="Page navigation example" class="mt-5 grid">
+                <nav v-show="paginate.current_page != 1" aria-label="Page navigation example" class="mt-5 grid">
                     <ul class="inline-flex -space-x-px mb-4 place-self-center">
-                        <li v-show="paginate.current_page!=1">
+                        <li v-show="paginate.current_page != 1">
                             <a :href="paginate.prev_page_url"
                                 class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
                         </li>
-                        <li v-show="paginate.current_page!=1" >
+                        <li v-show="paginate.current_page != 1">
                             <a :href="paginate.first_page_url"
                                 class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">1</a>
                         </li>
-                        <li v-show="paginate.current_page!=1">
-                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        <li v-show="paginate.current_page != 1">
+                            <a
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
                         </li>
                         <li>
                             <a href="#" aria-current="page"
-                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{ paginate.current_page }}</a>
+                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{
+                                    paginate.current_page }}</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
-                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        <li v-show="paginate.current_page != paginate.last_page">
+                            <a
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
+                        <li v-show="paginate.current_page != paginate.last_page">
                             <a :href="paginate.last_page_url"
-                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{ paginate.last_page }}</a>
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{
+                                    paginate.last_page }}</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
+                        <li v-show="paginate.current_page != paginate.last_page">
                             <a :href="paginate.next_page_url"
                                 class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
                         </li>
@@ -264,7 +273,7 @@ export default defineComponent({
         EditModal,
         VInput,
         VCard,
-        VButton,JetNavLink
+        VButton, JetNavLink
     },
     methods: {
         deleteNisbah(nisbah) {
@@ -301,6 +310,14 @@ export default defineComponent({
     props: {
         paginate: Object,
     },
+    computed: {
+        showAddModal() {
+            return !!this.$window.showAddModal
+        },
+        totalIDR() {
+            return this.toRupiah(this.total)
+        }
+    },
     mounted() {
         console.log(this.paginate)
         let urlParams = new URLSearchParams(window.location.search);
@@ -311,6 +328,10 @@ export default defineComponent({
         this.formSearch.kodeSimpanan = urlParams.get('kodeSimpanan')
         this.formSearch.kode = urlParams.get('kode')
         this.formSearch.kodeAnggota = urlParams.get('kodeAnggota')
+    },
+    created() {
+        console.log(this.$window.showAddModal);
+        console.log(this.$window.simpanan_id);
     }
 });
 </script>

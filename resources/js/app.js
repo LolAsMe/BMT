@@ -11,15 +11,14 @@ const app = createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => require(`./Pages/${name}.vue`),
     setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
+        let myApp = createApp({ render: () => h(app, props) })
             .use(plugin).use(Toaster)
             .mixin({
                 methods: { route }
             })
-            .mount(el);
+        myApp.config.globalProperties.$window = window;
+        myApp.mount(el);
+        return myApp
     },
 });
-
-
-
 InertiaProgress.init({ color: '#4B5563' });

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use App\Http\Requests\StoreKaryawanRequest;
 use App\Http\Requests\UpdateKaryawanRequest;
+use App\Models\User;
+use App\Services\KodeGeneratorService;
 use Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -39,12 +42,14 @@ class KaryawanController extends Controller
      * @param  \App\Http\Requests\StoreKaryawanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreKaryawanRequest $request)
+    public function store(StoreKaryawanRequest $request, KodeGeneratorService $kodeGeneratorService)
     {
         //
         // dd($request->validated());
         $attribute = $request->all();
-        $karyawan = Karyawan::create($request->validated());
+        $karyawanAttribute = $request->validated();
+        $karyawanAttribute['kode'] = $kodeGeneratorService->generateKodeKaryawan();
+        $karyawan = Karyawan::create($karyawanAttribute);
         $userAttribute = [];
         $userAttribute['name'] = $attribute['nama'];
         $userAttribute['email'] = $attribute['email'];
@@ -116,6 +121,18 @@ class KaryawanController extends Controller
     public function active(Karyawan $karyawan)
     {
         $karyawan->restore();
+        return back();
+    }
+    public function userEdit(User $user,Request $request)
+    {
+        // dd($user);
+        $attribute = $request->all();
+        $userAttribute = [];
+        $userAttribute['name'] = $attribute['name'];
+        $userAttribute['email'] = $attribute['email'];
+        $userAttribute['password'] = Hash::make($attribute['password']);
+        $user->update($userAttribute);
+        $user->save();
         return back();
     }
 }

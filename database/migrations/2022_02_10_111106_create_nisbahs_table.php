@@ -16,11 +16,12 @@ class CreateNisbahsTable extends Migration
         Schema::create('nisbah', function (Blueprint $table) {
             $table->id();
             $table->string('kode');
-            $table->string('bulan');
+            $table->string('tanggal_awal');
+            $table->string('tanggal_selesai');
             $table->foreignId('simpanan_id');
-            $table->decimal('pengendapan');
-            $table->decimal('tabungan');
-            $table->decimal('nisbah');
+            $table->decimal('awal',15,2);
+            $table->enum('status',["ongoing, selesai"])->default('ongoing');
+            $table->decimal('jumlah',15,2)->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

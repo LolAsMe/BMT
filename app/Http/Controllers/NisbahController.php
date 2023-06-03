@@ -7,6 +7,7 @@ use App\Http\Requests\StoreNisbahRequest;
 use App\Http\Requests\UpdateNisbahRequest;
 use App\Models\Simpanan;
 use App\Services\BMTService;
+use App\Services\KodeGeneratorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -55,11 +56,12 @@ class NisbahController extends Controller
      * @param  \App\Http\Requests\StoreNisbahRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNisbahRequest $request)
+    public function store(Request $request,KodeGeneratorService $kodeGeneratorService)
     {
         //
-        // dd($request->validated());
-        Nisbah::create($request->validated());
+        $attribute = $request->all();
+        $attribute['kode'] = $kodeGeneratorService->generateKodeNisbah();
+        Nisbah::create($attribute);
 
         return back()->with('flash', [
             'response' => 'berhasil'

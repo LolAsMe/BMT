@@ -405,6 +405,7 @@ export default defineComponent({
         //     this.checkedTahun = true
         //     this.checkedBulan = true
         // }
+        console.log(karyawan)
     }
 });
 </script>

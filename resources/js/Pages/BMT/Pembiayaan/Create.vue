@@ -53,13 +53,9 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input v-model="formCreate.anggota_id" type="text" name="floating_anggota" id="floating_anggota"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
-                            <label for="floating_anggota"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Anggota</label>
+                        <div @click="cariAnggota()"
+                            class="  hover:cursor-pointer hover:text-blue-300 relative z-0 w-full mb-6 group">
+                            Anggota : {{ anggota }}
                         </div>
                     </div>
                     <div class="grid md:grid-cols-2 md:gap-6">
@@ -130,8 +126,8 @@
                                 Total Pembiayaan</label>
                         </div>
                         <div class="relative z-0 w-full mb-6 group">
-                            <input @change="gantiJumlahAngsuran()" v-model="formCreate.frekuensi_angsuran" type="text" name="floating_frekuensi_angsuran"
-                                id="floating_frekuensi_angsuran"
+                            <input @change="gantiJumlahAngsuran()" v-model="formCreate.frekuensi_angsuran" type="text"
+                                name="floating_frekuensi_angsuran" id="floating_frekuensi_angsuran"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" " required />
                             <label for="floating_frekuensi_angsuran"
@@ -163,7 +159,6 @@
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
                 </form>
-
             </div>
         </div>
     </app-layout>
@@ -193,8 +188,8 @@ export default defineComponent({
     data() {
         return {
             formCreate: this.$inertia.form({
+                anggota_id:null,
                 jenis_pembiayaan_id: 1,
-                anggota_id: 1,
                 tanggal_pinjam: null,
                 jumlah: null,
                 tanggal_jatuh_tempo: null,
@@ -212,6 +207,7 @@ export default defineComponent({
         create() {
             this.formCreate.total_pembiayaan = this.total_pembiayaan
             // this.formCreate.jumlah_angsuran = this.jumlah_angsuran
+            this.formCreate.anggota_id = this.$window.anggota_id
             this.formCreate.post(route('pembiayaan.store', {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -222,11 +218,14 @@ export default defineComponent({
                 },
             }))
         },
-        search() {
+        cariAnggota() {
+            this.$window.searchTipe = "pembiayaan-create"
+            this.$inertia.get(route('anggota.index'))
+
         },
-        gantiJumlahAngsuran(){
+        gantiJumlahAngsuran() {
             let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
-            this.formCreate.jumlah_angsuran = Math.ceil(this.total_pembiayaan /(frekuensi*10000))*10000
+            this.formCreate.jumlah_angsuran = Math.ceil(this.total_pembiayaan / (frekuensi * 10000)) * 10000
             console.log('tes')
         }
     },
@@ -241,15 +240,15 @@ export default defineComponent({
             let potongan_pembiayaan = this.formCreate.potongan_pembiayaan ? parseInt(this.formCreate.potongan_pembiayaan) : 0
             return jumlah + pokok + jasa - potongan_pembiayaan
         },
-        rupiah(){
+        rupiah() {
             return "IDR " + this.total_pembiayaan.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+        },
+        anggota() {
+            return this.$window.anggota_nama ?? "Cari Anggota"
         }
-        // jumlah_angsuran() {
-        //     let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
-        //     return Math.ceil(this.total_pembiayaan / frekuensi)
-        // }
     },
     mounted() {
+        console.log(this.$window.anggota_id)
     }
 
 });

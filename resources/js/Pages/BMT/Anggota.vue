@@ -24,8 +24,6 @@
                 </ol>
             </nav>
         </template>
-
-
         <div class="py-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row-reverse flex-nowrap">
@@ -86,65 +84,65 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-                                                          px-6
-                                                          py-3
-                                                          text-left text-xs
-                                                          font-medium
-                                                          text-gray-500
-                                                          uppercase
-                                                          tracking-wider
-                                                        ">
+                                                              px-6
+                                                              py-3
+                                                              text-left text-xs
+                                                              font-medium
+                                                              text-gray-500
+                                                              uppercase
+                                                              tracking-wider
+                                                            ">
                                 No
                             </th>
                             <th scope="col" class="
-                                                          px-6
-                                                          py-3
-                                                          text-left text-xs
-                                                          font-medium
-                                                          text-gray-500
-                                                          uppercase
-                                                          tracking-wider
-                                                        ">
+                                                              px-6
+                                                              py-3
+                                                              text-left text-xs
+                                                              font-medium
+                                                              text-gray-500
+                                                              uppercase
+                                                              tracking-wider
+                                                            ">
                                 Nama
                             </th>
                             <th scope="col" class="
-                                                          px-6
-                                                          py-3
-                                                          text-left text-xs
-                                                          font-medium
-                                                          text-gray-500
-                                                          uppercase
-                                                          tracking-wider
-                                                        ">
+                                                              px-6
+                                                              py-3
+                                                              text-left text-xs
+                                                              font-medium
+                                                              text-gray-500
+                                                              uppercase
+                                                              tracking-wider
+                                                            ">
                                 Alamat
                             </th>
                             <th scope="col" class="
-                                                          px-6
-                                                          py-3
-                                                          text-left text-xs
-                                                          font-medium
-                                                          text-gray-500
-                                                          uppercase
-                                                          tracking-wider
-                                                        ">
+                                                              px-6
+                                                              py-3
+                                                              text-left text-xs
+                                                              font-medium
+                                                              text-gray-500
+                                                              uppercase
+                                                              tracking-wider
+                                                            ">
                                 TTL
                             </th>
                             <th scope="col" class="
-                                                          px-6
-                                                          py-3
-                                                           text-xs
-                                                          font-medium
-                                                          text-gray-500 text-center
-                                                          uppercase
-                                                          tracking-wider
-                                                        ">
+                                                              px-6
+                                                              py-3
+                                                               text-xs
+                                                              font-medium
+                                                              text-gray-500 text-center
+                                                              uppercase
+                                                              tracking-wider
+                                                            ">
 
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <tr class='hover:bg-slate-100 cursor-pointer' v-for="(anggota,
-                            index) in paginate.data" :key="anggota.id" @dblclick="detail(anggota.id)">
+                            index) in paginate.data" :key="anggota.id" @dblclick="detail(anggota.id,anggota.nama)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -191,7 +189,8 @@
                                             Nama Ibu Kandung : {{ anggota.nama_ibu_kandung }}
                                         </div>
                                         <div class="text-sm text-black">
-                                            Masuk :{{ anggota.tanggal_masuk ? anggota.tanggal_masuk.substring(0, 10) : '-' }}
+                                            Masuk :{{ anggota.tanggal_masuk ? anggota.tanggal_masuk.substring(0, 10) : '-'
+                                            }}
                                         </div>
                                     </div>
                                 </div>
@@ -201,36 +200,39 @@
                 </table>
                 <nav aria-label="Page navigation example" class="mt-5 grid">
                     <ul class="inline-flex -space-x-px mb-4 place-self-center">
-                        <li v-show="paginate.current_page!=1">
+                        <li v-show="paginate.current_page != 1">
                             <a :href="paginate.prev_page_url"
                                 class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
                         </li>
-                        <li v-show="paginate.current_page!=1" >
+                        <li v-show="paginate.current_page != 1">
                             <a :href="paginate.first_page_url"
                                 class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">1</a>
                         </li>
-                        <li v-show="paginate.current_page!=1">
-                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        <li v-show="paginate.current_page != 1">
+                            <a
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
                         </li>
                         <li>
                             <a href="#" aria-current="page"
-                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{ paginate.current_page }}</a>
+                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{
+                                    paginate.current_page }}</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
-                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        <li v-show="paginate.current_page != paginate.last_page">
+                            <a
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
+                        <li v-show="paginate.current_page != paginate.last_page">
                             <a :href="paginate.last_page_url"
-                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{ paginate.last_page }}</a>
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{
+                                    paginate.last_page }}</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
+                        <li v-show="paginate.current_page != paginate.last_page">
                             <a :href="paginate.next_page_url"
                                 class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
                         </li>
                     </ul>
                 </nav>
             </v-card>
-
         </div>
     </app-layout>
 </template>
@@ -270,10 +272,15 @@ export default defineComponent({
         deleteAnggota(anggota) {
             this.$inertia.delete(route("anggota.destroy", anggota.id));
         },
-        detail(anggotaId) {
-            console.log("ini Detail" + anggotaId)
-            console.log(this.route('anggota.index'))
-            window.location.href = this.route('anggota.show', anggotaId);
+        detail(anggotaId,anggotaNama) {
+            if(this.$window.searchTipe == 'pembiayaan-create'){
+                this.$window.anggota_id = anggotaId
+                this.$window.anggota_nama = anggotaNama
+                this.$inertia.get(this.route('pembiayaan.create'))
+            }else{
+                this.$inertia.get(this.route('anggota.show', anggotaId))
+
+            }
         },
         search() {
             console.log("ewrw")
@@ -282,7 +289,7 @@ export default defineComponent({
                 this.formSearch.kodeAnggota == null ? delete this.formSearch.kodeAnggota : null,
                 this.formSearch.get(this.route('anggota.search'));
         },
-        isNotJabatan(jabatan){
+        isNotJabatan(jabatan) {
             return !(this.$page.props.user.karyawan.jabatan.nama == jabatan)
         },
     },

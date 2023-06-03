@@ -98,7 +98,8 @@ class KodeGeneratorService
     }
     public function generateKodeNisbah()
     {
-        # code...
+        $kode = UniqueIdGenerator::generate(['table' => 'nisbah', 'length' => 7, 'field' => 'kode', 'prefix' =>'NISB', 'reset_on_change' => 'prefix']);
+        return $kode;
     }
     public function generateKodeDetailNisbah()
     {
@@ -107,6 +108,8 @@ class KodeGeneratorService
     public function generateKodeKaryawan()
     {
         # code...
+        $kode = UniqueIdGenerator::generate(['table' => 'karyawan', 'length' => 5, 'field' => 'kode', 'prefix' =>'KAR', 'reset_on_change' => 'prefix']);
+        return $kode;
     }
     public function generateKodeDetailLaba()
     {
