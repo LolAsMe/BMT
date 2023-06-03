@@ -66,11 +66,13 @@ class KodeGeneratorService
             $transaksi = 'SET';
         } else if ($tipe == 'penarikan') {
             $transaksi = "PEN";
-        } else {
+        } else if ($tipe == 'angsuran') {
+            $transaksi = "ANG";
+        }else {
             abort(404);
         }
         $prefix = $transaksi . $this->d  . $this->m . $this->y;
-        $kode = UniqueIdGenerator::generate(['table' => 'detail_simpanan', 'length' => 12, 'field' => 'kode', 'prefix' => $prefix, 'reset_on_change' => 'prefix']);
+        $kode = UniqueIdGenerator::generate(['table' => 'transaksi', 'length' => 12, 'field' => 'kode', 'prefix' => $prefix, 'reset_on_change' => 'prefix']);
         return $kode;
     }
     public function generateKodePembiayaan($jenis_pembiayaan_id)
@@ -81,9 +83,12 @@ class KodeGeneratorService
         $kode = "PEM.".$this->m.".".$this->y.".".$jenis_pembiayaan_id.".".($lastKode+1);
         return $kode;
     }
-    public function generateKodeDetailPembiayaan()
+    public function generateKodeDetailPembiayaan($kode,$angsuranKe=0)
     {
-        # code...
+        $transaksi = '';
+        $transaksi = "ANG.";
+        $kode = $transaksi . $kode.".".$angsuranKe;
+        return $kode;
     }
     public function generateKodeNisbah()
     {

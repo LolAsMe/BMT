@@ -151,7 +151,7 @@ class BMTService
         $kode = substr($kode,(strrpos($kode, '.',2)+1));
         $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('penarikan',$kode);
         $this->currentSimpanan->detail()->create([
-            'kode' => $this->kodeGeneratorService->generateKodeTransaksi('penarikan'),
+            'kode' => $kode,
             'tanggal_transaksi' => now(),
             'tanggal_slip' => now(),
             'debit' => $jumlahTarikan,
@@ -330,10 +330,15 @@ class BMTService
         ]);
         $this->currentPembiayaan->angsuran_diterima = $this->currentPembiayaan->jumlah_angsuran;
         $this->lastDetailPembiayaan = $this->currentPembiayaan->detail()->latest()->first();
+
+        $kode = $this->currentPembiayaan->kode;
+        $kode = substr($kode,(strrpos($kode, '.',2)+1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailPembiayaan($kode,1);
+
         $this->lastDetailPembiayaan->transaksi()->create(
             [
-                'kode' => 'PEMB 012930',
-                'nama' => 'PEM Mudhorobah',
+                'kode' => $this->kodeGeneratorService->generateKodeTransaksi('angsuran'),
+                'nama' => $kode,
                 'keterangan' => 'OK',
                 'debit' => $this->currentPembiayaan->jumlah_angsuran,
                 'kredit' => 0,
@@ -373,10 +378,15 @@ class BMTService
         ]);
         $this->lastDetailPembiayaan = $this->currentPembiayaan->detail()->latest()->first();
         $this->currentPembiayaan->angsuran_diterima += $jumlahAngsuran;
+
+        $kode = $this->currentPembiayaan->kode;
+        $kode = substr($kode,(strrpos($kode, '.',2)+1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailPembiayaan($kode,$this->angsuranKe);
+
         $this->lastDetailPembiayaan->transaksi()->create(
             [
-                'kode' => 'PEMB 012930',
-                'nama' => 'PEM Mudhorobah',
+                'kode' => $this->kodeGeneratorService->generateKodeTransaksi('angsuran'),
+                'nama' => $kode,
                 'keterangan' => 'OK',
                 'debit' => $jumlahAngsuran,
                 'kredit' => 0,
