@@ -10,6 +10,7 @@ use App\Models\Laba;
 use App\Models\Simpanan;
 use App\Services\BMTService;
 use App\Services\KodeGeneratorService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -81,19 +82,26 @@ class NisbahController extends Controller
         $nisbah->load('detail', 'simpanan.anggota');
         return Inertia::render('BMT/Nisbah/ShowOneNisbah', compact('nisbah'));
     }
-    public function hitungView()
+    public function hitungView(Request $request)
     {
         //
-        $lastNisbah = Nisbah::orderBy('id', 'desc')->first();
-        $lastNisbah->load('detail', 'simpanan.anggota');
 
-        $detail = DetailNisbah::orderBy('id', 'desc')->first();
-        $details = DetailNisbah::select('pengendapan', 'saldo_rata_rata', 'hasil', 'nisbah_id')->with('nisbah.simpanan.anggota')->whereBulan($detail->bulan)->get();
+        if($request['tanggal']){
+            $bulan = $request['tanggal'];
+            $bulan = Carbon::createFromFormat('Y-m-d', $bulan)->format('m-Y');
+
+            // dd(now($bulan));
+        }else {
+            $detail = DetailNisbah::orderBy('id', 'desc')->first();
+            $bulan = $detail->bulan;
+        }
+
+        $details = DetailNisbah::select('pengendapan', 'saldo_rata_rata', 'hasil', 'nisbah_id')->with('nisbah.simpanan.anggota')->whereBulan($bulan)->get();
         // DetailNisbah::
         //bulan
         //laba
         //nisbah total
-        $nisbah['bulan'] = $detail->bulan;
+        $nisbah['bulan'] = $bulan;
         $nisbah['laba'] = Laba::whereBulan('06-2023')->first()->jumlah;
         $nisbah['total'] = $details->sum('nisbah.awal');
         return Inertia::render('BMT/Nisbah/Hitung', compact('details', 'nisbah'));

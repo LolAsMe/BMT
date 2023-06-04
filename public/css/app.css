@@ -2189,6 +2189,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
+.odd\:bg-green-50:nth-child(odd) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / var(--tw-bg-opacity));
+}
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }

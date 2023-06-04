@@ -458,5 +458,11 @@ export default defineComponent({
         attribute: Object,
         kasBrankas: Object,
     },
+    mounted() {
+        let urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('tanggal')) {
+            this.tanggal = urlParams.get('tanggal')
+        }
+    }
 });
 </script>
