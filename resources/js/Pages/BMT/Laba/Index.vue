@@ -1,6 +1,8 @@
 <template>
     <app-layout title="Laba">
         <template #header>
+            <h2 class="font-bold border-b-2 mb-2 uppercase">{{ "LABA" }}
+            </h2>
             <nav class="flex my-2" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -36,61 +38,7 @@
                     </div>
                 </div>
             </div>
-            <v-card class="my-5 mb-5">
-                <div v-show="searchShow" class="grid grid-cols-4 p-6">
-                    <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
-                        Nama
-                    </h5>
-                    <div class="flex justify-center col-span-3">
-                        <div class="mb-3 xl:w-full">
-                            <div class="relative mb-4 flex w-full flex-wrap items-stretch">
-                                <input type="search" v-model="formSearch.nama"
-                                    class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
-                                    placeholder="Nama" aria-label="Search" aria-describedby="button-addon1" />
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
-                        Rekening Simpanan
-                    </h5>
-                    <div class="flex justify-center col-span-3">
-                        <div class="mb-3 xl:w-full">
-                            <div class="relative mb-4 flex w-full flex-wrap items-stretch">
-                                <input type="search" v-model="formSearch.kodeSimpanan"
-                                    class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
-                                    placeholder="Rekening" aria-label="Search" aria-describedby="button-addon1" />
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
-                        Kode
-                    </h5>
-                    <div class="flex justify-center col-span-3">
-                        <div class="mb-3 xl:w-full">
-                            <div class="relative mb-4 flex w-full flex-wrap items-stretch">
-                                <input type="search" v-model="formSearch.kode"
-                                    class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
-                                    placeholder="Kode" aria-label="Search" aria-describedby="button-addon1" />
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="mt-0 mb-2 text-base py-2 font-medium leading-tight text-primary align-middle">
-                        Kode Anggota
-                    </h5>
-                    <div class="flex justify-center col-span-3">
-                        <div class="mb-3 xl:w-full">
-                            <div class="relative mb-4 flex w-full flex-wrap items-stretch">
-                                <input type="search" v-model="formSearch.kodeAnggota"
-                                    class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-black outline-none transition duration-300 ease-in-out focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none dark:text-black dark:placeholder:text-neutral-200"
-                                    placeholder="kode Anggota" aria-label="Search" aria-describedby="button-addon1" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-end-2" @click="search"><button
-                            class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
-                    </div>
-                </div>
-            </v-card>
+
             <v-card>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">

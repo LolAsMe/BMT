@@ -46,6 +46,6 @@ class DetailNisbah extends Model
 
     public function nisbah()
     {
-        $this->belongsTo(Nisbah::class);
+        return $this->belongsTo(Nisbah::class);
     }
 }

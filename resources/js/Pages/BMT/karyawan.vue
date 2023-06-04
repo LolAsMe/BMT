@@ -1,8 +1,7 @@
 <template>
     <app-layout title="Karyawan">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                KARYAWAN
+            <h2 class="font-bold border-b-2 mb-2 uppercase">{{ "KARYAWAN" }}
             </h2>
         </template>
         <div class="py-2">

@@ -1,6 +1,8 @@
 <template>
     <app-layout title="Anggota">
         <template #header>
+            <h2 class="font-bold border-b-2 mb-2 uppercase">{{ "ANGGOTA" }}
+            </h2>
             <nav class="flex my-2" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">

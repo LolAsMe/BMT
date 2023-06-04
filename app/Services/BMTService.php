@@ -470,7 +470,12 @@ class BMTService
         $bulan = now()->format('m-Y');
         $lastDetail = DetailNisbah::whereStatus("selesai")->latest()->first();
         if ($lastDetail && $lastDetail->bulan == $bulan) {
-            // dd("bulan ini Sudah");
+            $details = DetailNisbah::whereStatus("selesai")->whereBulan($bulan)->with('nisbah')->get();
+            foreach ($details as $key => $detail) {
+                $detail->nisbah->jumlah -= $detail->hasil;
+                $detail->nisbah->save();
+                $detail->delete();
+            }
         }
         $nisbahs = Nisbah::whereStatus('ongoing')->get();
         foreach ($nisbahs as $key => $nisbah) {
@@ -484,7 +489,6 @@ class BMTService
                     $hariSatuBulan = now()->daysInMonth;
                     $hari = (int)$tanggal_awal->format('d');
                     $pengendapan = $hariSatuBulan - $hari;
-
                     $saldoRataRata = $pengendapan * $nisbah->awal / $hariSatuBulan;
                 } else if ($tanggal_selesai->format('m') == now()->format('m')) {
                     $hariSatuBulan = now()->daysInMonth;
@@ -508,6 +512,7 @@ class BMTService
         $nisbahs->load(['detail' => function ($query) {
             return $query->whereStatus('ongoing');
         }]);
+        // dd($nisbahs);
         $totalSaldo = 0;
         foreach ($nisbahs as $key => $nisbah) {
             $totalSaldo += $nisbah->detail[0]->saldo_rata_rata;

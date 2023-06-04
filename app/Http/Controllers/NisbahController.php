@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Nisbah;
 use App\Http\Requests\StoreNisbahRequest;
 use App\Http\Requests\UpdateNisbahRequest;
+use App\Models\DetailNisbah;
+use App\Models\Laba;
 use App\Models\Simpanan;
 use App\Services\BMTService;
 use App\Services\KodeGeneratorService;
@@ -22,7 +24,7 @@ class NisbahController extends Controller
     public function index(BMTService $bmt)
     {
         //
-        $paginate = Nisbah::with('simpanan','simpanan.anggota')->orderBy('status','asc')->paginate();
+        $paginate = Nisbah::with('simpanan', 'simpanan.anggota')->orderBy('status', 'asc')->paginate();
         // $simpanans= Simpanan::whereJenisSimpananId(11)->get()->toArray();
         //simpanan mudhorobah 664
         // $simpanan->tambahInvestasi();
@@ -34,7 +36,6 @@ class NisbahController extends Controller
         // $simpanan = Simpanan::find(664);
 
 
-        // $bmt->hitungNisbah();
 
         // debugbar()->addMessage($simpanans);
         return Inertia::render('BMT/Nisbah', compact('paginate'));
@@ -56,7 +57,7 @@ class NisbahController extends Controller
      * @param  \App\Http\Requests\StoreNisbahRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,KodeGeneratorService $kodeGeneratorService)
+    public function store(Request $request, KodeGeneratorService $kodeGeneratorService)
     {
         //
         $attribute = $request->all();
@@ -77,11 +78,32 @@ class NisbahController extends Controller
     public function show(Nisbah $nisbah)
     {
         //
-        $nisbah->load('detail','simpanan.anggota');
+        $nisbah->load('detail', 'simpanan.anggota');
         return Inertia::render('BMT/Nisbah/ShowOneNisbah', compact('nisbah'));
+    }
+    public function hitungView()
+    {
+        //
+        $lastNisbah = Nisbah::orderBy('id', 'desc')->first();
+        $lastNisbah->load('detail', 'simpanan.anggota');
 
+        $detail = DetailNisbah::orderBy('id', 'desc')->first();
+        $details = DetailNisbah::select('pengendapan', 'saldo_rata_rata', 'hasil', 'nisbah_id')->with('nisbah.simpanan.anggota')->whereBulan($detail->bulan)->get();
+        // DetailNisbah::
+        //bulan
+        //laba
+        //nisbah total
+        $nisbah['bulan'] = $detail->bulan;
+        $nisbah['laba'] = Laba::whereBulan('06-2023')->first()->jumlah;
+        $nisbah['total'] = $details->sum('nisbah.awal');
+        return Inertia::render('BMT/Nisbah/Hitung', compact('details', 'nisbah'));
     }
 
+    public function hitungNisbah(Request $request,BMTService $bmt)
+    {
+        $bmt->hitungNisbah();
+        return back();
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -121,7 +143,6 @@ class NisbahController extends Controller
         //
         $nisbah->delete();
         return redirect(route('nisbah.index'));
-
     }
 
     public function active(Nisbah $nisbah)

@@ -42,7 +42,7 @@
                                     :active="route().current('karyawan.index') ||route().current('karyawan.search')">
                                     Karyawan
                                 </jet-nav-link>
-                                <jet-nav-link v-show="isNotJabatan('Funding')" :href="route('group.index')"
+                                <jet-nav-link v-show="isJabatan('Fundinqwg')" :href="route('group.index')"
                                     :active="route().current('group.index')">
                                     Group
                                 </jet-nav-link>
@@ -250,7 +250,7 @@
                             :active="route().current('pembiayaan.index')">
                             Karyawan
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link v-show="isNotJabatan('Funding')" :href="route('pembiayaan.index')"
+                        <jet-responsive-nav-link v-show="isJabatan('Fundigng')" :href="route('pembiayaan.index')"
                             :active="route().current('pembiayaan.index')">
                             Group
                         </jet-responsive-nav-link>

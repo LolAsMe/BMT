@@ -1,6 +1,8 @@
 <template>
     <app-layout title="Nisbah">
         <template #header>
+            <h2 class="font-bold border-b-2 mb-2 uppercase">{{ "NISBAH" }}
+            </h2>
             <nav class="flex my-2" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -33,6 +35,11 @@
                             class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
                         <button v-show="searchShow" @click="searchShow = false, $inertia.get(route('nisbah.index'))"
                             class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Collapse</button>
+                    </div>
+                    <div class="pt-4">
+                        <button @click="$inertia.get(route('nisbah.hitung.index'))"
+                            class="focus:outline-none text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-blue-900">
+                            Hitung</button>
                     </div>
                 </div>
             </div>
@@ -96,59 +103,59 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                                  px-6
+                                  py-3
+                                  text-left text-xs
+                                  font-medium
+                                  text-gray-500
+                                  uppercase
+                                  tracking-wider
+                                ">
                                 No
                             </th>
                             <th scope="col" class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                                  px-6
+                                  py-3
+                                  text-left text-xs
+                                  font-medium
+                                  text-gray-500
+                                  uppercase
+                                  tracking-wider
+                                ">
                                 Kode
                             </th>
                             <th scope="col" class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                                  px-6
+                                  py-3
+                                  text-left text-xs
+                                  font-medium
+                                  text-gray-500
+                                  uppercase
+                                  tracking-wider
+                                ">
                                 Tanggal
                             </th>
                             <th scope="col" class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                                  px-6
+                                  py-3
+                                  text-left text-xs
+                                  font-medium
+                                  text-gray-500
+                                  uppercase
+                                  tracking-wider
+                                ">
                                 Nisbah
                             </th>
                             <th scope="col" class="relative px-6 py-3">
                                 <span class="
-                            px-6
-                            py-3
-                            text-xs text-center
-                            font-medium
-                            text-gray-500
-                            uppercase
-                            tracking-wider
-                          ">Status</span>
+                                    px-6
+                                    py-3
+                                    text-xs text-center
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                  ">Status</span>
                             </th>
                         </tr>
                     </thead>
@@ -284,7 +291,8 @@ export default defineComponent({
         detail(nisbahId) {
             console.log("ini Detail" + nisbahId)
             console.log(this.route('nisbah.index'))
-            window.location.href = this.route('nisbah.show', nisbahId);
+            // window.location.href = this.route('nisbah.show', nisbahId);
+            this.$inertia.get(this.route('nisbah.show', nisbahId))
 
         },
         search() {

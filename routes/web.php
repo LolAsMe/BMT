@@ -84,8 +84,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:manajer'])->group(functi
     ]);
     Route::post('karyawan/active/{karyawan}', [KaryawanController::class, 'active'])
         ->name('karyawan.active')->withTrashed();
-        Route::put('userupdate/{user}', [KaryawanController::class, 'userEdit'])->name('userupdate');
-    });
+    Route::put('userupdate/{user}', [KaryawanController::class, 'userEdit'])->name('userupdate');
+});
 Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group(function () {
 
 
@@ -131,15 +131,6 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         ->name('anggota.active')->withTrashed();
 
 
-    Route::post('nisbah/active/{nisbah}', [NisbahController::class, 'active'])
-        ->name('nisbah.active')->withTrashed();
-    Route::get('nisbah/{nisbah}', [NisbahController::class, 'show'])
-        ->name('nisbah.show')
-        ->withTrashed();
-
-
-    Route::get('search/nisbah', [NisbahController::class, 'search'])
-        ->name('nisbah.search');
     Route::resource('simpanan', SimpananController::class)->only([
         'destroy', 'update', 'store', 'search'
     ]);
@@ -173,12 +164,24 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::resource('nisbah', NisbahController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);
+    Route::post('nisbah/active/{nisbah}', [NisbahController::class, 'active'])
+        ->name('nisbah.active')->withTrashed();
+
+    Route::get('nisbah/{nisbah}', [NisbahController::class, 'show'])
+        ->name('nisbah.show')
+        ->withTrashed();
+    Route::get('search/nisbah', [NisbahController::class, 'search'])
+        ->name('nisbah.search');
+
+    Route::get('hitung/nisbah', [NisbahController::class, 'hitungView'])->name('nisbah.hitung.index');
+    Route::post('hitung/nisbah', [NisbahController::class, 'hitungNisbah'])->name('nisbah.hitung');
 
     Route::resource('nisbah/detail', DetailNisbahController::class)->only([
         'destroy', 'update'
     ])->shallow()->names(['destroy' => 'nisbah.detail.destroy', 'update' => 'nisbah.detail.update']);
     Route::post('nisbah/{nisbah}/detail', [DetailNisbahController::class, 'store'])->name('nisbah.detail.store');
     Route::get('nisbah/{nisbah}/detail', [DetailNisbahController::class, 'index'])->name('nisbah.detail.index');
+
 
     Route::resource('pembiayaan/detail', DetailPembiayaanController::class)->only([
         'destroy', 'update'
