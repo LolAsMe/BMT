@@ -102,7 +102,7 @@ class NisbahController extends Controller
         //laba
         //nisbah total
         $nisbah['bulan'] = $bulan;
-        $nisbah['laba'] = Laba::whereBulan('06-2023')->first()->jumlah;
+        $nisbah['laba'] = Laba::whereBulan($bulan)->first()?Laba::whereBulan($bulan)->first()->jumlah:0;
         $nisbah['total'] = $details->sum('nisbah.awal');
         return Inertia::render('BMT/Nisbah/Hitung', compact('details', 'nisbah'));
     }

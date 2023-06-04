@@ -173,6 +173,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
     Route::get('search/nisbah', [NisbahController::class, 'search'])
         ->name('nisbah.search');
 
+    Route::get('kas/{kas}', [TransaksiController::class, 'kasIndex'])->name('kas.index');
+
     Route::get('hitung/nisbah', [NisbahController::class, 'hitungView'])->name('nisbah.hitung.index');
     Route::post('hitung/nisbah', [NisbahController::class, 'hitungNisbah'])->name('nisbah.hitung');
 

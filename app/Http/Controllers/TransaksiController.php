@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
+use App\Models\DetailKas;
+use App\Models\DetailNisbah;
 use App\Models\DetailPembiayaan;
 use App\Models\DetailSimpanan;
 use App\Models\Kas;
+use App\Models\Laba;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
 use App\Models\TransaksiHarian;
@@ -236,5 +239,41 @@ class TransaksiController extends Controller
     {
         $bmt->setCurrentSimpanan($simpanan)->setor($request->jumlah, $request->keterangan);
         return redirect()->back();
+    }
+
+    public function kasIndex(Kas $kas,Request $request)
+    {
+        $kas->load('detail');
+
+        //filter tanggal, bulan, tahun,bulan_tahun
+        $filter = $request->filter;
+        $filterValue = $request->filterValue;
+        if ($filter == 'tanggal') {
+            $kas->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereDate('tanggal', $filterValue);
+            }]);
+        } else if ($filter == 'bulan') {
+            $kas->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereMonth('tanggal', $filterValue);
+            }]);
+        } else if ($filter == 'tahun') {
+            $kas->load(['detail' => function ($query) use ($filterValue) {
+                return $query->whereYear('tanggal', $filterValue);
+            }]);
+        } else if ($filter == 'bulan_tahun') {
+            $kas->load(['detail' => function ($query) use ($filterValue) {
+                $year = substr($filterValue, 0, 4);
+                $month = substr($filterValue, 5);
+                return $query->whereYear('tanggal', $year)->whereMonth('tanggal', $month);
+            }]);
+        } else {
+            $kas->load(['detail' => function ($query) {
+                return $query->take(20)->latest()->orderBy('id', 'desc');
+            }]);
+        }
+
+        debugbar()->addMessage($kas);
+
+        return Inertia::render('BMT/Kas', compact('kas'));
     }
 }
