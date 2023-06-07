@@ -227,10 +227,12 @@ class TransaksiController extends Controller
     public function pemasukan(Request $request, BMTService $bmt)
     {
         $bmt->kasTambah($request->pemasukan, $request->keterangan);
+        $bmt->kasMasuk($request->pemasukan,1,$request->keterangan,1);
         return redirect()->back();
     }
     public function pengeluaran(Request $request, BMTService $bmt)
     {
+        $bmt->kasKeluar($request->pengeluaran,1,$request->keterangan,1);
         $bmt->kasTambah(-$request->pengeluaran, $request->keterangan);
         return redirect()->back();
     }

@@ -231,7 +231,7 @@
                                                 {{ detail.keterangan }}
                                             </div>
                                             <div class="text-sm text-black">
-                                                {{ detail.karyawan_id }}
+                                                <!-- {{ detail.karyawan_id }} -->
                                             </div>
                                         </div>
                                     </div>

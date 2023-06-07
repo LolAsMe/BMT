@@ -461,9 +461,9 @@ class BMTService
     public function kasTambah($jumlah, $keterangan)
     {
         if ($jumlah < 0) {
-            $this->kasKeluar(-$jumlah, 3, $keterangan, 1);
+            $this->kasKeluar(-$jumlah, 3, $keterangan, 0);
         } else {
-            $this->kasMasuk($jumlah, 3, $keterangan, 1);
+            $this->kasMasuk($jumlah, 3, $keterangan, 0);
         }
     }
 
