@@ -140,6 +140,9 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
         'index', 'destroy', 'update', 'store', 'show'
     ]);
 
+    Route::post('tambah/laba', [LabaController::class, 'tambah'])->name('laba.tambah');
+
+
     Route::resource('anggunan', AnggunanController::class)->only([
         'index', 'destroy', 'update', 'store'
     ]);

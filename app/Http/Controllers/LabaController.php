@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorelabaRequest;
 use App\Http\Requests\UpdatelabaRequest;
 use App\Models\Laba;
+use App\Services\BMTService;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class LabaController extends Controller
@@ -93,5 +95,19 @@ class LabaController extends Controller
     public function destroy(laba $laba)
     {
         //
+    }
+
+    public function tambah(Request $request, BMTService $bMTService)
+    {
+
+        if($request->jumlah>0){
+            $bMTService->kasMasuk($request->jumlah,1,$request->keterangan,1);
+            $bMTService->labaMasuk($request->jumlah,['keterangan'=>$request->keterangan]);
+
+        }else{
+            $bMTService->kasKeluar(-$request->jumlah,1,$request->keterangan,1);
+            $bMTService->labaKeluar(-$request->jumlah,['keterangan'=>$request->keterangan]);
+        }
+        return back();
     }
 }
