@@ -46,7 +46,7 @@
 
             <div class="flex justify-end mt-4">
                 <button v-show="!searchShow" @click="searchShow = true"
-                    class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
+                    class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Add</button>
                 <button v-show="searchShow" @click="searchShow = false"
                     class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Collapse</button>
                 <button @click="$inertia.delete(route('group.destroy', group.id))" class="focus:outline-none text-white bg-red-400 hover:bg-red-500 focus:ring-4

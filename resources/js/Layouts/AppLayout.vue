@@ -47,7 +47,7 @@
                                     :active="route().current('karyawan.index') || route().current('karyawan.search')">
                                     Karyawan
                                 </jet-nav-link>
-                                <jet-nav-link v-show="isJabatan('Fundinqwg')" :href="route('group.index')"
+                                <jet-nav-link v-show="isJabatan('Manajer')" :href="route('group.index')"
                                     :active="route().current('group.index')">
                                     Group
                                 </jet-nav-link>

@@ -22,6 +22,7 @@ class GroupController extends Controller
     {
         //
         $groups = Group::with(['karyawan:id,nama', 'anggota:id,nama'])->get();
+        // dd($groups);
         return Inertia::render('BMT/Group', compact('groups'));
     }
 

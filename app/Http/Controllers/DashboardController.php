@@ -11,6 +11,7 @@ use App\Services\BMTService;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -29,9 +30,26 @@ class DashboardController extends Controller
                 BMTService::startTheDay();
                 $saldoAwal = $kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
             }
-            $group = Auth::user()->karyawan->group;
-            $group->load('anggota:id,nama');
-            return Inertia::render('DashboardKaryawan', compact('group'));
+            $groups = Auth::user()->karyawan->group;
+            $groups->load(['anggota','anggota.simpanan', 'anggota.pembiayaan']);
+            // $simpanan = $groups->anggota;
+            $groups->each(function ($group, $key) {
+                $group->simpanan = new Collection;
+                $group->pembiayaan = new Collection;
+                foreach ($group->anggota as $key => $anggota) {
+                    if ($anggota->simpanan) {
+                        $group->simpanan->push($anggota->simpanan);
+                    }
+                    if ($anggota->pembiayaan) {
+                        $group->pembiayaan->push($anggota->pembiayaan);
+                    }
+                    $group->anggota->makeHidden(['pembiayaan','simpanan']);
+
+                }
+            });
+            return Inertia::render('DashboardKaryawan', [
+                'groups' => $groups,
+            ]);
         } else if (Auth::user()->hasJabatan('Manajer') || Auth::user()->hasJabatan('Teller')) {
             $kasBMT = $bmt->kasBMT;
             $kasBrankas = $bmt->kasBrankas;
@@ -62,7 +80,7 @@ class DashboardController extends Controller
             ");
             $attribute['sum'] = $sum;
 
-            $pembiayaan = Pembiayaan::whereDate('tanggal_jatuh_tempo',"<", $tanggal)->with('anggota')->get();
+            $pembiayaan = Pembiayaan::whereDate('tanggal_jatuh_tempo', "<", $tanggal)->with('anggota')->get();
             $attribute['pembiayaan_tertunggak'] = $pembiayaan;
 
             return Inertia::render('Dashboard', [
