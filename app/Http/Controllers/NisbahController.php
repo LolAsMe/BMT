@@ -112,6 +112,12 @@ class NisbahController extends Controller
         $bmt->hitungNisbah();
         return back();
     }
+
+    public function applyNisbah(Request $request,BMTService $bmt)
+    {
+        $bmt->applyNisbah();
+        return back();
+    }
     /**
      * Show the form for editing the specified resource.
      *

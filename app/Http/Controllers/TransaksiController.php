@@ -244,7 +244,6 @@ class TransaksiController extends Controller
     public function kasIndex(Kas $kas,Request $request)
     {
         $kas->load('detail');
-
         //filter tanggal, bulan, tahun,bulan_tahun
         $filter = $request->filter;
         $filterValue = $request->filterValue;

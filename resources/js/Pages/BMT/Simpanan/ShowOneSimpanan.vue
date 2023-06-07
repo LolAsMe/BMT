@@ -250,16 +250,15 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-white divide-y odd:bg-slate-200">
                             <tr v-for="(detail, index) in simpanan.detail" :key="detail.id"
-                                :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'">
+                           :class="target_id == detail.id ? 'bg-green-100' : 'odd:bg-slate-50'" >
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="ml-0">
                                             <div class="text-sm font-medium text-gray-900">
-                                                Kode :{{ detail.kode }} <span
-                                                    class="bg-green-100 rounded-full border-2 border-green-100"> </span>
+                                                Kode :{{ detail.kode }}
                                             </div>
                                             <div class="text-sm text-black">
                                                 Tanggal :{{ detail.tanggal_transaksi.substring(0, 10) }}
@@ -350,6 +349,7 @@ export default defineComponent({
                 filter: null,
                 filterValue: null
             }),
+            target_id : 0
         }
     },
     methods: {
@@ -406,6 +406,7 @@ export default defineComponent({
     },
     mounted() {
         let urlParams = new URLSearchParams(window.location.search);
+        this.target_id = urlParams.get('id')
         if (urlParams.get('filter') == 'tanggal') {
             this.tanggal = urlParams.get('filterValue')
             this.checkedTanggal = true

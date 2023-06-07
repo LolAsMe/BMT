@@ -29,7 +29,7 @@ class BMTService
     private $angsuranKe = null;
 
 
-    public function __construct($default_password = '123456',$kodeGeneratorService)
+    public function __construct($default_password = '123456', $kodeGeneratorService)
     {
         $this->default_password = $default_password;
         $this->kodeGeneratorService = $kodeGeneratorService;
@@ -73,7 +73,7 @@ class BMTService
         $this->transaksiHarian->increment('kredit', $pembiayaan->jumlah);
 
         $kas->detail()->create([
-            'kode' => $this->kodeGeneratorService->generateDetailKas('02','02'),
+            'kode' => $this->kodeGeneratorService->generateDetailKas('02', '02'),
             'tanggal' => now(),
             'debit' => 0,
             'kredit' => $attribute['jumlah'],
@@ -109,11 +109,11 @@ class BMTService
         $this->currentSimpanan = $simpanan;
         return $this;
     }
-    public function setor(int $jumlahSetoran)
+    public function setor(int $jumlahSetoran, $keterangan = 'ok')
     {
         $kode = $this->currentSimpanan->kode;
-        $kode = substr($kode,(strrpos($kode, '.',2)+1));
-        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('setoran',$kode);
+        $kode = substr($kode, (strrpos($kode, '.', 2) + 1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('setoran', $kode);
 
         $this->currentSimpanan->detail()->create([
             'kode' => $kode,
@@ -123,7 +123,7 @@ class BMTService
             'kredit' => $jumlahSetoran,
             'saldo_awal' => $this->currentSimpanan->jumlah,
             'saldo_akhir' => $this->currentSimpanan->jumlah + $jumlahSetoran,
-            'keterangan' => 'OK',
+            'keterangan' => $keterangan,
             'karyawan_id' => $this->user->karyawan_id,
 
         ]);
@@ -132,7 +132,7 @@ class BMTService
             [
                 'kode' => $this->kodeGeneratorService->generateKodeTransaksi('setoran'),
                 'nama' => $kode,
-                'keterangan' => 'OK',
+                'keterangan' => $keterangan,
                 'debit' => $jumlahSetoran,
                 'kredit' => 0,
                 'tanggal_transaksi' => now(),
@@ -148,8 +148,8 @@ class BMTService
     public function tarik(int $jumlahTarikan)
     {
         $kode = $this->currentSimpanan->kode;
-        $kode = substr($kode,(strrpos($kode, '.',2)+1));
-        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('penarikan',$kode);
+        $kode = substr($kode, (strrpos($kode, '.', 2) + 1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('penarikan', $kode);
         $this->currentSimpanan->detail()->create([
             'kode' => $kode,
             'tanggal_transaksi' => now(),
@@ -180,7 +180,6 @@ class BMTService
         $this->transaksiHarian->increment('kredit', $jumlahTarikan);
 
         $this->kasKeluar($jumlahTarikan);
-
     }
 
 
@@ -195,10 +194,11 @@ class BMTService
         } else if ($option == 2) {
             $kas = $this->kasBrankas;
             $kasID = '01';
-        }else{
-            abort(404);
+        } else if ($option == 3) {
+            $kasID = '03';
+            $kas = Kas::find(3);
         }
-        $kode = $this->kodeGeneratorService->generateDetailKas($kasID,'01');
+        $kode = $this->kodeGeneratorService->generateDetailKas($kasID, '01');
         $kas->detail()->create([
             'kode' => $kode,
             'tanggal' => now(),
@@ -244,8 +244,11 @@ class BMTService
         } else if ($option == 2) {
             $kasID = '01';
             $kas = $this->kasBrankas;
+        } else if ($option == 3) {
+            $kasID = '03';
+            $kas = Kas::find(3);
         }
-        $kode = $this->kodeGeneratorService->generateDetailKas($kasID,'02');
+        $kode = $this->kodeGeneratorService->generateDetailKas($kasID, '02');
         $kas->detail()->create([
             'kode' => $kode,
             'tanggal' => now(),
@@ -340,8 +343,8 @@ class BMTService
         $this->lastDetailPembiayaan = $this->currentPembiayaan->detail()->latest()->first();
 
         $kode = $this->currentPembiayaan->kode;
-        $kode = substr($kode,(strrpos($kode, '.',2)+1));
-        $kode = $this->kodeGeneratorService->generateKodeDetailPembiayaan($kode,1);
+        $kode = substr($kode, (strrpos($kode, '.', 2) + 1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailPembiayaan($kode, 1);
 
         $this->lastDetailPembiayaan->transaksi()->create(
             [
@@ -388,8 +391,8 @@ class BMTService
         $this->currentPembiayaan->angsuran_diterima += $jumlahAngsuran;
 
         $kode = $this->currentPembiayaan->kode;
-        $kode = substr($kode,(strrpos($kode, '.',2)+1));
-        $kode = $this->kodeGeneratorService->generateKodeDetailPembiayaan($kode,$this->angsuranKe);
+        $kode = substr($kode, (strrpos($kode, '.', 2) + 1));
+        $kode = $this->kodeGeneratorService->generateKodeDetailPembiayaan($kode, $this->angsuranKe);
 
         $this->lastDetailPembiayaan->transaksi()->create(
             [
@@ -458,17 +461,33 @@ class BMTService
     public function kasTambah($jumlah, $keterangan)
     {
         if ($jumlah < 0) {
-            $this->kasKeluar(-$jumlah, 1, $keterangan, 1);
+            $this->kasKeluar(-$jumlah, 3, $keterangan, 1);
         } else {
-            $this->kasMasuk($jumlah, 1, $keterangan, 1);
+            $this->kasMasuk($jumlah, 3, $keterangan, 1);
         }
+    }
+
+    public function applyNisbah()
+    {
+        $nisbahs = Nisbah::with('simpanan')->whereStatus('pending')->get();
+        $jumlahNisbah = 0;
+        $nisbahKeterangan = "Nisbah ";
+        foreach ($nisbahs as $key => $nisbah) {
+            $this->setCurrentSimpanan($nisbah->simpanan);
+            $this->setor($nisbah->jumlah, "Setoran dari Nisbah " . $nisbah->kode);
+            $jumlahNisbah += $nisbah->jumlah;
+            $nisbahKeterangan = $nisbahKeterangan . "; $nisbah->id";
+            $nisbah->status = 'selesai';
+            $nisbah->save();
+        }
+        $this->kasKeluar($jumlahNisbah,1,"Keluaran Nisbah bulan ".now()->format("m-Y"),1);
     }
 
     public function hitungNisbah()
     {
-        $laba = Laba::labaThisMonth()->jumlah;
+        $laba = $this->labaThisMonth()->jumlah;
         $bulan = now()->format('m-Y');
-        $lastDetail = DetailNisbah::whereStatus("selesai")->latest()->first();
+        $lastDetail = DetailNisbah::whereStatus("selesai")->orWhere('status', 'pending')->latest()->first();
         if ($lastDetail && $lastDetail->bulan == $bulan) {
             $details = DetailNisbah::whereStatus("selesai")->whereBulan($bulan)->with('nisbah')->get();
             foreach ($details as $key => $detail) {
@@ -494,7 +513,7 @@ class BMTService
                     $hariSatuBulan = now()->daysInMonth;
                     $pengendapan = $tanggal_selesai->format('d');
                     $saldoRataRata = $pengendapan * $nisbah->awal / $hariSatuBulan;
-                    $nisbah->status = "selesai";
+                    $nisbah->status = "pending";
                 } else {
                     $hariSatuBulan = now()->daysInMonth;
                     $pengendapan = $hariSatuBulan;
@@ -532,7 +551,7 @@ class BMTService
 
     public function labaMasuk($jumlah, $attribute = [])
     {
-        $laba = Laba::labaThisMonth();
+        $laba = $this->labaThisMonth();
         $laba->detail()->create([
             'kode' => $this->kodeGeneratorService->generateKodeDetailLaba(),
             'debit' => $jumlah,
@@ -545,7 +564,7 @@ class BMTService
     }
     public function labaKeluar($jumlah, $attribute = [])
     {
-        $laba = Laba::labaThisMonth();
+        $laba = $this->labaThisMonth();
         $laba->detail()->create([
             'kode' => $this->kodeGeneratorService->generateKodeDetailLaba(),
             'kredit' => $jumlah,
@@ -562,7 +581,7 @@ class BMTService
         $harian = TransaksiHarian::create(['kode' => "000", "debit" => 0, "kredit" => 0]);
         $kasBMT = Kas::find(2);
         $kasBMT->detail()->create([
-            'kode' => (new KodeGeneratorService)->generateDetailKas('02','00'),
+            'kode' => (new KodeGeneratorService)->generateDetailKas('02', '00'),
             'tanggal' => now(),
             'debit' => 0,
             'kredit' => 0,
@@ -575,9 +594,30 @@ class BMTService
     public function checkStatusPembiayaan()
     {
         $pembiayaan = $this->currentPembiayaan;
-        if($pembiayaan->total_pembiayaan < $pembiayaan->angsuran_diterima){
+        if ($pembiayaan->total_pembiayaan < $pembiayaan->angsuran_diterima) {
             $pembiayaan->status = 'selesai';
             $pembiayaan->save();
         }
+    }
+
+    public function labaThisMonth(): Laba
+    {
+        // $laba = Laba::firstOrCreate([
+        //     'kode' => "LABA" . now()->format("m-Y")
+        // ], [
+        //     'bulan' => now()->format("m-Y"),
+        //     "jumlah" => 0
+        // ]);
+        $laba = Laba::whereKode("LABA" . now()->format("m-Y"))->first();
+        if (!$laba) {
+            $laba = Laba::create([
+                'kode' => "LABA" . now()->format("m-Y"),
+                'bulan' => now()->format("m-Y"),
+                "jumlah" => 0
+            ]);
+            $prevLaba = Laba::whereBulan(now()->subMonth()->format("m-Y"));
+            $this->kasMasuk($prevLaba->jumlah, 3, "laba bulan " + now()->subMonth()->format("m-Y"), 1);
+        }
+        return $laba;
     }
 }

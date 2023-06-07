@@ -134,7 +134,8 @@
                                 <div class="table-cell">Jumlah Pembiayaan</div>
                                 <div class="table-cell">:</div>
                                 <div class="table-cell">
-                                    {{"IDR " + pembiayaan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")}}
+                                    {{ "IDR " + pembiayaan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
+                                        "$1\.") }}
                                 </div>
                             </div>
                             <div class="table-row">
@@ -183,7 +184,8 @@
                                 <div class="table-cell " v-if="pembiayaan.status == 'ongoing'">
                                     <span class="bg-red-400 text-white">{{ pembiayaan.status }}</span>
                                 </div>
-                                <div v-else class="table-cell "><span class="bg-green-400 text-white">{{ pembiayaan.status }}</span>
+                                <div v-else class="table-cell "><span class="bg-green-400 text-white">{{ pembiayaan.status
+                                }}</span>
                                 </div>
                             </div>
                         </div>
@@ -193,76 +195,76 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="
-        px-6
-        py-3
-        text-left text-xs
-        font-medium
-        text-gray-500
-        uppercase
-        tracking-wider
-        ">
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            ">
                                     No
                                 </th>
                                 <th scope="col" class="
-        px-6
-        py-3
-        text-left text-xs
-        font-medium
-        text-gray-500
-        uppercase
-        tracking-wider
-        ">
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            ">
                                     Tanggal Transaksi
                                 </th>
                                 <th scope="col" class="
-        px-6
-        py-3
-        text-left text-xs
-        font-medium
-        text-gray-500
-        uppercase
-        tracking-wider
-        ">
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            ">
                                     Jumlah Angsuran
                                 </th>
                                 <th scope="col" class="
-        px-6
-        py-3
-        text-left text-xs
-        font-medium
-        text-gray-500
-        uppercase
-        tracking-wider
-        ">
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            ">
                                     Akumulasi Angsuran
                                 </th>
                                 <th scope="col" class="
-        px-6
-        py-3
-        text-left text-xs
-        font-medium
-        text-gray-500
-        uppercase
-        tracking-wider
-        ">
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            ">
                                     Total Tanggungan
                                 </th>
                                 <th scope="col" class="
-        px-6
-        py-3
-        text-left text-xs
-        font-medium
-        text-gray-500
-        uppercase
-        tracking-wider
-        ">
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            ">
                                     keterangan
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-white divide-y divide-gray-200 odd:bg-gray-100">
                             <tr v-for="(detail, index) in pembiayaan.detail" :key="detail.id" @dblclick="doFilter"
-                                :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'">
+                               :class="target_id == detail.id ? 'bg-green-100' : 'odd:bg-slate-50'">
                                 <td class="text-center">{{ detail.angsuran_ke }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
@@ -341,11 +343,12 @@ export default defineComponent({
     },
     data() {
         return {
+            target_id: 0
         }
     },
     methods: {
-        toRupiah(jumlah){
-            return "IDR " +jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,"$1\.")
+        toRupiah(jumlah) {
+            return "IDR " + jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
         }
         // deletePembiayaan() {
         //     console.log('test')
@@ -384,7 +387,8 @@ export default defineComponent({
 
     },
     mounted() {
-        // let urlParams = new URLSearchParams(window.location.search);
+        let urlParams = new URLSearchParams(window.location.search);
+        this.target_id = urlParams.get('id')
         // if (urlParams.get('filter') == 'tanggal') {
         //     this.tanggal = urlParams.get('filterValue')
         //     this.checkedTanggal = true

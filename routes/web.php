@@ -177,6 +177,7 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:teller,manajer'])->group
 
     Route::get('hitung/nisbah', [NisbahController::class, 'hitungView'])->name('nisbah.hitung.index');
     Route::post('hitung/nisbah', [NisbahController::class, 'hitungNisbah'])->name('nisbah.hitung');
+    Route::post('apply/nisbah', [NisbahController::class, 'applyNisbah'])->name('nisbah.apply');
 
     Route::resource('nisbah/detail', DetailNisbahController::class)->only([
         'destroy', 'update'

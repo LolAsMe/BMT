@@ -45,17 +45,19 @@
         <div class="py-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <!-- <div class="flex flex-row-reverse mt-4">
+                    <div class="flex flex-row-reverse mt-4">
+                            <!--
                         <button v-if="nisbah.deleted_at == null" @click="deleteKaryawan"
                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             DEACTIVE</button>
                         <button v-else @click="activeKaryawan"
                             class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             ACTIVE</button>
-                        <button @click="$refs.editModal.show(nisbah)"
+                        -->
+                        <button v-if="nisbah.status=='pending'" @click=""
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                            EDIT</button>
-                    </div> -->
+                            Apply</button>
+                        </div>
                     <table class="m-5 min-w-full divide-y divide-gray-200">
                         <tr>
                             <th class="text-left">ID</th>
@@ -70,7 +72,7 @@
                         <tr>
                             <th class="text-left">Rekening</th>
                             <th>:</th>
-                            <td>{{ nisbah.simpanan.kode }}</td>
+                            <td class="underline cursor-pointer hover:text-blue-200" @click="$inertia.get('/simpanan/' + nisbah.simpanan.id)">{{ nisbah.simpanan.kode }}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Nama</th>
@@ -104,6 +106,7 @@
                             <th>:</th>
                             <td v-show="nisbah.status=='ongoing'" class="text-sm font-medium bg-yellow-100 rounded-full border-2 border-yellow-1000">Ongoing</td>
                             <td v-show="nisbah.status=='selesai'" class="text-sm font-medium bg-green-100 rounded-full border-2 border-green-1000">Selesai</td>
+                            <td v-show="nisbah.status=='pending'" class="text-sm font-medium bg-red-100 rounded-full border-2 border-green-1000">Pending</td>
                         </tr>
                     </table>
                     <table class="min-w-full divide-y divide-gray-200 mt-5">

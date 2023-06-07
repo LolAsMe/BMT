@@ -40,6 +40,9 @@
                         <button @click="$inertia.get(route('nisbah.hitung.index'))"
                             class="focus:outline-none text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-blue-900">
                             Hitung</button>
+                            <button @click="$inertia.post(this.route('nisbah.apply'))"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Apply</button>
                     </div>
                 </div>
             </div>
@@ -213,6 +216,10 @@
                                         </div>
                                         <div v-show="nisbah.status == 'selesai'"
                                             class="text-sm font-medium bg-green-100 rounded-full border-2 border-green-1000">
+                                            {{ nisbah.status }}
+                                        </div>
+                                        <div v-show="nisbah.status == 'pending'"
+                                            class="text-sm font-medium bg-red-100 rounded-full border-2 border-green-1000">
                                             {{ nisbah.status }}
                                         </div>
                                     </div>

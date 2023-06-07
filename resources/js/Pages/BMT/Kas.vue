@@ -73,7 +73,10 @@
                         <button v-if="kas.id == 1" @click="$inertia.get(route('kas.index', 2))"
                             class="text-white col-span-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             Change KAS BMT</button>
-                        <button v-else="kas.id == 2" @click="$inertia.get(route('kas.index', 1))"
+                        <button v-else-if="kas.id == 2" @click="$inertia.get(route('kas.index', 3))"
+                            class="text-white col-span-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Change KAS Instansi</button>
+                        <button v-else="kas.id == 3" @click="$inertia.get(route('kas.index', 1))"
                             class="text-white col-span-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             Change KAS Brankas</button>
                         <div>
@@ -118,65 +121,65 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     No
                                 </th>
                                 <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     Nama
                                 </th>
                                 <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     Simpanan
                                 </th>
                                 <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     Jumlah Simpanan
                                 </th>
                                 <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+    px-6
+    py-3
+    text-left text-xs
+    font-medium
+    text-gray-500
+    uppercase
+    tracking-wider
+    ">
                                     Keterangan
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="(detail, index) in kas.detail" :key="detail.id"
-                                :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'">
+                                :class="target_id == detail.id ? 'bg-green-100' : 'odd:bg-slate-50'">
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
@@ -275,6 +278,7 @@ export default defineComponent({
                 filter: null,
                 filterValue: null
             }),
+            target_id: 0
         }
     },
     methods: {
@@ -329,6 +333,7 @@ export default defineComponent({
     },
     mounted() {
         let urlParams = new URLSearchParams(window.location.search);
+        this.target_id = urlParams.get('id')
         if (urlParams.get('filter') == 'tanggal') {
             this.tanggal = urlParams.get('filterValue')
             this.checkedTanggal = true

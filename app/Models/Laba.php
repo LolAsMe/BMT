@@ -19,12 +19,21 @@ class Laba extends Model
 
     public static function labaThisMonth(): Laba
     {
-        $laba = Laba::firstOrCreate([
-            'kode' => "LABA".now()->format("m-Y")
-        ], [
-            'bulan' => now()->format("m-Y"),
-            "jumlah" => 0
-        ]);
+        // $laba = Laba::firstOrCreate([
+        //     'kode' => "LABA" . now()->format("m-Y")
+        // ], [
+        //     'bulan' => now()->format("m-Y"),
+        //     "jumlah" => 0
+        // ]);
+        $laba = Laba::whereKode("LABA" . now()->format("m-Y"))->first();
+        if (!$laba) {
+            $laba = Laba::create([
+                'kode' => "LABA" . now()->format("m-Y"),
+                'bulan' => now()->format("m-Y"),
+                "jumlah" => 0
+            ]);
+            $prevLaba = Laba::whereBulan(now()->subMonth()->format("m-Y"));
+        }
         return $laba;
     }
     public function getJumlahAttribute($value)
