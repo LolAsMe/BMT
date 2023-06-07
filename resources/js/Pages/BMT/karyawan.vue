@@ -61,7 +61,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="(karyawan, index) in karyawans" :key="karyawan.id" @dblclick="detail(karyawan.id)"
+                        <tr v-for="(karyawan, index) in karyawans" :key="karyawan.id" @dblclick="detail(karyawan.id, karyawan.nama)"
                             class="odd:bg-slate-50 hover:bg-blue-50 cursor-pointer">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -121,10 +121,19 @@ export default defineComponent({
             this.$inertia.delete(route("karyawan.destroy", karyawan.id));
             console.log(this.$inertia);
         },
-        detail(karyawanId) {
+        detail(karyawanId, nama) {
             console.log("ini Detail" + karyawanId)
             console.log(this.route('karyawan.index'))
-            window.location.href = this.route('karyawan.show', karyawanId);
+
+            if(this.$window.searchTipe == 'karyawan-create'){
+                this.$window.karyawan_id = karyawanId
+                this.$window.karyawan_nama = nama
+                this.$window.showAddGroupModal = 1
+                this.$inertia.get(this.route('group.index'))
+            }else{
+                this.$inertia.get(this.route('karyawan.show', simpananId))
+            }
+
         },
     },
     props: {

@@ -129,7 +129,7 @@ import VButton from "@/Components/Button.vue";
 import VCard from "@/Components/Card.vue";
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-import Add from "@/Pages/BMT/Partials/JabatanAdd.vue";
+// import Add from "@/Pages/BMT/Partials/JabatanAdd.vue";
 import EditModal from "@/Pages/BMT/Partials/JabatanEditModal.vue";
 
 export default defineComponent({

@@ -615,8 +615,10 @@ class BMTService
                 'bulan' => now()->format("m-Y"),
                 "jumlah" => 0
             ]);
-            $prevLaba = Laba::whereBulan(now()->subMonth()->format("m-Y"));
-            $this->kasMasuk($prevLaba->jumlah, 3, "laba bulan " + now()->subMonth()->format("m-Y"), 1);
+            $prevLaba = Laba::whereBulan(now()->subMonth()->format("m-Y"))->first();
+            $this->kasMasuk($prevLaba->jumlah, 3, "laba bulan ".now()->subMonth()->format("m-Y"), 1);
+            debugbar()->addMessage($prevLaba);
+
         }
         return $laba;
     }

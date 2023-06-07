@@ -46,7 +46,7 @@ class GroupController extends Controller
     {
         //
         // dd($request->validated());
-        Group::create($request->validated());
+        Group::create($request->all());
 
         return back()->with('flash', [
             'response' => 'berhasil'

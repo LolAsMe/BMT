@@ -27,40 +27,44 @@
         </template>
         <div class="py-2">
             <v-card>
+                <div class="flex flex-row-reverse">
+
+                    <add :showModal="showAddModal"></add>
+                </div>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            ">
                                 No
                             </th>
                             <th scope="col" class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            ">
                                 Nama
                             </th>
                             <th scope="col" class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            ">
                                 Karyawan
                             </th>
                         </tr>
@@ -79,14 +83,14 @@
                                 </div>
                             </td>
                             <th class="
-                          px-6
-                          py-3
-                          text-left text-xs
-                          font-medium
-                          text-gray-500
-                          uppercase
-                          tracking-wider
-                        ">
+                              px-6
+                              py-3
+                              text-left text-xs
+                              font-medium
+                              text-gray-500
+                              uppercase
+                              tracking-wider
+                            ">
                                 {{ group.karyawan.nama }}
                             </th>
                         </tr>
@@ -106,19 +110,21 @@ import { Link } from "@inertiajs/inertia-vue3";
 import JetNavLink from '@/Jetstream/NavLink.vue'
 import VInput from "@/Components/Input.vue";
 import VModal from "@/Components/Modal.vue";
-// import Add from "@/Pages/BMT/Partials/GroupAdd.vue";
+import Add from "@/Pages/BMT/Partials/GroupAddModal.vue";
 // import EditModal from "@/Pages/BMT/Partials/GroupEditModal.vue";
 
 export default defineComponent({
     components: {
-        AppLayout,JetNavLink,
+        AppLayout, JetNavLink,
         VModal,
         Link,
-        // Add,
+        Add,
         // EditModal,
         VInput,
         VCard,
         VButton,
+    },
+    computed: {
     },
     methods: {
         deleteGroup(group) {
@@ -135,6 +141,10 @@ export default defineComponent({
             console.log(this.route('group.index'))
             window.location.href = this.route('group.show', groupId);
         },
+    }, data() {
+        return {
+            showAddModal: false
+        };
     },
     props: {
         groups: Object,

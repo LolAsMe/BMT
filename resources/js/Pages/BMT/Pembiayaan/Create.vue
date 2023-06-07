@@ -221,7 +221,6 @@ export default defineComponent({
         cariAnggota() {
             this.$window.searchTipe = "pembiayaan-create"
             this.$inertia.get(route('anggota.index'))
-
         },
         gantiJumlahAngsuran() {
             let frekuensi = this.formCreate.frekuensi_angsuran ? parseInt(this.formCreate.frekuensi_angsuran) : 1
