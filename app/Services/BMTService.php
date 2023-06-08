@@ -142,7 +142,7 @@ class BMTService
         );
         $this->currentSimpanan->increment('jumlah', $jumlahSetoran);
         $this->transaksiHarian->increment('debit', $jumlahSetoran);
-        $this->kasMasuk($jumlahSetoran);
+        $this->kasMasuk($jumlahSetoran,1,"Setor simpanan Kode ".$this->currentSimpanan->kode);
     }
 
     public function tarik(int $jumlahTarikan)
@@ -179,7 +179,7 @@ class BMTService
         $this->currentSimpanan->decrement('jumlah', $jumlahTarikan);
         $this->transaksiHarian->increment('kredit', $jumlahTarikan);
 
-        $this->kasKeluar($jumlahTarikan);
+        $this->kasKeluar($jumlahTarikan,1,"Tarik simpanan Kode ".$this->currentSimpanan->kode);
     }
 
 
@@ -360,7 +360,7 @@ class BMTService
         );
 
         $this->transaksiHarian->increment('debit', $this->currentPembiayaan->jumlah_angsuran);
-        $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran);
+        $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran,1,"Masuk Pembiayaan ".$this->currentPembiayaan->kode." angsuran ke 1");
         $attribute = [
             'kode' => 'Setor',
             'keterangan' => 'ok'
@@ -416,7 +416,7 @@ class BMTService
         $frekuensi = $this->currentPembiayaan->frekuensi_angsuran;
         $laba = ($total - $jumlah) / $frekuensi;
         $this->labaMasuk($laba, $attribute);
-        $this->kasMasuk($jumlahAngsuran);
+        $this->kasMasuk($jumlahAngsuran,1,"Masuk Pembiayaan ".$this->currentPembiayaan->kode." angsuran ke ". $this->angsuranKe);
         $this->currentPembiayaan->save();
     }
 

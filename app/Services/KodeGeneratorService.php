@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\DetailKas;
 use App\Models\DetailLaba;
 use App\Models\Pembiayaan;
+use App\Models\Simpanan;
 use DB;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
@@ -28,21 +29,24 @@ class KodeGeneratorService
     public function generateKodeSimpanan($jenis_simpanan_id)
     {
         # code...
-        $firstGap = DB::select("WITH gaps AS
-        (
-            SELECT
-                LAG(CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER), 1, 0) OVER(ORDER BY CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER)) AS gap_begin,
-                CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER) AS gap_end,
-                CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER) - LAG(CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER), 1, 0) OVER(ORDER BY CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER)) AS gap
-            FROM simpanan
-        )
-        SELECT
-            gap_begin as first_gap
-        FROM gaps
-        WHERE gap > 1 limit 1
-        ;");
+        // $firstGap = DB::select("WITH gaps AS
+        // (
+        //     SELECT
+        //         LAG(CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER), 1, 0) OVER(ORDER BY CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER)) AS gap_begin,
+        //         CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER) AS gap_end,
+        //         CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER) - LAG(CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER), 1, 0) OVER(ORDER BY CONVERT(SUBSTRING_INDEX(kode,'.',-1),UNSIGNED INTEGER)) AS gap
+        //     FROM simpanan
+        // )
+        // SELECT
+        //     gap_begin as first_gap
+        // FROM gaps
+        // WHERE gap > 1 limit 1
+        // ;");
+        $firstGap = 0;
+        $last = Simpanan::latest()->first();
+        $last_id = substr($last->kode, (strrpos($last->kode, '.', 2) + 1));
         $jenis_simpanan_id < 10 ? $jenis_simpanan_id = "0" . $jenis_simpanan_id : $jenis_simpanan_id = $jenis_simpanan_id;
-        $id = $firstGap[0]->first_gap + 1;
+        $id = $last_id + 1;
         $kode =  $this->m . "." . $this->y . ".01." . $jenis_simpanan_id . ".03." . $id;
         return $kode;
     }

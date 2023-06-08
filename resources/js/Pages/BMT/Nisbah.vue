@@ -36,7 +36,7 @@
                         <button v-show="searchShow" @click="searchShow = false, $inertia.get(route('nisbah.index'))"
                             class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Collapse</button>
                     </div>
-                    <div class="pt-4" v-if="this.$page.props.user.karyawan.jabatan.nama == 'manajer'">
+                    <div class="pt-4" v-if="this.$page.props.user.karyawan.jabatan.nama == 'Manajer'">
                         <button @click="$inertia.get(route('nisbah.hitung.index'))"
                             class="focus:outline-none text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-blue-900">
                             Hitung</button>

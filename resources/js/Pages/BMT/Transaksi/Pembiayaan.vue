@@ -450,7 +450,7 @@
                                                 "$1\.") }}
                                     </div>
                                     <div class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
-                                        Angsuran Diterima :{{ (pembiayaan.angsuran_diterima) / pembiayaan.jumlah_angsuran
+                                        Angsuran Diterima :{{ Math.ceil(pembiayaan.angsuran_diterima / pembiayaan.jumlah_angsuran)
                                         }}
                                     </div>
                                 </div>
