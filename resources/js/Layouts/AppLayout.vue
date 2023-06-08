@@ -14,9 +14,10 @@
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                <jet-application-mark class="block h-9 w-auto" />
-                                </Link>
-                            </div>
+                                <!-- <jet-application-mark class="block h-9 w-auto" /> -->
+                                <img src="/storage/BMT.png" alt="Icon PNG" width="50" height="50">
+                            </Link>
+                        </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

@@ -13,6 +13,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Inertia\Inertia;
+use Storage;
 
 class DashboardController extends Controller
 {

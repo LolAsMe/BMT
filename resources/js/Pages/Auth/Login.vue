@@ -3,7 +3,7 @@
 
     <jet-authentication-card>
         <template #logo>
-            <jet-authentication-card-logo />
+                                <img src="/storage/BMT.png" alt="Icon PNG" width="150" height="150">
         </template>
 
         <jet-validation-errors class="mb-4" />
