@@ -29,7 +29,8 @@
         <div class="py-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row-reverse flex-nowrap">
-                    <add v-show="isNotJabatan('Funding')" v-if="anggotaTanpaSimpanan.length != 0" :anggotas="anggotaTanpaSimpanan" :jenisSimpanan="jenisSimpanan"></add>
+                    <add v-show="isNotJabatan('Funding')" v-if="anggotaTanpaSimpanan.length != 0"
+                        :anggotas="anggotaTanpaSimpanan" :jenisSimpanan="jenisSimpanan"></add>
                     <button v-show="!searchShow" @click="searchShow = true"
                         class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
                     <button v-show="searchShow" @click="searchShow = false, $inertia.get(route('simpanan.index'))"
@@ -85,10 +86,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-end-2" @click="search"><button
-                                class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
+                        <div class="mb-5">
+                            <label for="jenis_simpanan">Jenis Simpanan: </label>
+                            <select name="jenis_simpanan" id="jenis_simpanan" v-model="formSearch.jenis_id">
+                                <option v-for="jenis in jenisSimpanan" :key="jenis.id" :value="jenis.id">{{ jenis.nama }}
+                                </option>
+                            </select>
+                            </div>
+                            <div class="col-end-2" @click="search"><button
+                                    class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Search</button>
+                            </div>
                         </div>
-                    </div>
                 </v-card>
             </div>
             <v-card>
@@ -96,53 +104,54 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-                                                    px-6
-                                                    py-3
-                                                    text-left text-xs
-                                                    font-medium
-                                                    text-gray-500
-                                                    uppercase
-                                                    tracking-wider
-                                                    ">
+                                                        px-6
+                                                        py-3
+                                                        text-left text-xs
+                                                        font-medium
+                                                        text-gray-500
+                                                        uppercase
+                                                        tracking-wider
+                                                        ">
                                 No
                             </th>
                             <th scope="col" class="
-                                                    px-6
-                                                    py-3
-                                                    text-left text-xs
-                                                    font-medium
-                                                    text-gray-500
-                                                    uppercase
-                                                    tracking-wider
-                                                    ">
+                                                        px-6
+                                                        py-3
+                                                        text-left text-xs
+                                                        font-medium
+                                                        text-gray-500
+                                                        uppercase
+                                                        tracking-wider
+                                                        ">
                                 Nama
                             </th>
                             <th scope="col" class="
-                                                    px-6
-                                                    py-3
-                                                    text-left text-xs
-                                                    font-medium
-                                                    text-gray-500
-                                                    uppercase
-                                                    tracking-wider
-                                                    ">
+                                                        px-6
+                                                        py-3
+                                                        text-left text-xs
+                                                        font-medium
+                                                        text-gray-500
+                                                        uppercase
+                                                        tracking-wider
+                                                        ">
                                 Simpanan
                             </th>
                             <th scope="col" class="
-                                                    px-6
-                                                    py-3
-                                                    text-left text-xs
-                                                    font-medium
-                                                    text-gray-500
-                                                    uppercase
-                                                    tracking-wider
-                                                    ">
+                                                        px-6
+                                                        py-3
+                                                        text-left text-xs
+                                                        font-medium
+                                                        text-gray-500
+                                                        uppercase
+                                                        tracking-wider
+                                                        ">
                                 Jumlah Simpanan
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in paginate.data" :key="simpanan.id" @dblclick="detail(simpanan.id,simpanan.anggota.nama)">
+                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in paginate.data"
+                            :key="simpanan.id" @dblclick="detail(simpanan.id, simpanan.anggota.nama)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -172,15 +181,15 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right">
                                 <span class="
-                                                    px-2
-                                                    inline-flex
-                                                    text-xs
-                                                    leading-5
-                                                    font-semibold
-                                                    rounded-full
-                                                    bg-green-100
-                                                    text-green-800
-                                                    ">
+                                                        px-2
+                                                        inline-flex
+                                                        text-xs
+                                                        leading-5
+                                                        font-semibold
+                                                        rounded-full
+                                                        bg-green-100
+                                                        text-green-800
+                                                        ">
                                     {{
                                         "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
                                     }}
@@ -191,29 +200,33 @@
                 </table>
                 <nav aria-label="Page navigation example" class="mt-5 grid">
                     <ul class="inline-flex -space-x-px mb-4 place-self-center">
-                        <li v-show="paginate.current_page!=1">
+                        <li v-show="paginate.current_page != 1">
                             <a :href="paginate.prev_page_url"
                                 class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
                         </li>
-                        <li v-show="paginate.current_page!=1" >
+                        <li v-show="paginate.current_page != 1">
                             <a :href="paginate.first_page_url"
                                 class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">1</a>
                         </li>
-                        <li v-show="paginate.current_page!=1">
-                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        <li v-show="paginate.current_page != 1">
+                            <a
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
                         </li>
                         <li>
                             <a href="#" aria-current="page"
-                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{ paginate.current_page }}</a>
+                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{
+                                    paginate.current_page }}</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
-                            <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
+                        <li v-show="paginate.current_page != paginate.last_page">
+                            <a
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">...</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
+                        <li v-show="paginate.current_page != paginate.last_page">
                             <a :href="paginate.last_page_url"
-                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{ paginate.last_page }}</a>
+                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">{{
+                                    paginate.last_page }}</a>
                         </li>
-                        <li v-show="paginate.current_page!=paginate.last_page">
+                        <li v-show="paginate.current_page != paginate.last_page">
                             <a :href="paginate.next_page_url"
                                 class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">Next</a>
                         </li>
@@ -243,7 +256,7 @@ export default defineComponent({
         EditModal,
         VInput,
         VCard,
-        VButton,JetNavLink
+        VButton, JetNavLink
     },
     data() {
         return {
@@ -252,7 +265,8 @@ export default defineComponent({
                 nama: null,
                 alamat: null,
                 kode: null,
-                kodeAnggota: null
+                kodeAnggota: null,
+                jenis_id: null
             }),
             searchShow: false
         };
@@ -265,12 +279,12 @@ export default defineComponent({
         },
         detail(simpananId, nama) {
 
-            if(this.$window.searchTipe == 'nisbah-create'){
+            if (this.$window.searchTipe == 'nisbah-create') {
                 this.$window.simpanan_id = simpananId
                 this.$window.anggota_nama = nama
                 this.$window.showAddModal = 1
                 this.$inertia.get(this.route('nisbah.index'))
-            }else{
+            } else {
                 this.$inertia.get(this.route('simpanan.show', simpananId))
             }
 
@@ -280,10 +294,11 @@ export default defineComponent({
             this.formSearch.nama == null ? delete this.formSearch.nama : null,
                 this.formSearch.alamat == null ? delete this.formSearch.alamat : null,
                 this.formSearch.kode == null ? delete this.formSearch.kode : null,
+                this.formSearch.jenis_id == null ? delete this.formSearch.jenis_id : null,
                 this.formSearch.kodeAnggota == null ? delete this.formSearch.kodeAnggota : null,
                 this.formSearch.get(this.route('simpanan.search'));
         },
-        isNotJabatan(jabatan){
+        isNotJabatan(jabatan) {
             return !(this.$page.props.user.karyawan.jabatan.nama == jabatan)
         },
     },

@@ -147,6 +147,12 @@ class BMTService
 
     public function tarik(int $jumlahTarikan)
     {
+        if($this->currentSimpanan->jenis_simpanan_id==4){
+            abort(404,'Simpaann Tidak Bisa Ditarik');
+        }
+        if($this->currentSimpanan->jumlah<$jumlahTarikan){
+            return "Jumlah Tarikan Melebihi Jumlah Simpanan";
+        }
         $kode = $this->currentSimpanan->kode;
         $kode = substr($kode, (strrpos($kode, '.', 2) + 1));
         $kode = $this->kodeGeneratorService->generateKodeDetailSimpanan('penarikan', $kode);
@@ -502,8 +508,9 @@ class BMTService
             $tanggal_selesai = Carbon::createFromDate($nisbah->tanggal_selesai);
 
             //check valid tanggal
+            // dd(now()->gte($tanggal_awal));
             // dd(now()->gte($tanggal_awal) && now()->lte($tanggal_selesai));
-            if (now()->gte($tanggal_awal) && now()->lte($tanggal_selesai)) {
+            if (now()->lte($tanggal_selesai)) {
                 if ($tanggal_awal->format('m') == now()->format('m')) {
                     $hariSatuBulan = now()->daysInMonth;
                     $hari = (int)$tanggal_awal->format('d');
@@ -534,7 +541,13 @@ class BMTService
         // dd($nisbahs);
         $totalSaldo = 0;
         foreach ($nisbahs as $key => $nisbah) {
-            $totalSaldo += $nisbah->detail[0]->saldo_rata_rata;
+            try {
+                //code...
+                $totalSaldo += $nisbah->detail[0]->saldo_rata_rata;
+            } catch (\Throwable $th) {
+                //throw $th;
+                dd($nisbah);
+            }
         }
 
         foreach ($nisbahs as $key => $nisbah) {

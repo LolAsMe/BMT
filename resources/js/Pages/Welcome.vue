@@ -8,13 +8,13 @@
             </Link>
 
             <template v-else>
-                <Link :href="route('login')" class="text-sm text-black underline">
+                <Link :href="route('login')" class="text-sm text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 focus:outline-none">
                 Log in
                 </Link>
 
-                <Link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-black underline">
+                <!-- <Link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-black underline">
                 Register
-                </Link>
+                </Link> -->
             </template>
         </div>
 

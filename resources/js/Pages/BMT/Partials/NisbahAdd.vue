@@ -57,8 +57,6 @@
                           ">
                     Submit
                 </button>
-
-
             </form>
         </v-modal>
     </div>

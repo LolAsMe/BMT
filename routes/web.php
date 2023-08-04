@@ -69,6 +69,8 @@ Route::middleware(['auth:sanctum', 'verified', 'jabatan:funding,manajer,teller']
         ->name('simpanan.search');
     Route::get('search/simpanan/mudhorobah', [SimpananController::class, 'search2'])
         ->name('simpanan.search2');
+    Route::get('search/simpanan/wajib', [SimpananController::class, 'search3'])
+        ->name('simpanan.search3');
     Route::get('search/pembiayaan', [PembiayaanController::class, 'search'])
         ->name('pembiayaan.search');
     Route::get('search/anggota', [AnggotaController::class, 'search'])

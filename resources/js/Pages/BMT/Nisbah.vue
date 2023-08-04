@@ -40,7 +40,7 @@
                         <button @click="$inertia.get(route('nisbah.hitung.index'))"
                             class="focus:outline-none text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-blue-900">
                             Hitung</button>
-                            <button @click="$inertia.post(this.route('nisbah.apply'))"
+                        <button @click="$inertia.post(this.route('nisbah.apply'))"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             Apply</button>
                     </div>
@@ -102,63 +102,63 @@
                 </div>
             </v-card>
             <v-card>
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="
-                                  px-6
-                                  py-3
-                                  text-left text-xs
-                                  font-medium
-                                  text-gray-500
-                                  uppercase
-                                  tracking-wider
-                                ">
+                                          px-6
+                                          py-3
+                                          text-left text-xs
+                                          font-medium
+                                          text-gray-500
+                                          uppercase
+                                          tracking-wider
+                                        ">
                                 No
                             </th>
                             <th scope="col" class="
-                                  px-6
-                                  py-3
-                                  text-left text-xs
-                                  font-medium
-                                  text-gray-500
-                                  uppercase
-                                  tracking-wider
-                                ">
+                                          px-6
+                                          py-3
+                                          text-left text-xs
+                                          font-medium
+                                          text-gray-500
+                                          uppercase
+                                          tracking-wider
+                                        ">
                                 Kode
                             </th>
                             <th scope="col" class="
-                                  px-6
-                                  py-3
-                                  text-left text-xs
-                                  font-medium
-                                  text-gray-500
-                                  uppercase
-                                  tracking-wider
-                                ">
+                                          px-6
+                                          py-3
+                                          text-left text-xs
+                                          font-medium
+                                          text-gray-500
+                                          uppercase
+                                          tracking-wider
+                                        ">
                                 Tanggal
                             </th>
                             <th scope="col" class="
-                                  px-6
-                                  py-3
-                                  text-left text-xs
-                                  font-medium
-                                  text-gray-500
-                                  uppercase
-                                  tracking-wider
-                                ">
+                                          px-6
+                                          py-3
+                                          text-left text-xs
+                                          font-medium
+                                          text-gray-500
+                                          uppercase
+                                          tracking-wider
+                                        ">
                                 Nisbah
                             </th>
                             <th scope="col" class="relative px-6 py-3">
                                 <span class="
-                                    px-6
-                                    py-3
-                                    text-xs text-center
-                                    font-medium
-                                    text-gray-500
-                                    uppercase
-                                    tracking-wider
-                                  ">Status</span>
+                                            px-6
+                                            py-3
+                                            text-xs text-center
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                          ">Status</span>
                             </th>
                         </tr>
                     </thead>
@@ -327,7 +327,9 @@ export default defineComponent({
     },
     computed: {
         showAddModal() {
-            return !!this.$window.showAddModal
+            let show = this.$window.showAddModal
+            this.$window.showAddModal = 0
+            return !!show
         },
         totalIDR() {
             return this.toRupiah(this.total)
@@ -347,6 +349,7 @@ export default defineComponent({
     created() {
         console.log(this.$window.showAddModal);
         console.log(this.$window.simpanan_id);
-    }
+    },
+
 });
 </script>

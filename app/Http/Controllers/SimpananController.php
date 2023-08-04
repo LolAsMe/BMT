@@ -159,7 +159,42 @@ class SimpananController extends Controller
 
     public function search(Request $request)
     {
+        $simpanans = Simpanan::orderBy('id')->withTrashed();
+        $request->nama ? $simpanans->whereHas(
+            'anggota',
+            function (Builder $query) use ($request) {
+                return $query->where('nama', 'like', '%' . $request->nama . '%');
+            }
+        ) : null;
+        $request->alamat ? $simpanans->whereHas(
+            'anggota',
+            function (Builder $query) use ($request) {
+                return $query->where('alamat', 'like', '%' . $request->alamat . '%');
+            }
+        ) : null;
+        $request->jenis_id ? $simpanans->where('jenis_simpanan_id','=',$request->jenis_id,) : null;
+        $request->kode ? $simpanans->where('kode', 'like', '%' . $request->kode . '%')  : null;
+        $request->kodeAnggota ? $simpanans->whereHas(
+            'anggota',
+            function (Builder $query) use ($request) {
+                return $query->where('kode', 'like', '%' . $request->kodeAnggota . '%');
+            }
+        ) : null;
+        $anggotaTanpaSimpanan = Anggota::whereDoesntHave('simpanan')->get();
+        $jenisSimpanan = JenisSimpanan::all('id', 'nama');
+        $paginate = $simpanans->with('anggota', 'jenisSimpanan')->take(25)->paginate();
+        $paginate->appends([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'kodeAnggota' => $request->kodeAnggota,
+            'kode' => $request->kode,
+        ]);
+        return Inertia::render('BMT/Simpanan', compact('paginate', 'anggotaTanpaSimpanan', 'jenisSimpanan'));
+    }
+    public function search3(Request $request)
+    {
         $simpanans = Simpanan::orderBy('id');
+        $simpanans->where('jenis_simpanan_id','=',04);
         $request->nama ? $simpanans->whereHas(
             'anggota',
             function (Builder $query) use ($request) {

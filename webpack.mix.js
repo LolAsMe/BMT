@@ -23,8 +23,8 @@ mix.js('resources/js/app.js', 'public/js').vue()
         require('tailwindcss'),
     ]) .options({
         hmrOptions: {
-            host: '192.168.1.29',
-            port: 8080
+            // host: '192.168.1.29',
+            // port: 8080
         }
     })
     .webpackConfig(require('./webpack.config'));

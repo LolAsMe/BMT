@@ -44,7 +44,7 @@
         </template>
         <div class="py-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white overflow-x-auto shadow-xl sm:rounded-lg">
 
                     <table class="m-5 min-w-full divide-y divide-gray-200">
                         <tr>
