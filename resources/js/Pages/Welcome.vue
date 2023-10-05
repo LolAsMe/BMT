@@ -1,8 +1,8 @@
 <template>
     <Head title="Welcome" />
 
-    <div class="relative flex items-top justify-center min-h-screen sm:items-center sm:pt-0 bg-gradient-to-r from-green-200 to-white">
-        <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+    <div class="relative flex justify-center min-h-screen items-center pt-0 bg-gradient-to-r from-green-200 to-white">
+        <div v-if="canLogin" class="fixed top-0 right-0 px-6 py-4 block">
             <Link v-if="$page.props.user" :href="route('dashboard')" class="text-sm text-gray-700 underline">
             Dashboard
             </Link>
@@ -18,12 +18,11 @@
             </template>
         </div>
 
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-12">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-
-                    <img src="/storage/BMT.png" alt="Icon PNG" width="250" height="250">
-                    <p class="font-bold text-xl m-auto px-2">Selamat Datang Di KSPSS BMT USAHA DINI</p>
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 ">
+            <div class="bg-white overflow-hidden shadow-xl rounded-lg p-12">
+                <div class="flex justify-center sm:justify-start pt-0">
+                    <img src="/storage/BMT.png" alt="Icon PNG" class="w-24 h-24 sm:w-64 sm:h-64">
+                    <p class="font-bold text-xl m-auto px-4">Selamat Datang Di KSPSS BMT USAHA DINI</p>
                 </div>
             </div>
 

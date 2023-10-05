@@ -10,65 +10,118 @@
                         </span>
                         <div v-if="group.simpanan.length != 0">
                             {{ 'Simpanan' }}
-                            <table class="min-w-full divide-y divide-gray-200">
+
+                            <table class="table-auto block sm:hidden">
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+                                            mx-auto
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             No
                                         </th>
                                         <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
+                                            Data
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="hover:bg-slate-100 cursor-pointer odd:bg-white even:bg-slate-100"
+                                        v-for="(simpanan, index) in group.simpanan" :key="simpanan.id"
+                                        @dblclick="detail(simpanan.id, '')">
+                                        <td>
+                                            <div class="mb-2 mx-auto">{{ index + 1 }}</div>
+                                        </td>
+                                        <td class="px-4 py-2 flex flex-col">
+                                            <div class="mb-2">Nama : {{ group.anggota.find(x => x.id ===
+                                                simpanan.anggota_id).nama }}</div>
+                                            <div class="mb-2">Kode Anggota : {{
+                                                group.anggota.find(x => x.id === simpanan.anggota_id).kode }}</div>
+                                            <div class="mb-2">Alamat : {{ group.anggota.find(x => x.id ===
+                                                simpanan.anggota_id).alamat }}</div>
+                                            <div class="mb-2">Rekening : {{ simpanan.kode }}</div>
+                                            <div>Jumlah : {{
+                                                "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
+                                                    "$1\.")
+                                            }}</div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table class="hidden sm:table min-w-full divide-y divide-gray-200 ">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
+                                            No
+                                        </th>
+                                        <th scope="col" class="
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             Nama
                                         </th>
                                         <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             Simpanan
                                         </th>
                                         <th scope="col" class="
-                                                                px-6
-                                                                py-3
-                                                                text-left text-xs
-                                                                font-medium
-                                                                text-gray-500
-                                                                uppercase
-                                                                tracking-wider
-                                                                ">
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             Jumlah Simpanan
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-slate-100 cursor-pointer" v-for="(simpanan, index) in group.simpanan"
-                                        :key="simpanan.id" @dblclick="detail(simpanan.id, '')">
+                                    <tr class="hover:bg-slate-100 cursor-pointer"
+                                        v-for="(simpanan, index) in group.simpanan" :key="simpanan.id"
+                                        @dblclick="detail(simpanan.id, '')">
                                         <td class="text-center">{{ index + 1 }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="ml-0">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ group.anggota.find(x => x.id === simpanan.anggota_id).nama }} <span
-                                                            class="bg-green-100 rounded-full border-2 border-green-100"> {{
+                                                        {{ group.anggota.find(x => x.id === simpanan.anggota_id).nama }}
+                                                        <span class="bg-green-100 rounded-full border-2 border-green-100">
+                                                            {{
                                                                 group.anggota.find(x => x.id === simpanan.anggota_id).kode }}
                                                         </span>
                                                     </div>
@@ -89,15 +142,15 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right">
                                             <span class="
-                                                                px-2
-                                                                inline-flex
-                                                                text-xs
-                                                                leading-5
-                                                                font-semibold
-                                                                rounded-full
-                                                                bg-green-100
-                                                                text-green-800
-                                                                ">
+                                                px-2
+                                                inline-flex
+                                                text-xs
+                                                leading-5
+                                                font-semibold
+                                                rounded-full
+                                                bg-green-100
+                                                text-green-800
+                                                ">
                                                 {{
                                                     "IDR " + simpanan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
                                                         "$1\.")
@@ -108,64 +161,117 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div  v-if="group.pembiayaan.length != 0">
+                        <div v-if="group.pembiayaan.length != 0">
                             {{ 'Pembiayaan' }}
-                            <table class="min-w-full divide-y divide-gray-200">
+                            <table class="table-auto block sm:hidden">
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th scope="col" class="
-                                                                            px-6
-                                                                            py-3
-                                                                            text-left text-xs
-                                                                            font-medium
-                                                                            text-gray-500
-                                                                            uppercase
-                                                                            tracking-wider
-                                                                            ">
+                                            mx-auto
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             No
                                         </th>
                                         <th scope="col" class="
-                                                                            px-6
-                                                                            py-3
-                                                                            text-left text-xs
-                                                                            font-medium
-                                                                            text-gray-500
-                                                                            uppercase
-                                                                            tracking-wider
-                                                                            ">
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
+                                            Data
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="hover:bg-slate-100 cursor-pointer odd:bg-white even:bg-slate-100"
+                                        v-for="(pembiayaan, index) in group.pembiayaan" :key="pembiayaan.id"
+                                        @dblclick="this.$inertia.get(this.route('pembiayaan.show', pembiayaan.id))">
+                                        <td>
+                                            <div class="mb-2 mx-auto">{{ index + 1 }}</div>
+                                        </td>
+                                        <td class="px-4 py-2 flex flex-col">
+                                            <div class="mb-2">Nama : {{ group.anggota.find(x => x.id ===
+                                                pembiayaan.anggota_id).nama }}</div>
+                                            <div class="mb-2">Kode Anggota : {{ group.anggota.find(x => x.id ===
+                                                pembiayaan.anggota_id).kode
+                                            }}</div>
+                                            <div class="mb-2">Alamat : {{ group.anggota.find(x => x.id ===
+                                                pembiayaan.anggota_id).alamat }}</div>
+                                            <div class="mb-2">Pembiayaan Kode : {{ pembiayaan.kode }}</div>
+                                            <div>Jumlah : {{ "IDR " +
+                                                pembiayaan.total_pembiayaan.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
+                                                    "$1\.") }}</div>
+                                            <div>Angsuran :{{ "IDR " +
+                                                    pembiayaan.jumlah_angsuran.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
+                                                        "$1\.") }}</div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table class="hidden sm:table min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
+                                            No
+                                        </th>
+                                        <th scope="col" class="
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             Anggota
                                         </th>
                                         <th scope="col" class="
-                                                                            px-6
-                                                                            py-3
-                                                                            text-left text-xs
-                                                                            font-medium
-                                                                            text-gray-500
-                                                                            uppercase
-                                                                            tracking-wider
-                                                                            ">
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             Jumlah
                                         </th>
                                         <th scope="col" class="
-                                                                            px-6
-                                                                            py-3
-                                                                            text-left text-xs
-                                                                            font-medium
-                                                                            text-gray-500
-                                                                            uppercase
-                                                                            tracking-wider
-                                                                            ">
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             Angsuran
                                         </th>
                                         <th scope="col" class="
-                                                                            px-6
-                                                                            py-3
-                                                                            text-left text-xs
-                                                                            font-medium
-                                                                            text-gray-500
-                                                                            uppercase
-                                                                            tracking-wider
-                                                                            ">
+                                            px-6
+                                            py-3
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                            ">
                                             Keterangan
                                         </th>
                                     </tr>
@@ -179,8 +285,8 @@
                                             <div class="flex items-center">
                                                 <div class="ml-0">
                                                     <div class="text-xs font-normal text-gray-900">
-                                                        {{ group.anggota.find(x => x.id === pembiayaan.anggota_id).nama }} <span
-                                                            class="bg-green-100 rounded-full border-2 border-green-100">
+                                                        {{ group.anggota.find(x => x.id === pembiayaan.anggota_id).nama }}
+                                                        <span class="bg-green-100 rounded-full border-2 border-green-100">
                                                             {{ group.anggota.find(x => x.id === pembiayaan.anggota_id).kode
                                                             }} </span>
                                                     </div>
@@ -196,12 +302,14 @@
                                         <td class="whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="ml-0">
-                                                    <div class="text-sm font-normal text-gray-900 border-b-2 border-red-200">
+                                                    <div
+                                                        class="text-sm font-normal text-gray-900 border-b-2 border-red-200">
                                                         Jumlah :{{ "IDR " +
                                                             pembiayaan.jumlah.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
                                                                 "$1\.") }}
                                                     </div>
-                                                    <div class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
+                                                    <div
+                                                        class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
                                                         Total :{{ "IDR " +
                                                             pembiayaan.total_pembiayaan.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
                                                                 "$1\.") }}
@@ -212,15 +320,18 @@
                                         <td class="whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="ml-0">
-                                                    <div class="text-sm font-normal text-gray-900 border-b-2 border-red-200">
+                                                    <div
+                                                        class="text-sm font-normal text-gray-900 border-b-2 border-red-200">
                                                         Frekuensi :{{ pembiayaan.frekuensi_angsuran }}
                                                     </div>
-                                                    <div class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
+                                                    <div
+                                                        class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
                                                         Angsuran :{{ "IDR " +
                                                             pembiayaan.jumlah_angsuran.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
                                                                 "$1\.") }}
                                                     </div>
-                                                    <div class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
+                                                    <div
+                                                        class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
                                                         Angsuran Diterima :{{ Math.round((pembiayaan.angsuran_diterima) /
                                                             pembiayaan.jumlah_angsuran)
                                                         }}
@@ -232,10 +343,12 @@
                                         <td class="whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="ml-0">
-                                                    <div class="text-sm font-normal text-gray-900 border-b-2 border-red-200">
+                                                    <div
+                                                        class="text-sm font-normal text-gray-900 border-b-2 border-red-200">
                                                         Keterangan :{{ pembiayaan.keterangan }}
                                                     </div>
-                                                    <div class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
+                                                    <div
+                                                        class="text-sm font-normal text-gray-900 border-t-2 border-red-200">
                                                         Status :<span
                                                             :class="pembiayaan.status == 'ongoing' ? 'bg-red-100  rounded-lg' : 'bg-green-100  rounded-lg'">{{
                                                                 pembiayaan.status }}</span>

@@ -2,7 +2,7 @@
     <app-layout title="Dashboard">
         <div class="py-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="grid grid-cols-6 gap-5">
+                <div class=" block sm:grid-cols-6 sm:grid gap-5">
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5" v-if="attribute.saldoAwal">
                         <svg class="mb-3" width="40px" height="40px" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -193,14 +193,14 @@
                         <!-- <pie id="my-chart-id" :options="chartOptions" :data="chartData" /> -->
                     </div>
                     <div
-                        class="col-span-2 row-span-2 h-96 bg-white rounded-3xl drop-shadow-xl p-6 overscroll-auto overflow-y-scroll ">
+                        class="col-span-2 row-span-2 h-96 mt-4 sm:mt-0 bg-white rounded-3xl drop-shadow-xl p-6 overscroll-auto overflow-y-scroll ">
                         <span class="font-bold border-2">
                             Pembiayaan Tertunggak
                         </span>
                         <table v-for="(pembiayaan, index) in attribute.pembiayaan_tertunggak" :key="pembiayaan.id"
                             class="m-5 divide-y divide-red-400">
                             <tr>
-                                <th class="text-left w-1/2">ID</th>
+                            <th class="text-left w-1/2">ID</th>
                                 <th>:</th>
                                 <td>{{ pembiayaan.id }}</td>
                             </tr>
