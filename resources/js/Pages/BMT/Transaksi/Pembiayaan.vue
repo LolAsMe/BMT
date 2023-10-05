@@ -283,7 +283,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-200 odd:bg-white even:bg-slate-50">
                     <tr v-for="(detail, index) in onePembiayaan.detail" :key="detail.id" @dblclick="doFilter"
                         :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'">
                         <td class="text-center">{{ detail.angsuran_ke }}</td>
@@ -401,7 +401,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <tr class="hover:bg-slate-100 cursor-pointer"
+                    <tr class="hover:bg-slate-100 cursor-pointer odd:bg-white even:bg-slate-50"
                         v-for="(pembiayaan, index) in $inertia.page.props.pembiayaans" :key="pembiayaan.id"
                         @dblclick="applyPembiayaan(pembiayaan)">
                         <td class="text-center">{{ index + 1 }}</td>

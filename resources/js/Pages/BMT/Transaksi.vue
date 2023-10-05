@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-6 gap-5 place-items-center mb-5">
+            <div class="hidden sm:grid sm:grid-cols-6 gap-5 place-items-center mb-5">
                 <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5" v-if="attribute.saldoAwal">
                     <svg class="mb-3" width="40px" height="40px" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">

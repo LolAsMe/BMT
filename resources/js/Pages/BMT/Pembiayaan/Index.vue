@@ -177,8 +177,8 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="hover:bg-slate-100 cursor-pointer" v-for="(pembiayaan, index) in paginate.data"
+                    <tbody class="bg-white divide-y divide-gray-200 ">
+                        <tr class="hover:bg-slate-100 cursor-pointer odd:bg-white even:bg-slate-50" v-for="(pembiayaan, index) in paginate.data"
                             :key="pembiayaan.id" @dblclick="detail(pembiayaan.id)">
                             <td class="text-center">{{ index + 1 }}</td>
                             <td class="whitespace-nowrap">
