@@ -1,9 +1,9 @@
 <template>
     <app-layout title="Dashboard">
-        <div class="py-10">
+        <div class="py-9">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class=" block sm:grid-cols-6 sm:grid gap-5">
-                    <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5" v-if="attribute.saldoAwal">
+                <div class=" block xl:grid-cols-6 sm:grid-cols-3 sm:grid gap-3">
+                    <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-4 h-4/5" v-if="attribute.saldoAwal">
                         <svg class="mb-3" width="40px" height="40px" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -23,10 +23,10 @@
                                     stroke="#323232" stroke-width="2"></path>
                             </g>
                         </svg>
-                        <span class="block font-bold text-xs">
+                        <span class="block font-bold">
                             Kas BMT
                         </span>
-                        <span class="block font-bold text-sm">{{ toRupiah(kasBMT.jumlah) }}</span>
+                        <span class="block font-bold">{{ toRupiah(kasBMT.jumlah) }}</span>
                     </div>
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5">
                         <svg width="35px" height="35px" viewBox="0 -96.5 950 1100" class="mb-3 " version="1.1"
@@ -104,10 +104,10 @@
                                     fill="#131313"></path>
                             </g>
                         </svg>
-                        <span class="block font-bold text-xs">
+                        <span class="block font-bold">
                             Kas Brankas
                         </span>
-                        <span class="block font-bold text-sm">{{ toRupiah(kasBrankas.jumlah) }}</span>
+                        <span class="block font-bold">{{ toRupiah(kasBrankas.jumlah) }}</span>
                     </div>
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5">
                         <svg fill="#000000" width="35px" height="35px" viewBox="0 0 24 24" id="debit-purchase-left"
@@ -127,10 +127,10 @@
                                 </path>
                             </g>
                         </svg>
-                        <span class="block font-bold text-xs">
+                        <span class="block font-bold">
                             Transaksi Debit
                         </span>
-                        <span class="block font-bold text-sm">{{ toRupiah(attribute.jumlahDebit) }}</span>
+                        <span class="block font-bold">{{ toRupiah(attribute.jumlahDebit) }}</span>
                     </div>
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5">
                         <svg fill="#000000" width="35px" height="35px" viewBox="0 0 32 32" version="1.1"
@@ -144,10 +144,10 @@
                                 </path>
                             </g>
                         </svg>
-                        <span class="block font-bold text-xs">
+                        <span class="block font-bold">
                             Transaksi Kredit
                         </span>
-                        <span class="block font-bold text-sm">{{ toRupiah(attribute.jumlahKredit) }}</span>
+                        <span class="block font-bold">{{ toRupiah(attribute.jumlahKredit) }}</span>
                     </div>
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5">
                         <svg class="mb-2" width="35px" height="35px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
@@ -163,10 +163,10 @@
                                 </g>
                             </g>
                         </svg>
-                        <span class="block font-bold text-xs">
+                        <span class="block font-bold">
                             Saldo Awal
                         </span>
-                        <span class="block font-bold text-sm">{{ toRupiah(attribute.saldoAwal) }}</span>
+                        <span class="block font-bold">{{ toRupiah(attribute.saldoAwal) }}</span>
                     </div>
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5">
                         <svg class="-mt-1 -ml-2 -mb-1" width="50px" height="50px" viewBox="0 0 24 24" fill="none"
@@ -182,25 +182,28 @@
                                     fill="#1F2328"></path>
                             </g>
                         </svg>
-                        <span class="block font-bold text-xs">
+                        <span class="block font-bold">
                             Saldo Akhir
                         </span>
-                        <span class="block font-bold text-sm">{{
+                        <span class="block font-bold">{{
                             toRupiah(attribute.saldoAwal + attribute.jumlahDebit - attribute.jumlahKredit) }}</span>
                     </div>
-                    <div class="row-span-2 col-span-4 h-96 bg-white rounded-3xl drop-shadow-xl p-6">
+
+                </div>
+                <div class="flex mt-9">
+                    <div class="h-96 w-7/12 mr-7 bg-white rounded-3xl drop-shadow-xl p-6">
                         <Bar :data="chartData" :options="options" />
                         <!-- <pie id="my-chart-id" :options="chartOptions" :data="chartData" /> -->
                     </div>
                     <div
-                        class="col-span-2 row-span-2 h-96 mt-4 sm:mt-0 bg-white rounded-3xl drop-shadow-xl p-6 overscroll-auto overflow-y-scroll ">
+                        class="h-96 mt-4 sm:mt-0 bg-white rounded-3xl drop-shadow-xl p-6 overscroll-auto overflow-y-scroll ">
                         <span class="font-bold border-2">
                             Pembiayaan Tertunggak
                         </span>
                         <table v-for="(pembiayaan, index) in attribute.pembiayaan_tertunggak" :key="pembiayaan.id"
                             class="m-5 divide-y divide-red-400">
                             <tr>
-                            <th class="text-left w-1/2">ID</th>
+                                <th class="text-left w-1/2">ID</th>
                                 <th>:</th>
                                 <td>{{ pembiayaan.id }}</td>
                             </tr>

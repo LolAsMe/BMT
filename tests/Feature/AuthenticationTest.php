@@ -22,7 +22,7 @@ class AuthenticationTest extends TestCase
     {
            // Create a user for testing
         $user = User::factory()->create([
-            'email' => 'test@example.com',
+            'name' => 'test@example.com',
             'password' => bcrypt('password123'),
         ]);
         $karyawan = Karyawan::factory()->create([
@@ -31,7 +31,7 @@ class AuthenticationTest extends TestCase
 
         // Attempt to authenticate the user
         $response = $this->post('/login', [
-            'email' => 'test@example.com',
+            'name' => 'test@example.com',
             'password' => 'password123',
         ]);
         // Assert that the user is authenticated
