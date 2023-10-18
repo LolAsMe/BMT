@@ -15,6 +15,13 @@ class KaryawanFactory extends Factory
     {
         return [
             //
+            "kode" => "KR01",
+            "nama" => $this->faker->name(),
+            "alamat" => "Boyolali",
+            "no_telepon" => "08912389",
+            "jabatan_id" => "1",
+            "created_at"=>now(),
+            'updated_at'=>now(),
         ];
     }
 }

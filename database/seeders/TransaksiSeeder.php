@@ -16,7 +16,7 @@ class TransaksiSeeder extends Seeder
     {
         //
         DB::table('transaksi_harian')->insert([
-            ['kode'=>'000', 'jumlah'=>0,'updated_at'=>now(),'created_at'=>now()],
+            ['kode'=>'000', 'debit'=>0,'kredit'=>0,'updated_at'=>now(),'created_at'=>now()],
         ]);
     }
 }

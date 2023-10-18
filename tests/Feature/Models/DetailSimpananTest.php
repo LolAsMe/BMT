@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class DetailSimpananTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -20,7 +21,6 @@ class DetailSimpananTest extends TestCase
         $this->actingAs($user = User::factory()->create());
         $simpanan = Simpanan::create([
             //
-            'kode'=>'SiMP02',
             'anggota_id'=>'2',
             'jenis_simpanan_id'=>'2',
             'jumlah'=>0,
@@ -36,7 +36,6 @@ class DetailSimpananTest extends TestCase
     {
         $simpanan = Simpanan::create([
             //
-            'kode'=>'SiMP02',
             'anggota_id'=>'2',
             'jenis_simpanan_id'=>'2',
             'jumlah'=>0,
@@ -84,7 +83,6 @@ class DetailSimpananTest extends TestCase
         $this->actingAs($user = User::factory()->create());
         $simpanan = Simpanan::create([
             //
-            'kode'=>'SiMP02',
             'anggota_id'=>'2',
             'jenis_simpanan_id'=>'2',
             'jumlah'=>0,
@@ -144,7 +142,7 @@ class DetailSimpananTest extends TestCase
         $this->actingAs($user = User::factory()->create());
         $simpanan = Simpanan::create([
             //
-            'kode'=>'SiMP02',
+            'kode'=>'',
             'anggota_id'=>'2',
             'jenis_simpanan_id'=>'2',
             'jumlah'=>0,

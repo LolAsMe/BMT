@@ -50,6 +50,7 @@ class SimpananController extends Controller
         //
         $attribute = $request->validated();
         $attribute['kode']=$kodeGeneratorService->generateKodeSimpanan($attribute['jenis_simpanan_id']);
+        // $attribute['kode']='asdkfo';
         Simpanan::create($attribute);
 
         return back()->with('flash', [

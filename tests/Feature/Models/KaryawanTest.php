@@ -28,17 +28,15 @@ class KaryawanTest extends TestCase
         $this->actingAs($user = User::factory()->create());
 
         $response = $this->post(route('karyawan.index'), [
-            "kode" => "KR01",
-            "nama" => "Imam",
+            "nama" => "Imam 123",
             "alamat" => "Boyolali",
-            "no_telepon" => "08912389",
+            "no_telepon" => "0891238923",
             "jabatan_id" => "2"
         ]);
         $this->assertDatabaseHas('karyawan', [
-            "kode" => "KR01",
-            "nama" => "Imam",
+            "nama" => "Imam 123",
             "alamat" => "Boyolali",
-            "no_telepon" => "08912389",
+            "no_telepon" => "0891238923",
             "jabatan_id" => "2"
         ]);
     }

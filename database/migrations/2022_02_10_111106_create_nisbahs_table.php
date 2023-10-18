@@ -20,7 +20,7 @@ class CreateNisbahsTable extends Migration
             $table->string('tanggal_selesai');
             $table->foreignId('simpanan_id');
             $table->decimal('awal',15,2);
-            $table->enum('status',["ongoing, selesai"])->default('ongoing');
+            $table->enum('status',["ongoing", "selesai"])->default('ongoing');
             $table->decimal('jumlah',15,2)->default(0);
             $table->softDeletes();
             $table->timestamps();

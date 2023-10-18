@@ -131,7 +131,7 @@ export default defineComponent({
                 this.$window.showAddGroupModal = 1
                 this.$inertia.get(this.route('group.index'))
             }else{
-                this.$inertia.get(this.route('karyawan.show', simpananId))
+                this.$inertia.get(this.route('karyawan.show', karyawanId))
             }
 
         },

@@ -16,7 +16,7 @@ class KaryawanSeeder extends Seeder
     {
         //
         DB::table('karyawan')->insert([
-            "kode" => "KR01",
+            "kode" => "KAR01",
             "nama" => "Imam",
             "alamat" => "Boyolali",
             "no_telepon" => "08912389",

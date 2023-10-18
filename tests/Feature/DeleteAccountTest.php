@@ -17,10 +17,17 @@ class DeleteAccountTest extends TestCase
             return $this->markTestSkipped('Account deletion is not enabled.');
         }
 
-        $this->actingAs($user = User::factory()->create());
+
+        // $karyawan = Karyawan::factory()->create([
+        //     'nama' => 'test',
+        // ]);
+        $this->actingAs($user = User::factory()->create([
+            'email' => 'test@example.com',
+            'password' => bcrypt('password123'),
+        ]));
 
         $response = $this->delete('/user', [
-            'password' => 'password',
+            'password' => 'password123',
         ]);
 
         $this->assertNull($user->fresh());

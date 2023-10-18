@@ -56,6 +56,7 @@ class PembiayaanController extends Controller
             'kode' => $kodeGeneratorService->generateKodePembiayaan($request->jenis_pembiayaan_id),
             'anggota_id' => $request->anggota_id,
             'jenis_pembiayaan_id' => $request->jenis_pembiayaan_id,
+            'nomor' => $request->nomor,
             'tanggal_pinjam' => $request->tanggal_pinjam,
             'jumlah' => $request->jumlah,
             'tanggal_jatuh_tempo' => $request->tanggal_jatuh_tempo,
@@ -123,7 +124,6 @@ class PembiayaanController extends Controller
     public function update(UpdatePembiayaanRequest $request, Pembiayaan $pembiayaan)
     {
         //
-        dd($request->all());
         $pembiayaan->load('anggota');
         $request->jenis_pembiayaan_id ? $pembiayaan->jenis_pembiayaan_id = $request->jenis_pembiayaan_id : null;
         $request->nama_anggota ? $pembiayaan->anggota->nama = $request->nama_anggota : null;
