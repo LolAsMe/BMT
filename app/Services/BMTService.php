@@ -10,8 +10,12 @@ use App\Models\Laba;
 use App\Models\Nisbah;
 use App\Models\Pembiayaan;
 use App\Models\Simpanan;
+use App\Models\Transaksi;
 use App\Models\TransaksiHarian;
+use App\Models\User;
 use Carbon\Carbon;
+use DB;
+use Illuminate\Support\Collection;
 
 class BMTService
 {
@@ -23,6 +27,7 @@ class BMTService
     private $nisbahRate;
     public $kasBrankas;
     public $kasBMT;
+    public $saldoAwal;
     private $user;
     private KodeGeneratorService $kodeGeneratorService;
 
@@ -37,8 +42,71 @@ class BMTService
         $this->user = auth('web')->user();
         $this->kasBrankas = Kas::find(1);
         $this->kasBMT = Kas::find(2);
+        $this->saldoAwal = $this->getSaldoAwal();
         $this->transaksiHarian = TransaksiHarian::whereDate('tanggal', now())->first() ?? new TransaksiHarian();
         $this->nisbahRate = 0.5;
+    }
+
+    public function getAttributeDashboard()
+    {
+        $tanggal = now();
+
+        $attribute = [];
+        $transaksis = Transaksi::whereDate('tanggal_transaksi', $tanggal)->with(['log'])->get()->loadMorph('log', [
+            DetailSimpanan::class => ['simpanan.anggota'],
+            DetailPembiayaan::class => ['pembiayaan.anggota'],
+        ]);
+        $attribute['kasBrankas'] =  $this->kasBrankas;
+        $attribute['kasBMT'] =  $this->kasBMT;
+        $attribute['jumlahDebit'] =  $transaksis->sum('debit') ?? 0;
+        $attribute['jumlahKredit'] =  $transaksis->sum('kredit') ?? 0;
+        $attribute['saldoAwal'] =  $this->saldoAwal;
+        $attribute['selisih'] =  $attribute['jumlahDebit'] - $attribute['jumlahKredit'];
+
+        $sum = DB::select("
+        SELECT    date(tanggal_transaksi) as date, SUM(debit) as debitTotal, SUM(kredit) as kreditTotal
+        FROM      transaksi
+        GROUP BY  date(tanggal_transaksi) order by date desc limit 7
+        ");
+        $attribute['sum'] = $sum;
+
+        $pembiayaan = Pembiayaan::whereDate('tanggal_jatuh_tempo', "<", $tanggal)->with('anggota')->get();
+        $attribute['pembiayaan_tertunggak'] = $pembiayaan;
+        $attribute['transaksis'] = $transaksis;
+        return $attribute;
+    }
+
+    public function getSaldoAwal()
+    {
+        $kas = $this->kasBMT->detail()->whereDate('tanggal', now())->first();
+        if ($kas) {
+            $saldoAwal = $kas->saldo_awal;
+        } else {
+            BMTService::startTheDay();
+            $saldoAwal = $this->kasBMT->detail()->whereDate('tanggal', now())->first()->saldo_awal;
+        }
+        return $saldoAwal;
+    }
+
+    public function getGroupAnggota(User $user)
+    {
+        $groups = $user->karyawan->group;
+        $groups->load(['anggota', 'anggota.simpanan', 'anggota.pembiayaan']);
+        // $simpanan = $groups->anggota;
+        $groups->each(function ($group, $key) {
+            $group->simpanan = new Collection;
+            $group->pembiayaan = new Collection;
+            foreach ($group->anggota as $key => $anggota) {
+                if ($anggota->simpanan) {
+                    $group->simpanan->push($anggota->simpanan);
+                }
+                if ($anggota->pembiayaan) {
+                    $group->pembiayaan->push($anggota->pembiayaan);
+                }
+                $group->anggota->makeHidden(['pembiayaan', 'simpanan']);
+            }
+        });
+        return $groups;
     }
 
     public function createPembiayaan($attribute)
@@ -142,15 +210,15 @@ class BMTService
         );
         $this->currentSimpanan->increment('jumlah', $jumlahSetoran);
         $this->transaksiHarian->increment('debit', $jumlahSetoran);
-        $this->kasMasuk($jumlahSetoran,1,"Setor simpanan Kode ".$this->currentSimpanan->kode);
+        $this->kasMasuk($jumlahSetoran, 1, "Setor simpanan Kode " . $this->currentSimpanan->kode);
     }
 
     public function tarik(int $jumlahTarikan)
     {
-        if($this->currentSimpanan->jenis_simpanan_id==4){
-            abort(404,'Simpaann Tidak Bisa Ditarik');
+        if ($this->currentSimpanan->jenis_simpanan_id == 4) {
+            abort(404, 'Simpaann Tidak Bisa Ditarik');
         }
-        if($this->currentSimpanan->jumlah<$jumlahTarikan){
+        if ($this->currentSimpanan->jumlah < $jumlahTarikan) {
             return "Jumlah Tarikan Melebihi Jumlah Simpanan";
         }
         $kode = $this->currentSimpanan->kode;
@@ -185,7 +253,7 @@ class BMTService
         $this->currentSimpanan->decrement('jumlah', $jumlahTarikan);
         $this->transaksiHarian->increment('kredit', $jumlahTarikan);
 
-        $this->kasKeluar($jumlahTarikan,1,"Tarik simpanan Kode ".$this->currentSimpanan->kode);
+        $this->kasKeluar($jumlahTarikan, 1, "Tarik simpanan Kode " . $this->currentSimpanan->kode);
     }
 
 
@@ -366,7 +434,7 @@ class BMTService
         );
 
         $this->transaksiHarian->increment('debit', $this->currentPembiayaan->jumlah_angsuran);
-        $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran,1,"Masuk Pembiayaan ".$this->currentPembiayaan->kode." angsuran ke 1");
+        $this->kasMasuk($this->currentPembiayaan->jumlah_angsuran, 1, "Masuk Pembiayaan " . $this->currentPembiayaan->kode . " angsuran ke 1");
         $attribute = [
             'kode' => 'Setor',
             'keterangan' => 'ok'
@@ -422,7 +490,7 @@ class BMTService
         $frekuensi = $this->currentPembiayaan->frekuensi_angsuran;
         $laba = ($total - $jumlah) / $frekuensi;
         $this->labaMasuk($laba, $attribute);
-        $this->kasMasuk($jumlahAngsuran,1,"Masuk Pembiayaan ".$this->currentPembiayaan->kode." angsuran ke ". $this->angsuranKe);
+        $this->kasMasuk($jumlahAngsuran, 1, "Masuk Pembiayaan " . $this->currentPembiayaan->kode . " angsuran ke " . $this->angsuranKe);
         $this->currentPembiayaan->save();
     }
 
@@ -486,7 +554,7 @@ class BMTService
             $nisbah->status = 'selesai';
             $nisbah->save();
         }
-        $this->kasKeluar($jumlahNisbah,1,"Keluaran Nisbah bulan ".now()->format("m-Y"),1);
+        $this->kasKeluar($jumlahNisbah, 1, "Keluaran Nisbah bulan " . now()->format("m-Y"), 1);
     }
 
     public function hitungNisbah()
@@ -629,9 +697,8 @@ class BMTService
                 "jumlah" => 0
             ]);
             $prevLaba = Laba::whereBulan(now()->subMonth()->format("m-Y"))->first();
-            $this->kasMasuk($prevLaba->jumlah, 3, "laba bulan ".now()->subMonth()->format("m-Y"), 1);
+            $this->kasMasuk($prevLaba->jumlah, 3, "laba bulan " . now()->subMonth()->format("m-Y"), 1);
             debugbar()->addMessage($prevLaba);
-
         }
         return $laba;
     }

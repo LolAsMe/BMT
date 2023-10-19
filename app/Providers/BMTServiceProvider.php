@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Jabatan;
 use App\Services\BMTService;
 use App\Services\KodeGeneratorService;
+use Cache;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -34,6 +36,9 @@ class BMTServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        // $cachedData = Cache::remember('jabatan', now()->addHours(24), function () {
+        //     return Jabatan::all(); // Replace with your query to load the data
+        // });
         Relation::morphMap([
             'DetailSimpanan' => 'App\Models\DetailSimpanan',
             'DetailPembiayaan' => 'App\Models\DetailPembiayaan',

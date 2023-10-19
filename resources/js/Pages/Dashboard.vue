@@ -26,7 +26,7 @@
                         <span class="block font-bold">
                             Kas BMT
                         </span>
-                        <span class="block font-bold">{{ toRupiah(kasBMT.jumlah) }}</span>
+                        <span class="block font-bold">{{ toRupiah(attribute.kasBMT.jumlah) }}</span>
                     </div>
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5">
                         <svg width="35px" height="35px" viewBox="0 -96.5 950 1100" class="mb-3 " version="1.1"
@@ -107,7 +107,7 @@
                         <span class="block font-bold">
                             Kas Brankas
                         </span>
-                        <span class="block font-bold">{{ toRupiah(kasBrankas.jumlah) }}</span>
+                        <span class="block font-bold">{{ toRupiah(attribute.kasBrankas.jumlah) }}</span>
                     </div>
                     <div class="block m-5 bg-white rounded-3xl drop-shadow-xl p-6 h-4/5">
                         <svg fill="#000000" width="35px" height="35px" viewBox="0 0 24 24" id="debit-purchase-left"
@@ -338,10 +338,7 @@ export default defineComponent({
         }
     },
     props: {
-        transaksis: Object,
-        kasBMT: Object,
         attribute: Object,
-        kasBrankas: Object,
     },
 
 });
