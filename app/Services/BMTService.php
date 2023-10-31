@@ -109,6 +109,32 @@ class BMTService
         return $groups;
     }
 
+    public function fetchNasabahByUser(User $user)
+    {
+        $groups = $user->karyawan->group;
+        $groups->load(['anggota', 'anggota.simpanan.jenisSimpanan', 'anggota.pembiayaan.jenisPembiayaan','anggota.simpanan.detail'=>function($query){
+            $query->orderBy('id','desc')->take(7);
+        },'anggota.pembiayaan.detail'=>function($query){
+            $query->orderBy('id','desc')->take(7);
+        }]);
+        $groupNasabah = $groups->map(function ($group) {
+            return [
+                'group_name' => $group->nama,
+                'anggota' => $group->anggota->map(function ($anggota) {
+                    return [
+                        'anggota_name' => $anggota->nama,
+                        'kode' => $anggota->kode,
+                        'alamat' => $anggota->alamat,
+                        'simpanan' => $anggota->simpanan ?? null,
+                        'pembiayaan' => $anggota->pembiayaan ?? null,
+                    ];
+                }),
+            ];
+        });
+
+        return $groupNasabah;
+    }
+
     public function createPembiayaan($attribute)
     {
         $kas = $this->kasBMT;
