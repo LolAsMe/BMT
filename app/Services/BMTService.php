@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Anggota;
 use App\Models\DetailNisbah;
 use App\Models\DetailPembiayaan;
+use App\Models\DetailSimpanan;
 use App\Models\Kas;
 use App\Models\Laba;
 use App\Models\Nisbah;

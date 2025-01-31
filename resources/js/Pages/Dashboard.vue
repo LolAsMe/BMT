@@ -200,7 +200,7 @@
                         <span class="font-bold border-2">
                             Pembiayaan Tertunggak
                         </span>
-                        <table v-for="(pembiayaan, index) in attribute.pembiayaan_tertunggak" :key="pembiayaan.id"
+                        <table v-for="(pembiayaan) in attribute.pembiayaan_tertunggak" :key="pembiayaan.id"
                             class="m-5 divide-y divide-red-400">
                             <tr>
                                 <th class="text-left w-1/2">ID</th>

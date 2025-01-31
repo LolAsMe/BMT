@@ -21,7 +21,7 @@
         <div class="max-w-6xl mx-auto px-6 lg:px-8 ">
             <div class="bg-white overflow-hidden shadow-xl rounded-lg p-12">
                 <div class="flex justify-center sm:justify-start pt-0">
-                    <img src="/storage/BMT.png" alt="Icon PNG" class="w-24 h-24 sm:w-64 sm:h-64">
+                    <img src="/BMT.png" alt="Icon PNG" class="w-24 h-24 sm:w-64 sm:h-64">
                     <p class="font-bold text-xl m-auto px-4">Selamat Datang Di KSPSS BMT USAHA DINI</p>
                 </div>
             </div>

@@ -15,7 +15,7 @@
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                 <!-- <jet-application-mark class="block h-9 w-auto" /> -->
-                                <img src="/storage/BMT.png" alt="Icon PNG" width="50" height="50">
+                                <img src="/BMT.png" alt="Icon PNG" width="50" height="50">
                             </Link>
                         </div>
 
